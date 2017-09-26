@@ -15,7 +15,7 @@
 
 @interface PLFilterViewController : UIViewController
 @property (nonatomic, assign) BOOL isBeauty;
-@property (nonatomic, strong) NSDictionary *beautyDict;
+@property (nonatomic, strong) NSDictionary *beautyDictionary;
 @property (nonatomic, weak) id<PLFilterVcDelegate> delegate;
 @property (nonatomic, assign) BOOL needProcessVideo;
 /// 是否是图片推流

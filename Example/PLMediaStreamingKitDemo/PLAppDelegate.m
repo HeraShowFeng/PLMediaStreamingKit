@@ -25,14 +25,11 @@
     # warning 初始化 推流SDK的使用环境
     [PLStreamingEnv initEnv];
     
-    // 设置 SDK内部输出日志的级别为Debug
+    // 设置 SDK 内部输出日志的级别为 Debug
     [PLStreamingEnv setLogLevel:PLStreamLogLevelDebug];
     
-    // 开启 SDK内部写文件日志功能
+    // 开启 SDK 内部写文件日志功能
     [PLStreamingEnv enableFileLogging];
-    
-    
-    
     
     
     // 根控制器
@@ -42,13 +39,11 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
-    
     self.window.rootViewController = mainVC;
     self.window.rootViewController.view.frame = self.window.bounds;
     self.window.rootViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth |
     UIViewAutoresizingFlexibleHeight;
     [self.window makeKeyAndVisible];
-    
     
     return YES;
 }

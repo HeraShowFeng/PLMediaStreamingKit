@@ -9,7 +9,7 @@
 #import "PLFilterViewController.h"
 
 @interface PLFilterViewController ()
-@property (nonatomic, strong) NSMutableDictionary *filterDict;
+@property (nonatomic, strong) NSMutableDictionary *filterDictionary;
 @end
 
 @implementation PLFilterViewController
@@ -19,7 +19,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     
-    _filterDict = [NSMutableDictionary dictionaryWithDictionary:_beautyDict];
+    _filterDictionary = [NSMutableDictionary dictionaryWithDictionary:_beautyDictionary];
     
     if (_imageStream) {
         /// 图片推流状态 不可操作视频
@@ -32,11 +32,10 @@
     
     [self layoutFilterTitleAndColseButton];
     [self layoutBeautySettings];
-    
 }
 
 # pragma mark ---- 标题 ----
-- (void)layoutFilterTitleAndColseButton{
+- (void)layoutFilterTitleAndColseButton {
     UILabel *titleLab = [[UILabel alloc]init];
     titleLab.font = FONT_MEDIUM(16);
     titleLab.text = @"美颜设置";
@@ -49,18 +48,18 @@
     
     UIButton *closeButton = [[UIButton alloc]init];
     closeButton.layer.cornerRadius = 19;
-    [closeButton addTarget:self action:@selector(closeButtonSelected) forControlEvents:UIControlEventTouchDown];
+    [closeButton addTarget:self action:@selector(dismissView) forControlEvents:UIControlEventTouchDown];
     [closeButton setImage:[UIImage imageNamed:@"pl_close"] forState:UIControlStateNormal];
     [self.view addSubview:closeButton];
     [closeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(38, 38));
-        make.leftMargin.mas_equalTo(4);
-        make.topMargin.mas_equalTo(30);
+        make.size.mas_equalTo(CGSizeMake(34, 34));
+        make.leftMargin.mas_equalTo(8);
+        make.topMargin.mas_equalTo(32);
     }];
 }
 
 # pragma mark ---- 美颜设置 ----
-- (void)layoutBeautySettings{
+- (void)layoutBeautySettings {
     // 美颜／美白／红润
     NSArray *titleArr = @[@"setBeautify - 美颜",@"setWhiten - 美白",@"setRedden - 红润"];
     for (NSInteger i = 0; i < 3; i++) {
@@ -90,13 +89,13 @@
         
         switch (i) {
             case 0:
-                slider.value = [_filterDict[@"beauty"] floatValue];
+                slider.value = [_filterDictionary[@"beauty"] floatValue];
                 break;
             case 1:
-                slider.value = [_filterDict[@"whiten"] floatValue];
+                slider.value = [_filterDictionary[@"whiten"] floatValue];
                 break;
             case 2:
-                slider.value = [_filterDict[@"readden"] floatValue];
+                slider.value = [_filterDictionary[@"readden"] floatValue];
                 break;
             default:
                 break;
@@ -128,7 +127,7 @@
 }
 
 # pragma mark ---- 分栏事件 控制滤镜 ----
-- (void)segmentAction:(UISegmentedControl *)segment{
+- (void)segmentAction:(UISegmentedControl *)segment {
     if (segment.selectedSegmentIndex == 0) {
         self.needProcessVideo = NO;
     } else{
@@ -136,38 +135,32 @@
     }
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(filetrNeedPixelBufferOn:)]) {
         [self.delegate filetrNeedPixelBufferOn:_needProcessVideo];
-        [self closeButtonSelected];
+        [self dismissView];
     }
 }
 
 #pragma mark --- 滑条事件 控制美颜值 ---
-- (void)sliderAction:(UISlider *)slider
-{
+- (void)sliderAction:(UISlider *)slider {
     NSInteger index = slider.tag - 100;
     if (index == 0) {
         // 美颜程度 范围 0 ~ 1
-        [_filterDict setObject:[NSString stringWithFormat:@"%f", slider.value] forKey:@"beauty"];
+        [_filterDictionary setObject:[NSString stringWithFormat:@"%f", slider.value] forKey:@"beauty"];
     }
     if (index == 1) {
         // 美白程度 范围 0 ~ 1
-        [_filterDict setObject:[NSString stringWithFormat:@"%f", slider.value] forKey:@"whiten"];
+        [_filterDictionary setObject:[NSString stringWithFormat:@"%f", slider.value] forKey:@"whiten"];
     }
     if (index == 2) {
         // 红润程度 范围 0 ~ 1
-        [_filterDict setObject:[NSString stringWithFormat:@"%f", slider.value] forKey:@"readden"];
+        [_filterDictionary setObject:[NSString stringWithFormat:@"%f", slider.value] forKey:@"readden"];
     }
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(filterChangeBeautyDic:)]) {
-        [self.delegate filterChangeBeautyDic:[_filterDict copy]];
-        [self closeButtonSelected];
+        [self.delegate filterChangeBeautyDic:[_filterDictionary copy]];
+        [self dismissView];
     }
 }
 
-
-- (void)dismissView{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)closeButtonSelected{
+- (void)dismissView {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

@@ -21,5 +21,5 @@
 @property (nonatomic, strong) NSArray *configuraValue;
 @property (nonatomic, strong) NSNumber *selectedNum;
 
-+ (PLConfigureModel *)configureModelWithDict:(NSDictionary *)dict;
++ (PLConfigureModel *)configureModelWithDictionary:(NSDictionary *)dictionary;
 @end

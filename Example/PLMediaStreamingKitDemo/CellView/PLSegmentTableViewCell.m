@@ -9,7 +9,7 @@
 #import "PLSegmentTableViewCell.h"
 
 @implementation PLSegmentTableViewCell
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         _configLabel = [[UILabel alloc]initWithFrame:CGRectMake(28, 15, KSCREEN_WIDTH - 56, 30)];
         _configLabel.numberOfLines = 0;
@@ -24,7 +24,7 @@
     return self;
 }
 
-- (void)confugureSegmentCellWithConfigureModel:(PLConfigureModel *)configureModel{
+- (void)confugureSegmentCellWithConfigureModel:(PLConfigureModel *)configureModel {
     _configLabel.text = configureModel.configuraKey;
     
     [_segmentControl removeFromSuperview];
@@ -46,7 +46,7 @@
     }
 }
 
-+ (CGFloat)configureSegmentCellHeightWithString:(NSString *)string{
++ (CGFloat)configureSegmentCellHeightWithString:(NSString *)string {
     CGRect bounds = [string boundingRectWithSize:CGSizeMake(KSCREEN_WIDTH - 56, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObject:FONT_LIGHT(14) forKey:NSFontAttributeName] context:nil];
     if (bounds.size.height > 30) {
         return 99 + bounds.size.height - 30;

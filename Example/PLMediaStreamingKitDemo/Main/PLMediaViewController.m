@@ -48,7 +48,7 @@
 /// 扫描推流二维码生成推流地址
 @property (nonatomic, strong) UIButton *scanButton;
 
-@property (nonatomic, strong) NSMutableDictionary *beautyDict;
+@property (nonatomic, strong) NSMutableDictionary *beautyDictionary;
 @property (nonatomic, assign) BOOL needProcessVideo;
 
 /// 是否是图片推流
@@ -64,14 +64,13 @@
 
 @implementation PLMediaViewController
 
-- (void)dealloc{
+- (void)dealloc {
     /// 销毁 session
     [self.streamingSession destroy];
     
     /// 清空存储
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"configure"];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"session"];
-
 }
 
 - (void)viewDidLoad {
@@ -85,7 +84,9 @@
 }
 
 # pragma mark ---- 推流配置 ----
-- (void)configureMediaStreaming{
+- (void)configureMediaStreaming {
+    
+# warning 推流地址
     _streamURL = [NSURL URLWithString:@"rtmp://pili-publish.liujingbo.echohu.top/liujingbo/fengwenxiu"];
 
     /// 视频采集
@@ -116,7 +117,7 @@
 }
 
 # pragma mark ---- session 基本设置 ----
-- (void)configureMediaStreamingSession{
+- (void)configureMediaStreamingSession {
     self.streamingSession.previewView.frame = CGRectMake(0, 0, KSCREEN_WIDTH, KSCREEN_HEIGHT);
     self.streamingSession.previewView.backgroundColor = COLOR_RGB(246, 246, 246, 1);
     
@@ -132,7 +133,7 @@
     [self.streamingSession setBeautify:0.5];
     [self.streamingSession setWhiten:0.5];
     [self.streamingSession setRedden:0.5];
-    _beautyDict = [NSMutableDictionary dictionaryWithDictionary:@{@"beauty":@"0.5", @"whiten":@"0.5", @"readden":@"0.5"}];
+    _beautyDictionary = [NSMutableDictionary dictionaryWithDictionary:@{@"beauty":@"0.5", @"whiten":@"0.5", @"readden":@"0.5"}];
     
     /// 添加水印
     [self.streamingSession setWaterMarkWithImage:[UIImage imageNamed:@"qiniu"] position:CGPointMake(50, 500)];
@@ -141,8 +142,7 @@
 }
 
 # pragma mark ---- PLMediaStreamingSession  delegate ----
-- (void)mediaStreamingSession:(PLMediaStreamingSession *)session streamStateDidChange:(PLStreamState)state
-{
+- (void)mediaStreamingSession:(PLMediaStreamingSession *)session streamStateDidChange:(PLStreamState)state {
     NSString *streamStatusStr = [NSString string];
     switch (state) {
         case 0:
@@ -172,12 +172,12 @@
     NSLog(@"流状态 --------- %@", streamStatusStr);
 }
 
-- (void)mediaStreamingSession:(PLMediaStreamingSession *)session didDisconnectWithError:(NSError *)error
-{
+- (void)mediaStreamingSession:(PLMediaStreamingSession *)session didDisconnectWithError:(NSError *)error {
     NSLog(@"流状态 错误 ---- %@", error);
 }
 
-- (CVPixelBufferRef)mediaStreamingSession:(PLMediaStreamingSession *)session cameraSourceDidGetPixelBuffer:(CVPixelBufferRef)pixelBuffer{
+- (CVPixelBufferRef)mediaStreamingSession:(PLMediaStreamingSession *)session cameraSourceDidGetPixelBuffer:(CVPixelBufferRef)pixelBuffer {
+    /// 滤镜处理
     if (_needProcessVideo) {
         size_t w = CVPixelBufferGetWidth(pixelBuffer);
         size_t h = CVPixelBufferGetHeight(pixelBuffer);
@@ -197,7 +197,7 @@
 }
 
 # pragma mark ---- 布局推流界面 ----
-- (void)layoutMediaStreamingInterface{
+- (void)layoutMediaStreamingInterface {
     UIButton *backButton = [[UIButton alloc]init];
     backButton.backgroundColor = BUTTON_BACKGROUNDCOLOR;
     backButton.layer.cornerRadius = 5;
@@ -247,7 +247,7 @@
     [playButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(66, 28));
         make.rightMargin.mas_equalTo(0);
-        make.topMargin.mas_equalTo(30);
+        make.topMargin.mas_equalTo(29);
     }];
     
     
@@ -332,7 +332,7 @@
 }
 
 # pragma mark ---- CommonButton ----
-- (void)plCommonButtonAction:(UIButton *)button{
+- (void)plCommonButtonAction:(UIButton *)button {
     NSInteger index = button.tag - 100;
     button.selected = !button.selected;
     if (index == 0) {
@@ -350,7 +350,6 @@
     } else if (index == 2) {
         UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"音视频推流切换" message:@"亲，切换推流方式，会先断流再重新推流！" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action){
-//            [self dismissView];
         }];
         UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             if (!button.selected) {
@@ -369,11 +368,11 @@
         if (!_imageStream) {
             if (!button.selected) {
                 [button setImage:[UIImage imageNamed:@"pl_nobeauty"] forState:UIControlStateNormal];
-                _beautyDict = [NSMutableDictionary dictionaryWithDictionary:@{@"beauty":@"0.5", @"whiten":@"0.5", @"readden":@"0.5"}];
+                _beautyDictionary = [NSMutableDictionary dictionaryWithDictionary:@{@"beauty":@"0.5", @"whiten":@"0.5", @"readden":@"0.5"}];
                 [self.streamingSession setBeautifyModeOn:YES];
             } else {
                 [button setImage:[UIImage imageNamed:@"pl_beauty"] forState:UIControlStateNormal];
-                _beautyDict = [NSMutableDictionary dictionaryWithDictionary:@{@"beauty":@"0.0", @"whiten":@"0.0", @"readden":@"0.0"}];
+                _beautyDictionary = [NSMutableDictionary dictionaryWithDictionary:@{@"beauty":@"0.0", @"whiten":@"0.0", @"readden":@"0.0"}];
                 [self.streamingSession setBeautifyModeOn:NO];
             }
         } else{
@@ -402,7 +401,7 @@
 }
 
 # pragma mark ---- ClassifyButton ----
-- (void)plClassifyButtonAction:(UIButton *)button{
+- (void)plClassifyButtonAction:(UIButton *)button {
     NSInteger index = button.tag - 100;
     button.selected = !button.selected;
     if (index == 0) {
@@ -419,15 +418,13 @@
         PLFilterViewController *filterVc = [[PLFilterViewController alloc]init];
         filterVc.delegate = self;
         filterVc.imageStream = _imageStream;
-        filterVc.beautyDict = [_beautyDict copy];
+        filterVc.beautyDictionary = [_beautyDictionary copy];
         filterVc.needProcessVideo = _needProcessVideo;
         [self presentViewController:filterVc animated:NO completion:nil];
     } else{
         NSString *title = [button titleForState:UIControlStateNormal];
         if ([title isEqualToString:@"图片推流 - 开"]) {
-            [self showAlertViewForPictureStreaming];
-            [button setTitle:@"图片推流 - 关" forState:UIControlStateNormal];
-            [self.streamingSession setPushImage:[UIImage imageNamed:@"pushImage"]];
+            [self showAlertViewForPictureStreaming:button];
         } else {
             _imageStream = NO;
             [button setTitle:@"图片推流 - 开" forState:UIControlStateNormal];
@@ -451,15 +448,19 @@
     }
 }
 
-- (void)showAlertViewForPictureStreaming{
+/// 图片推流提示
+- (void)showAlertViewForPictureStreaming:(UIButton *)button {
+    __block UIButton *picButton = button;
     UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"图片推流" message:@"亲，是否要选择图片推流 ？" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action){
         _imageStream = NO;
-        [self dismissView];
+        [self.streamingSession setPushImage:nil];
+        [picButton setTitle:@"图片推流 - 开" forState:UIControlStateNormal];
     }];
     UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         _imageStream = YES;
         [self.streamingSession setPushImage:[UIImage imageNamed:@"pushImage"]];
+        [picButton setTitle:@"图片推流 - 关" forState:UIControlStateNormal];
     }];
     [alertVc addAction:cancelAction];
     [alertVc addAction:sureAction];
@@ -467,21 +468,22 @@
 }
 
 # pragma mark ---- UIImageWriteToSavedPhotosAlbum ----
-- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
-{
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
     UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"亲，截图已成功保存至相册～" preferredStyle:UIAlertControllerStyleAlert];
     [self presentViewController:alertVc animated:YES completion:^{
         [self performSelector:@selector(dismissView) withObject:nil afterDelay:3];
     }];
 }
 
-- (void)dismissView{
+- (void)dismissView {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+# warning 界面之间功能切换实现的代理方法
 # pragma mark ---- PLConfigVcDelegate ----
-- (void)configureStreamWithConfigureModel:(PLConfigureModel *)configureModel categoryModel:(PLCategoryModel *)categoryModel{
+- (void)configureStreamWithConfigureModel:(PLConfigureModel *)configureModel categoryModel:(PLCategoryModel *)categoryModel {
     NSInteger index = [configureModel.selectedNum integerValue];
+    
     /// PLVideoCaptureConfiguration
     if ([categoryModel.categoryKey isEqualToString:@"PLVideoCaptureConfiguration"]) {
         if ([configureModel.configuraKey containsString:@"videoFrameRate"]) {
@@ -744,7 +746,7 @@
 }
 
 # pragma mark ---- PLSessiomVcDelegate ----
-- (void)configureSessionWithConfigureModel:(PLConfigureModel *)configureModel categoryModel:(PLCategoryModel *)categoryModel{
+- (void)configureSessionWithConfigureModel:(PLConfigureModel *)configureModel categoryModel:(PLCategoryModel *)categoryModel {
     NSInteger index = [configureModel.selectedNum integerValue];
     
     /// PLStreamingKit
@@ -896,11 +898,11 @@
 }
 
 # pragma mark ---- PLFilterVcDelegate ----
-- (void)filterChangeBeautyDic:(NSDictionary *)dict{
-    _beautyDict = [NSMutableDictionary dictionaryWithDictionary:dict];
-    CGFloat beauty = [_beautyDict[@"beauty"] floatValue];
-    CGFloat whiten = [_beautyDict[@"whiten"] floatValue];
-    CGFloat redden = [_beautyDict[@"redden"] floatValue];
+- (void)filterChangeBeautyDic:(NSDictionary *)dictionary {
+    _beautyDictionary = [NSMutableDictionary dictionaryWithDictionary:dictionary];
+    CGFloat beauty = [_beautyDictionary[@"beauty"] floatValue];
+    CGFloat whiten = [_beautyDictionary[@"whiten"] floatValue];
+    CGFloat redden = [_beautyDictionary[@"redden"] floatValue];
     if (beauty == 0 && whiten == 0 && redden == 0) {
         [self.streamingSession setBeautifyModeOn:NO];
     } else {
@@ -911,12 +913,12 @@
     [self.streamingSession setRedden:redden];
 }
 
-- (void)filetrNeedPixelBufferOn:(BOOL)needProcessVideo{
+- (void)filetrNeedPixelBufferOn:(BOOL)needProcessVideo {
     _needProcessVideo = needProcessVideo;
 }
 
-# pragma mark ---- 改变设置 ----
-- (void)restartStreamingWithNewConfiguration{
+# pragma mark ---- 改变 streamingSession 设置 ----
+- (void)restartStreamingWithNewConfiguration {
     /// 改变设置 并重新推流
     if ([self.streamingSession isStreamingRunning]) {
         [self.streamingSession stopStreaming];
@@ -940,12 +942,12 @@
 }
 
 # pragma mark ---- 生成二维码 供扫描播放 ----
-- (void)createQRcode{
+- (void)createQRcode {
     if (!_streamURL) {
         [[[UIAlertView alloc] initWithTitle:@"提示" message:@"还没有获取到 streamJson 没有可供播放的二维码哦" delegate:nil cancelButtonTitle:@"知道啦" otherButtonTitles:nil] show];
     } else {
+# warning 拉流地址
 //        NSString *url = @"拉流地址";
-
         NSString *url = @"rtmp://pili-live-rtmp.liujingbo.echohu.top/liujingbo/fengwenxiu";
         UIImage *image = [self createQRForString:url];
         UIControl *screenMaskView = ({
@@ -968,14 +970,12 @@
 }
 
 # pragma mark ---- 移除二维码 ----
-- (void)tapQRCodeImageView:(UIView *)screenMask
-{
+- (void)tapQRCodeImageView:(UIView *)screenMask {
     [screenMask removeFromSuperview];
 }
 
 # pragma mark ---- 生成二维码 ----
-- (UIImage *)createQRForString:(NSString *)qrString
-{
+- (UIImage *)createQRForString:(NSString *)qrString {
     NSData *stringData = [qrString dataUsingEncoding:NSUTF8StringEncoding];
     CIFilter *qrFilter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
     [qrFilter setValue:stringData forKey:@"inputMessage"];
@@ -1003,23 +1003,23 @@
 }
 
 # pragma mark ---- urlTextField 回收键盘 ----
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
 }
 
 # pragma mark ---- urlTextField delegate ----
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self verifyStreamUrlWithText:textField.text isStream:self.streamingSession.isStreamingRunning];
     return YES;
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     self.streamURL = [NSURL URLWithString:textField.text];
     return YES;
 }
 
 # pragma mark ---- 检验推流地址格式 ----
-- (void)verifyStreamUrlWithText:(NSString *)text isStream:(BOOL)isStream{
+- (void)verifyStreamUrlWithText:(NSString *)text isStream:(BOOL)isStream {
     NSString *messageStr;
     if (text != nil) {
         if ([text containsString:@"rtmp://"] && ![text isEqualToString:@"rtmp://"]) {

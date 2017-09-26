@@ -24,28 +24,40 @@
 
 @implementation PLScanViewController
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self stopReading];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self startReading];
+    
+    UILabel *titleLab = [[UILabel alloc]init];
+    titleLab.font = FONT_MEDIUM(16);
+    titleLab.text = @"推流地址二维码扫描";
+    titleLab.textColor = [UIColor whiteColor];
+    [self.view addSubview:titleLab];
+    [titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(160, 30));
+        make.leftMargin.mas_equalTo(KSCREEN_WIDTH/2 - 80);
+        make.topMargin.mas_equalTo(34);
+    }];
+    
     UIButton *closeButton = [[UIButton alloc]init];
     closeButton.layer.cornerRadius = 19;
     [closeButton addTarget:self action:@selector(closeButtonSelected) forControlEvents:UIControlEventTouchDown];
     [closeButton setImage:[UIImage imageNamed:@"pl_close"] forState:UIControlStateNormal];
     [self.view addSubview:closeButton];
     [closeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(38, 38));
-        make.leftMargin.mas_equalTo(4);
-        make.topMargin.mas_equalTo(30);
+        make.size.mas_equalTo(CGSizeMake(34, 34));
+        make.leftMargin.mas_equalTo(8);
+        make.topMargin.mas_equalTo(32);
     }];
 }
 
-- (void)closeButtonSelected{
+- (void)closeButtonSelected {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [self stopReading];
 }
 
 - (BOOL)startReading {
@@ -101,7 +113,7 @@
     /// 扫描线
     _scanLayer = [[CALayer alloc] init];
     _scanLayer.frame = CGRectMake(0, 0, _boxView.bounds.size.width, 1);
-    _scanLayer.backgroundColor = [UIColor brownColor].CGColor;
+    _scanLayer.backgroundColor = COLOR_RGB(16, 169, 235, 1).CGColor;
     
     [_boxView.layer addSublayer:_scanLayer];
     
@@ -120,7 +132,7 @@
     [_videoPreviewLayer removeFromSuperlayer];
 }
 
-# pragma mark - AVCaptureMetadataOutputObjectsDelegate
+# pragma mark ---- AVCaptureMetadataOutputObjectsDelegate ----
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
     //判断是否有数据
     if (metadataObjects != nil && [metadataObjects count] > 0) {
@@ -148,16 +160,14 @@
 }
 
 - (void)moveScanLayer:(NSTimer *)timer {
-    CGRect frame = _scanLayer.frame;
+    CGRect layerFrame = _scanLayer.frame;
     if (_boxView.frame.size.height < _scanLayer.frame.origin.y) {
-        frame.origin.y = 0;
-        _scanLayer.frame = frame;
+        layerFrame.origin.y = 0;
+        _scanLayer.frame = layerFrame;
     }else{
-        
-        frame.origin.y += 5;
-        
+        layerFrame.origin.y += 5;
         [UIView animateWithDuration:0.1 animations:^{
-            _scanLayer.frame = frame;
+            _scanLayer.frame = layerFrame;
         }];
     }
 }

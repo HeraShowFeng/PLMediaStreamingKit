@@ -16,6 +16,7 @@
  UITableViewDataSource,
  PLListArrayViewDelegate
 >
+
 @property (nonatomic, strong) UITableView *configurTableView;
 @property (nonatomic, strong) NSArray *configurArray;
 
@@ -33,10 +34,9 @@ static NSString *saveConfigure = @"configure";
     
     [self layoutConfigurationsView];
     [self showMediaStreamingConfigurations];
-    
 }
 
-- (void)viewDidAppear:(BOOL)animated{
+- (void)viewDidAppear:(BOOL)animated {
     if (_imageStream) {
         /// 图片推流状态 不可操作视频
         UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"目前处于图片推流中，不可以修改以下分区视频相关属性: PLVideoCaptureConfiguration 、PLVideoStreamingConfiguration，请切换至视频推流后，再修改！" preferredStyle:UIAlertControllerStyleAlert];
@@ -47,7 +47,7 @@ static NSString *saveConfigure = @"configure";
 }
 
 # pragma mark ---- 标题 ----
-- (void)layoutConfigurationsView{
+- (void)layoutConfigurationsView {
     UILabel *titleLab = [[UILabel alloc]init];
     titleLab.font = FONT_MEDIUM(16);
     titleLab.text = @"configurations 设置";
@@ -60,13 +60,13 @@ static NSString *saveConfigure = @"configure";
     
     UIButton *closeButton = [[UIButton alloc]init];
     closeButton.layer.cornerRadius = 19;
-    [closeButton addTarget:self action:@selector(closeButtonSelected) forControlEvents:UIControlEventTouchDown];
+    [closeButton addTarget:self action:@selector(dismissView) forControlEvents:UIControlEventTouchDown];
     [closeButton setImage:[UIImage imageNamed:@"pl_close"] forState:UIControlStateNormal];
     [self.view addSubview:closeButton];
     [closeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(38, 38));
-        make.leftMargin.mas_equalTo(4);
-        make.topMargin.mas_equalTo(30);
+        make.size.mas_equalTo(CGSizeMake(34, 34));
+        make.leftMargin.mas_equalTo(8);
+        make.topMargin.mas_equalTo(32);
     }];
     
     self.configurTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 70, KSCREEN_WIDTH, KSCREEN_HEIGHT - 70) style:UITableViewStylePlain];
@@ -80,7 +80,7 @@ static NSString *saveConfigure = @"configure";
 }
 
 # pragma mark ---- PLMediaStreamingKit configure 设置 ----
-- (void)showMediaStreamingConfigurations{
+- (void)showMediaStreamingConfigurations {
     NSUserDefaults *userdafault = [NSUserDefaults standardUserDefaults];
     NSArray *dataArr = [userdafault objectForKey:@"configure"];
     
@@ -145,17 +145,17 @@ static NSString *saveConfigure = @"configure";
 }
 
 # pragma mark ---- tableview delegate ----
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return _configurArray.count;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     PLCategoryModel *categoryModel = _configurArray[section];
     NSArray *array = categoryModel.categoryValue;
     return array.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *titleArray = @[@"PLVideoCaptureConfiguration", @"PLVideoStreamingConfiguration"];
 
     PLCategoryModel *categoryModel = _configurArray[indexPath.section];
@@ -195,7 +195,7 @@ static NSString *saveConfigure = @"configure";
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     PLCategoryModel *categoryModel = _configurArray[indexPath.section];
     NSArray *array = categoryModel.categoryValue;
     PLConfigureModel *configureModel = array[indexPath.row];
@@ -207,7 +207,7 @@ static NSString *saveConfigure = @"configure";
     }
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_WIDTH, 40)];
     headerView.backgroundColor = [UIColor whiteColor];
     PLCategoryModel *categoryModel = _configurArray[section];
@@ -219,12 +219,12 @@ static NSString *saveConfigure = @"configure";
     return headerView;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 40.0f;
 }
 
 # pragma mark ---- segment action ----
-- (void)segmentAction:(UISegmentedControl *)segment{
+- (void)segmentAction:(UISegmentedControl *)segment {
     NSInteger section = segment.tag / 100;
     NSInteger row = segment.tag % 100;
     PLCategoryModel *categoryModel = _configurArray[section];
@@ -235,7 +235,7 @@ static NSString *saveConfigure = @"configure";
 }
 
 # pragma mark ---- listButton action ----
-- (void)listButtonAction:(UIButton *)listButton{
+- (void)listButtonAction:(UIButton *)listButton {
     NSInteger section = listButton.tag / 100;
     NSInteger row = listButton.tag % 100;
     PLCategoryModel *categoryModel = _configurArray[section];
@@ -252,29 +252,28 @@ static NSString *saveConfigure = @"configure";
 }
 
 # pragma mark ---- PLListArrayViewDelegate ----
-- (void)listArrayViewSelectedWithIndex:(NSInteger)index configureModel:(PLConfigureModel *)configureModel categoryModel:(PLCategoryModel *)categoryModel{
+- (void)listArrayViewSelectedWithIndex:(NSInteger)index configureModel:(PLConfigureModel *)configureModel categoryModel:(PLCategoryModel *)categoryModel {
     [self controlPropertiesWithIndex:index configureModel:configureModel categoryModel:categoryModel];
 }
 
 # pragma mark ---- 是否图片推流 是否禁止操作视频相关属性 ----
-- (void)controlPropertiesWithIndex:(NSInteger)index configureModel:(PLConfigureModel *)configureModel categoryModel:(PLCategoryModel *)categoryModel{
+- (void)controlPropertiesWithIndex:(NSInteger)index configureModel:(PLConfigureModel *)configureModel categoryModel:(PLCategoryModel *)categoryModel {
     configureModel.selectedNum = [NSNumber numberWithInteger:index];
     [_configurTableView reloadData];
     [self saveConfigurations];
     
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(configureStreamWithConfigureModel:categoryModel:)]) {
         [self.delegate configureStreamWithConfigureModel:configureModel categoryModel:categoryModel];
-        [self closeButtonSelected];
+        [self dismissView];
     }
 }
 
-- (void)dismissView{
+- (void)dismissView {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-
-# pragma mark ---- 存储 ----
-- (void)saveConfigurations{
+# pragma mark ---- 数据本地化 ----
+- (void)saveConfigurations {
     NSMutableArray *dataArr = [NSMutableArray array];
     for (PLCategoryModel * categoryModel in _configurArray) {
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:categoryModel];
@@ -283,10 +282,6 @@ static NSString *saveConfigure = @"configure";
     NSUserDefaults *userdafault = [NSUserDefaults standardUserDefaults];
     [userdafault setObject:[NSArray arrayWithArray:dataArr] forKey:@"configure"];
     [userdafault synchronize];
-}
-
-- (void)closeButtonSelected{
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -17,6 +17,7 @@
  UITableViewDataSource,
  PLListArrayViewDelegate
 >
+
 @property (nonatomic, strong) UITableView *sessionTableView;
 @property (nonatomic, strong) NSArray *sessionArray;
 
@@ -36,7 +37,7 @@ static NSString *listIdentifier = @"listCell";
     [self showMediaStreamingSessions];
 }
 
-- (void)viewDidAppear:(BOOL)animated{
+- (void)viewDidAppear:(BOOL)animated {
     if (_imageStream) {
         /// 图片推流状态 不可操作视频
         UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"目前处于图片推流中，不可以修改以下分区视频相关属性：PLStreamingKit 、CameraSource，请切换至视频推流后，再修改！" preferredStyle:UIAlertControllerStyleAlert];
@@ -47,7 +48,7 @@ static NSString *listIdentifier = @"listCell";
 }
 
 # pragma mark ---- 标题 ----
-- (void)layoutSessionsView{
+- (void)layoutSessionsView {
     UILabel *titleLab = [[UILabel alloc]init];
     titleLab.font = FONT_MEDIUM(16);
     titleLab.text = @"session 设置";
@@ -60,13 +61,13 @@ static NSString *listIdentifier = @"listCell";
     
     UIButton *closeButton = [[UIButton alloc]init];
     closeButton.layer.cornerRadius = 19;
-    [closeButton addTarget:self action:@selector(closeButtonSelected) forControlEvents:UIControlEventTouchDown];
+    [closeButton addTarget:self action:@selector(dismissView) forControlEvents:UIControlEventTouchDown];
     [closeButton setImage:[UIImage imageNamed:@"pl_close"] forState:UIControlStateNormal];
     [self.view addSubview:closeButton];
     [closeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(38, 38));
-        make.leftMargin.mas_equalTo(4);
-        make.topMargin.mas_equalTo(30);
+        make.size.mas_equalTo(CGSizeMake(34, 34));
+        make.leftMargin.mas_equalTo(8);
+        make.topMargin.mas_equalTo(32);
     }];
     
     self.sessionTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 70, KSCREEN_WIDTH, KSCREEN_HEIGHT - 70) style:UITableViewStylePlain];
@@ -80,7 +81,7 @@ static NSString *listIdentifier = @"listCell";
 }
 
 # pragma mark ---- PLMediaStreamingKit session 设置 ----
-- (void)showMediaStreamingSessions{
+- (void)showMediaStreamingSessions {
     NSUserDefaults *userdafault = [NSUserDefaults standardUserDefaults];
     NSArray *dataArr = [userdafault objectForKey:@"session"];
     if (dataArr.count != 0) {
@@ -131,17 +132,17 @@ static NSString *listIdentifier = @"listCell";
 }
 
 # pragma mark ---- tableview delegate ----
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return _sessionArray.count;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     PLCategoryModel *categoryModel = _sessionArray[section];
     NSArray *array = categoryModel.categoryValue;
     return array.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *titleArray = @[@"PLStreamingKit", @"CameraSource"];
     
     PLCategoryModel *categoryModel = _sessionArray[indexPath.section];
@@ -182,7 +183,7 @@ static NSString *listIdentifier = @"listCell";
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     PLCategoryModel *categoryModel = _sessionArray[indexPath.section];
     NSArray *array = categoryModel.categoryValue;
     PLConfigureModel *configureModel = array[indexPath.row];
@@ -194,7 +195,7 @@ static NSString *listIdentifier = @"listCell";
     }
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_WIDTH, 40)];
     headerView.backgroundColor = [UIColor whiteColor];
     PLCategoryModel *categoryModel = _sessionArray[section];
@@ -206,12 +207,12 @@ static NSString *listIdentifier = @"listCell";
     return headerView;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 40.0f;
 }
 
 # pragma mark ---- segment action ----
-- (void)segmentAction:(UISegmentedControl *)segment{
+- (void)segmentAction:(UISegmentedControl *)segment {
     NSInteger section = segment.tag / 100;
     NSInteger row = segment.tag % 100;
     PLCategoryModel *categoryModel = _sessionArray[section];
@@ -222,7 +223,7 @@ static NSString *listIdentifier = @"listCell";
 }
 
 # pragma mark ---- listButton action ----
-- (void)listButtonAction:(UIButton *)listButton{
+- (void)listButtonAction:(UIButton *)listButton {
     NSInteger section = listButton.tag / 100;
     NSInteger row = listButton.tag % 100;
     PLCategoryModel *categoryModel = _sessionArray[section];
@@ -239,18 +240,18 @@ static NSString *listIdentifier = @"listCell";
 }
 
 # pragma mark ---- PLListArrayViewDelegate ----
-- (void)listArrayViewSelectedWithIndex:(NSInteger)index configureModel:(PLConfigureModel *)configureModel categoryModel:(PLCategoryModel *)categoryModel{
+- (void)listArrayViewSelectedWithIndex:(NSInteger)index configureModel:(PLConfigureModel *)configureModel categoryModel:(PLCategoryModel *)categoryModel {
     [self controlPropertiesWithIndex:index configureModel:configureModel categoryModel:categoryModel];
 }
 
 # pragma mark ---- 是否图片推流 是否禁止操作视频相关属性 ----
-- (void)controlPropertiesWithIndex:(NSInteger)index configureModel:(PLConfigureModel *)configureModel categoryModel:(PLCategoryModel *)categoryModel{
+- (void)controlPropertiesWithIndex:(NSInteger)index configureModel:(PLConfigureModel *)configureModel categoryModel:(PLCategoryModel *)categoryModel {
     configureModel.selectedNum = [NSNumber numberWithInteger:index];
     [_sessionTableView reloadData];
     [self saveSessions];
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(configureSessionWithConfigureModel:categoryModel:)]) {
         [self.delegate configureSessionWithConfigureModel:configureModel categoryModel:categoryModel];
-        [self closeButtonSelected];
+        [self dismissView];
     }
 }
 
@@ -258,9 +259,7 @@ static NSString *listIdentifier = @"listCell";
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-
-
-# pragma mark ---- 存储 ----
+# pragma mark ---- 数据本地化 ----
 - (void)saveSessions{
     NSMutableArray *dataArr = [NSMutableArray array];
     for (PLCategoryModel * categoryModel in _sessionArray) {
@@ -270,10 +269,6 @@ static NSString *listIdentifier = @"listCell";
     NSUserDefaults *userdafault = [NSUserDefaults standardUserDefaults];
     [userdafault setObject:[NSArray arrayWithArray:dataArr] forKey:@"session"];
     [userdafault synchronize];
-}
-
-- (void)closeButtonSelected{
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

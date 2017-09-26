@@ -40,11 +40,11 @@ static NSString *listIdentifier = @"listCell";
     return self;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _listArray.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:listIdentifier forIndexPath:indexPath];
     cell.textLabel.font = FONT_LIGHT(14);
     cell.textLabel.text = _listArray[indexPath.row];
@@ -57,7 +57,7 @@ static NSString *listIdentifier = @"listCell";
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(listArrayViewSelectedWithIndex:configureModel:categoryModel:)]) {
         [self.delegate listArrayViewSelectedWithIndex:indexPath.row configureModel:_configureModel categoryModel:_categoryModel];
         [self removeFromSuperview];

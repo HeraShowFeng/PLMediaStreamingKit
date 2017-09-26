@@ -9,7 +9,7 @@
 #import "PLListArrTableViewCell.h"
 
 @implementation PLListArrTableViewCell
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         _configLabel = [[UILabel alloc]initWithFrame:CGRectMake(28, 15, KSCREEN_WIDTH - 56, 30)];
         _configLabel.numberOfLines = 0;
@@ -34,7 +34,7 @@
     return self;
 }
 
-- (void)confugureListArrayCellWithConfigureModel:(PLConfigureModel *)configureModel{
+- (void)confugureListArrayCellWithConfigureModel:(PLConfigureModel *)configureModel {
     _configLabel.text = configureModel.configuraKey;
     NSInteger index = [configureModel.selectedNum integerValue];
     [_listButton setTitle:configureModel.configuraValue[index] forState:UIControlStateNormal];
@@ -47,7 +47,7 @@
     }
 }
 
-+ (CGFloat)configureListArrayCellHeightWithString:(NSString *)string{
++ (CGFloat)configureListArrayCellHeightWithString:(NSString *)string {
     CGRect bounds = [string boundingRectWithSize:CGSizeMake(KSCREEN_WIDTH - 56, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObject:FONT_LIGHT(14) forKey:NSFontAttributeName] context:nil];
     if (bounds.size.height > 30) {
         return 99 + bounds.size.height - 30;

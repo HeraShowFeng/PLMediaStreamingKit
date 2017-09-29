@@ -98,7 +98,7 @@ static NSString *listIdentifier = @"listCell";
         NSDictionary *autoReconnectEnableDict = @{@"autoReconnectEnable - 自动断线重连 ( Default：NO )":@[@"NO", @"YES"], @"default":@0};
         NSDictionary *monitorNetworkStateEnableDict = @{@"monitorNetworkStateEnable - 网络切换监测  ( Default：NO )":@[@"NO", @"YES"], @"default":@0};
         NSDictionary *thresholdDict = @{@"threshold - 丢包策略的阀值 ( Default：0.5 )":@[@"0", @"0.5", @"0.25", @"0.75", @"1"], @"default":@0};
-        NSDictionary *maxCountDict = @{@"maxCount - 队列最大容纳包 ( Default：300 )":@[@"0", @"50", @"100", @"300", @"150", @"450", @"600"], @"default":@3};
+        NSDictionary *maxCountDict = @{@"maxCount - 队列最大容纳包 ( Default：300 )":@[@"0", @"50", @"100", @"150", @"300", @"450", @"600"], @"default":@4};
         
         
         NSDictionary *PLStreamingKitDict = @{@"PLStreamingKit":@[statusUpdateIntervalDict, dynamicFrameEnableDict, autoReconnectEnableDict, monitorNetworkStateEnableDict, thresholdDict, maxCountDict]};

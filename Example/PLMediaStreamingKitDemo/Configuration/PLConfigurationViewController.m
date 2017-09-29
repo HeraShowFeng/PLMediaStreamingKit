@@ -103,7 +103,7 @@ static NSString *saveConfigure = @"configure";
         [userdafault setObject:IOS_SYSTEM_STRING forKey:@"system_version"];
         
         /// PLVideoCaptureConfiguration 相关属性
-        NSDictionary *videoFrameRateDict = @{@"videoFrameRate - 帧率 ( Default：24fps )":@[@"5", @"15", @"24", @"20", @"30"], @"default":@2};
+        NSDictionary *videoFrameRateDict = @{@"videoFrameRate - 帧率 ( Default：24fps )":@[@"5", @"15", @"20", @"24", @"30"], @"default":@3};
         
         NSDictionary *sessionPresetDict;
         if ([IOS_SYSTEM_STRING compare:@"9.0.0"] >= 0){

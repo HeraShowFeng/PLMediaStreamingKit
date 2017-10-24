@@ -8,9 +8,7 @@
 
 #import "PLAppDelegate.h"
 #import "PLMainViewController.h"
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
-#import "PLMediaStreamingKit.h"
+#import "PLMediaViewController.h"
 
 @interface PLAppDelegate ()
 
@@ -21,22 +19,32 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    // 第三方 日志统计
     [Fabric with:@[[Crashlytics class]]];
 
+    # warning 初始化 推流SDK的使用环境
     [PLStreamingEnv initEnv];
     
+    // 设置 SDK 内部输出日志的级别为 Debug
+    [PLStreamingEnv setLogLevel:PLStreamLogLevelDebug];
+    
+    // 开启 SDK 内部写文件日志功能
+    [PLStreamingEnv enableFileLogging];
+    
+    
+    // 根控制器
     PLMainViewController *mainVC = [[PLMainViewController alloc] init];
 
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = mainVC;
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    self.window.rootViewController = mainVC;
     self.window.rootViewController.view.frame = self.window.bounds;
     self.window.rootViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth |
     UIViewAutoresizingFlexibleHeight;
     [self.window makeKeyAndVisible];
     
-    [PLStreamingEnv setLogLevel:PLStreamLogLevelDebug];
-    [PLStreamingEnv enableFileLogging];
     return YES;
 }
 

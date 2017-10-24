@@ -14,32 +14,29 @@
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		769750EF1A6331080079423B /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 769750EC1A6329DC0079423B /* VideoToolbox.framework */; };
-		B651FF9C1D93DA1F00D1C578 /* qiniu.png in Resources */ = {isa = PBXBuildFile; fileRef = B651FF941D93DA1F00D1C578 /* qiniu.png */; };
-		B651FF9D1D93DA1F00D1C578 /* TestMusic1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B651FF951D93DA1F00D1C578 /* TestMusic1.mp3 */; };
-		B651FF9E1D93DA1F00D1C578 /* TestMusic2.wav in Resources */ = {isa = PBXBuildFile; fileRef = B651FF961D93DA1F00D1C578 /* TestMusic2.wav */; };
-		B651FF9F1D93DA1F00D1C578 /* TestMusic3.wav in Resources */ = {isa = PBXBuildFile; fileRef = B651FF971D93DA1F00D1C578 /* TestMusic3.wav */; };
-		B651FFA01D93DA1F00D1C578 /* TestMusic4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B651FF981D93DA1F00D1C578 /* TestMusic4.mp3 */; };
-		B651FFA11D93DA1F00D1C578 /* TestMusic5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B651FF991D93DA1F00D1C578 /* TestMusic5.mp3 */; };
-		B651FFA21D93DA1F00D1C578 /* xiaoqi1.png in Resources */ = {isa = PBXBuildFile; fileRef = B651FF9A1D93DA1F00D1C578 /* xiaoqi1.png */; };
-		B651FFA31D93DA1F00D1C578 /* xiaoqi2.png in Resources */ = {isa = PBXBuildFile; fileRef = B651FF9B1D93DA1F00D1C578 /* xiaoqi2.png */; };
 		B6FC33981D93C301004EEE29 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6FC33901D93C301004EEE29 /* Images.xcassets */; };
 		B6FC33991D93C301004EEE29 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33931D93C301004EEE29 /* main.m */; };
 		B6FC33AB1D93C398004EEE29 /* PLMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC339C1D93C398004EEE29 /* PLMainViewController.m */; };
-		B6FC33AC1D93C398004EEE29 /* PLModelPanelGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC339E1D93C398004EEE29 /* PLModelPanelGenerator.m */; };
-		B6FC33AD1D93C398004EEE29 /* PLPanelDelegateGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33A01D93C398004EEE29 /* PLPanelDelegateGenerator.m */; };
-		B6FC33AE1D93C398004EEE29 /* PLPermissionRequestor.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33A21D93C398004EEE29 /* PLPermissionRequestor.m */; };
-		B6FC33AF1D93C398004EEE29 /* PLStreamingSessionConstructor.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33A41D93C398004EEE29 /* PLStreamingSessionConstructor.m */; };
-		B6FC33B01D93C398004EEE29 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6FC33A61D93C398004EEE29 /* libWeChatSDK.a */; };
-		B6FC33B11D93C398004EEE29 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = B6FC33A71D93C398004EEE29 /* README.txt */; };
 		B6FC33B41D93C470004EEE29 /* PLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33B31D93C470004EEE29 /* PLAppDelegate.m */; };
 		B6FC33B61D93C603004EEE29 /* PLMediaStreamingKit.podspec in Resources */ = {isa = PBXBuildFile; fileRef = B6FC33B51D93C603004EEE29 /* PLMediaStreamingKit.podspec */; };
-		B6FC33CC1D93C970004EEE29 /* PLAlertSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33BE1D93C970004EEE29 /* PLAlertSpinner.m */; };
-		B6FC33CD1D93C970004EEE29 /* PLAttributeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33C01D93C970004EEE29 /* PLAttributeModel.m */; };
-		B6FC33CE1D93C970004EEE29 /* PLDelgateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33C21D93C970004EEE29 /* PLDelgateHelper.m */; };
-		B6FC33CF1D93C970004EEE29 /* PLLogDisplayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33C41D93C970004EEE29 /* PLLogDisplayer.m */; };
-		B6FC33D01D93C970004EEE29 /* PLMainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33C61D93C970004EEE29 /* PLMainTabBarController.m */; };
-		B6FC33D11D93C970004EEE29 /* PLPanelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33C81D93C970004EEE29 /* PLPanelModel.m */; };
-		B6FC33D21D93C970004EEE29 /* PLTitleValueConf.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33CB1D93C970004EEE29 /* PLTitleValueConf.m */; };
+		C325CEA51F9F37BB001C34FF /* PLMediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C325CE831F9F3641001C34FF /* PLMediaViewController.m */; };
+		C325CEA61F9F3851001C34FF /* PLConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C325CE861F9F3652001C34FF /* PLConfigurationViewController.m */; };
+		C325CEA71F9F3851001C34FF /* PLSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C325CE891F9F365B001C34FF /* PLSessionViewController.m */; };
+		C325CEA81F9F3851001C34FF /* PLFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C325CE8C1F9F3667001C34FF /* PLFilterViewController.m */; };
+		C325CEA91F9F3851001C34FF /* PLScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C325CE961F9F3678001C34FF /* PLScanViewController.m */; };
+		C325CEAA1F9F3851001C34FF /* PLListArrayView.m in Sources */ = {isa = PBXBuildFile; fileRef = C325CE8F1F9F3670001C34FF /* PLListArrayView.m */; };
+		C325CEAB1F9F3851001C34FF /* PLListArrTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C325CE911F9F3670001C34FF /* PLListArrTableViewCell.m */; };
+		C325CEAC1F9F3851001C34FF /* PLSegmentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C325CE931F9F3670001C34FF /* PLSegmentTableViewCell.m */; };
+		C325CEAD1F9F3851001C34FF /* PLCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C325CE991F9F367F001C34FF /* PLCategoryModel.m */; };
+		C325CEAE1F9F390E001C34FF /* LOGO.png in Resources */ = {isa = PBXBuildFile; fileRef = C325CE9B1F9F368D001C34FF /* LOGO.png */; };
+		C325CEAF1F9F390E001C34FF /* LOGO2-05.png in Resources */ = {isa = PBXBuildFile; fileRef = C325CE9C1F9F368D001C34FF /* LOGO2-05.png */; };
+		C325CEB01F9F390E001C34FF /* pushImage.png in Resources */ = {isa = PBXBuildFile; fileRef = C325CE9D1F9F368D001C34FF /* pushImage.png */; };
+		C325CEB11F9F390E001C34FF /* qiniu.png in Resources */ = {isa = PBXBuildFile; fileRef = C325CE9E1F9F368D001C34FF /* qiniu.png */; };
+		C325CEB21F9F390E001C34FF /* TestMusic1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C325CE9F1F9F368D001C34FF /* TestMusic1.mp3 */; };
+		C325CEB31F9F390E001C34FF /* TestMusic2.wav in Resources */ = {isa = PBXBuildFile; fileRef = C325CEA01F9F368D001C34FF /* TestMusic2.wav */; };
+		C325CEB41F9F390E001C34FF /* TestMusic3.wav in Resources */ = {isa = PBXBuildFile; fileRef = C325CEA11F9F368D001C34FF /* TestMusic3.wav */; };
+		C325CEB51F9F390E001C34FF /* TestMusic4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C325CEA21F9F368D001C34FF /* TestMusic4.mp3 */; };
+		C325CEB61F9F390E001C34FF /* TestMusic5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C325CEA31F9F368D001C34FF /* TestMusic5.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,14 +59,6 @@
 		6003F5AE195388D20070C39A /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D38E0519CDFBF6954B8389D /* libPods-PLMediaStreamingKitDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PLMediaStreamingKitDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		769750EC1A6329DC0079423B /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
-		B651FF941D93DA1F00D1C578 /* qiniu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qiniu.png; sourceTree = "<group>"; };
-		B651FF951D93DA1F00D1C578 /* TestMusic1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TestMusic1.mp3; sourceTree = "<group>"; };
-		B651FF961D93DA1F00D1C578 /* TestMusic2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = TestMusic2.wav; sourceTree = "<group>"; };
-		B651FF971D93DA1F00D1C578 /* TestMusic3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = TestMusic3.wav; sourceTree = "<group>"; };
-		B651FF981D93DA1F00D1C578 /* TestMusic4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TestMusic4.mp3; sourceTree = "<group>"; };
-		B651FF991D93DA1F00D1C578 /* TestMusic5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TestMusic5.mp3; sourceTree = "<group>"; };
-		B651FF9A1D93DA1F00D1C578 /* xiaoqi1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiaoqi1.png; sourceTree = "<group>"; };
-		B651FF9B1D93DA1F00D1C578 /* xiaoqi2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiaoqi2.png; sourceTree = "<group>"; };
 		B6FC338D1D93C301004EEE29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
 		B6FC338F1D93C301004EEE29 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B6FC33901D93C301004EEE29 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -77,37 +66,37 @@
 		B6FC33941D93C301004EEE29 /* PLMediaStreamingKitDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PLMediaStreamingKitDemo-Info.plist"; sourceTree = "<group>"; };
 		B6FC339B1D93C398004EEE29 /* PLMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLMainViewController.h; sourceTree = "<group>"; };
 		B6FC339C1D93C398004EEE29 /* PLMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLMainViewController.m; sourceTree = "<group>"; };
-		B6FC339D1D93C398004EEE29 /* PLModelPanelGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLModelPanelGenerator.h; sourceTree = "<group>"; };
-		B6FC339E1D93C398004EEE29 /* PLModelPanelGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLModelPanelGenerator.m; sourceTree = "<group>"; };
-		B6FC339F1D93C398004EEE29 /* PLPanelDelegateGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPanelDelegateGenerator.h; sourceTree = "<group>"; };
-		B6FC33A01D93C398004EEE29 /* PLPanelDelegateGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLPanelDelegateGenerator.m; sourceTree = "<group>"; };
-		B6FC33A11D93C398004EEE29 /* PLPermissionRequestor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPermissionRequestor.h; sourceTree = "<group>"; };
-		B6FC33A21D93C398004EEE29 /* PLPermissionRequestor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLPermissionRequestor.m; sourceTree = "<group>"; };
-		B6FC33A31D93C398004EEE29 /* PLStreamingSessionConstructor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLStreamingSessionConstructor.h; sourceTree = "<group>"; };
-		B6FC33A41D93C398004EEE29 /* PLStreamingSessionConstructor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLStreamingSessionConstructor.m; sourceTree = "<group>"; };
-		B6FC33A61D93C398004EEE29 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
-		B6FC33A71D93C398004EEE29 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
-		B6FC33A81D93C398004EEE29 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
-		B6FC33A91D93C398004EEE29 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
-		B6FC33AA1D93C398004EEE29 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		B6FC33B21D93C470004EEE29 /* PLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAppDelegate.h; sourceTree = "<group>"; };
 		B6FC33B31D93C470004EEE29 /* PLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAppDelegate.m; sourceTree = "<group>"; };
 		B6FC33B51D93C603004EEE29 /* PLMediaStreamingKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PLMediaStreamingKit.podspec; path = ../PLMediaStreamingKit.podspec; sourceTree = "<group>"; };
-		B6FC33BD1D93C970004EEE29 /* PLAlertSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAlertSpinner.h; sourceTree = "<group>"; };
-		B6FC33BE1D93C970004EEE29 /* PLAlertSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAlertSpinner.m; sourceTree = "<group>"; };
-		B6FC33BF1D93C970004EEE29 /* PLAttributeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAttributeModel.h; sourceTree = "<group>"; };
-		B6FC33C01D93C970004EEE29 /* PLAttributeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAttributeModel.m; sourceTree = "<group>"; };
-		B6FC33C11D93C970004EEE29 /* PLDelgateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLDelgateHelper.h; sourceTree = "<group>"; };
-		B6FC33C21D93C970004EEE29 /* PLDelgateHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLDelgateHelper.m; sourceTree = "<group>"; };
-		B6FC33C31D93C970004EEE29 /* PLLogDisplayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLLogDisplayer.h; sourceTree = "<group>"; };
-		B6FC33C41D93C970004EEE29 /* PLLogDisplayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLLogDisplayer.m; sourceTree = "<group>"; };
-		B6FC33C51D93C970004EEE29 /* PLMainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLMainTabBarController.h; sourceTree = "<group>"; };
-		B6FC33C61D93C970004EEE29 /* PLMainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLMainTabBarController.m; sourceTree = "<group>"; };
-		B6FC33C71D93C970004EEE29 /* PLPanelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPanelModel.h; sourceTree = "<group>"; };
-		B6FC33C81D93C970004EEE29 /* PLPanelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLPanelModel.m; sourceTree = "<group>"; };
-		B6FC33C91D93C970004EEE29 /* PLStreamingKitDemoUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLStreamingKitDemoUtils.h; sourceTree = "<group>"; };
-		B6FC33CA1D93C970004EEE29 /* PLTitleValueConf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLTitleValueConf.h; sourceTree = "<group>"; };
-		B6FC33CB1D93C970004EEE29 /* PLTitleValueConf.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLTitleValueConf.m; sourceTree = "<group>"; };
+		C325CE821F9F3641001C34FF /* PLMediaViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLMediaViewController.h; sourceTree = "<group>"; };
+		C325CE831F9F3641001C34FF /* PLMediaViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLMediaViewController.m; sourceTree = "<group>"; };
+		C325CE851F9F3652001C34FF /* PLConfigurationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLConfigurationViewController.h; sourceTree = "<group>"; };
+		C325CE861F9F3652001C34FF /* PLConfigurationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLConfigurationViewController.m; sourceTree = "<group>"; };
+		C325CE881F9F365B001C34FF /* PLSessionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLSessionViewController.h; sourceTree = "<group>"; };
+		C325CE891F9F365B001C34FF /* PLSessionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLSessionViewController.m; sourceTree = "<group>"; };
+		C325CE8B1F9F3667001C34FF /* PLFilterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLFilterViewController.h; sourceTree = "<group>"; };
+		C325CE8C1F9F3667001C34FF /* PLFilterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLFilterViewController.m; sourceTree = "<group>"; };
+		C325CE8E1F9F3670001C34FF /* PLListArrayView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLListArrayView.h; sourceTree = "<group>"; };
+		C325CE8F1F9F3670001C34FF /* PLListArrayView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLListArrayView.m; sourceTree = "<group>"; };
+		C325CE901F9F3670001C34FF /* PLListArrTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLListArrTableViewCell.h; sourceTree = "<group>"; };
+		C325CE911F9F3670001C34FF /* PLListArrTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLListArrTableViewCell.m; sourceTree = "<group>"; };
+		C325CE921F9F3670001C34FF /* PLSegmentTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLSegmentTableViewCell.h; sourceTree = "<group>"; };
+		C325CE931F9F3670001C34FF /* PLSegmentTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLSegmentTableViewCell.m; sourceTree = "<group>"; };
+		C325CE951F9F3678001C34FF /* PLScanViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLScanViewController.h; sourceTree = "<group>"; };
+		C325CE961F9F3678001C34FF /* PLScanViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLScanViewController.m; sourceTree = "<group>"; };
+		C325CE981F9F367F001C34FF /* PLCategoryModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLCategoryModel.h; sourceTree = "<group>"; };
+		C325CE991F9F367F001C34FF /* PLCategoryModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLCategoryModel.m; sourceTree = "<group>"; };
+		C325CE9B1F9F368D001C34FF /* LOGO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LOGO.png; sourceTree = "<group>"; };
+		C325CE9C1F9F368D001C34FF /* LOGO2-05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LOGO2-05.png"; sourceTree = "<group>"; };
+		C325CE9D1F9F368D001C34FF /* pushImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pushImage.png; sourceTree = "<group>"; };
+		C325CE9E1F9F368D001C34FF /* qiniu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qiniu.png; sourceTree = "<group>"; };
+		C325CE9F1F9F368D001C34FF /* TestMusic1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TestMusic1.mp3; sourceTree = "<group>"; };
+		C325CEA01F9F368D001C34FF /* TestMusic2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = TestMusic2.wav; sourceTree = "<group>"; };
+		C325CEA11F9F368D001C34FF /* TestMusic3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = TestMusic3.wav; sourceTree = "<group>"; };
+		C325CEA21F9F368D001C34FF /* TestMusic4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TestMusic4.mp3; sourceTree = "<group>"; };
+		C325CEA31F9F368D001C34FF /* TestMusic5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TestMusic5.mp3; sourceTree = "<group>"; };
+		C325CEA41F9F3696001C34FF /* PLPublicHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLPublicHeader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,7 +106,6 @@
 			files = (
 				769750EF1A6331080079423B /* VideoToolbox.framework in Frameworks */,
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
-				B6FC33B01D93C398004EEE29 /* libWeChatSDK.a in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
 				1CB31FA1A509BFCE50E56392 /* libPods-PLMediaStreamingKitDemo.a in Frameworks */,
@@ -171,42 +159,25 @@
 		B6FC338B1D93C301004EEE29 /* PLMediaStreamingKitDemo */ = {
 			isa = PBXGroup;
 			children = (
-				B6FC33A51D93C398004EEE29 /* Weixin */,
-				B6FC33BC1D93C970004EEE29 /* PLStreamingKitDemoUtils */,
 				B6FC33B21D93C470004EEE29 /* PLAppDelegate.h */,
 				B6FC33B31D93C470004EEE29 /* PLAppDelegate.m */,
 				B6FC339B1D93C398004EEE29 /* PLMainViewController.h */,
 				B6FC339C1D93C398004EEE29 /* PLMainViewController.m */,
-				B6FC339D1D93C398004EEE29 /* PLModelPanelGenerator.h */,
-				B6FC339E1D93C398004EEE29 /* PLModelPanelGenerator.m */,
-				B6FC339F1D93C398004EEE29 /* PLPanelDelegateGenerator.h */,
-				B6FC33A01D93C398004EEE29 /* PLPanelDelegateGenerator.m */,
-				B6FC33A11D93C398004EEE29 /* PLPermissionRequestor.h */,
-				B6FC33A21D93C398004EEE29 /* PLPermissionRequestor.m */,
-				B6FC33A31D93C398004EEE29 /* PLStreamingSessionConstructor.h */,
-				B6FC33A41D93C398004EEE29 /* PLStreamingSessionConstructor.m */,
+				C325CE811F9F3641001C34FF /* Main */,
+				C325CE841F9F3652001C34FF /* Configuration */,
+				C325CE871F9F365B001C34FF /* Session */,
+				C325CE8A1F9F3667001C34FF /* Filter */,
+				C325CE941F9F3678001C34FF /* ScanCode */,
+				C325CE8D1F9F3670001C34FF /* CellView */,
+				C325CE971F9F367F001C34FF /* Model */,
+				C325CEA41F9F3696001C34FF /* PLPublicHeader.h */,
+				C325CE9A1F9F368D001C34FF /* Resource */,
 				B6FC338C1D93C301004EEE29 /* Launch Screen.storyboard */,
 				B6FC338E1D93C301004EEE29 /* InfoPlist.strings */,
 				B6FC33901D93C301004EEE29 /* Images.xcassets */,
-				B6FC33911D93C301004EEE29 /* Resource */,
 				B6FC33921D93C301004EEE29 /* Supporting Files */,
 			);
 			path = PLMediaStreamingKitDemo;
-			sourceTree = "<group>";
-		};
-		B6FC33911D93C301004EEE29 /* Resource */ = {
-			isa = PBXGroup;
-			children = (
-				B651FF941D93DA1F00D1C578 /* qiniu.png */,
-				B651FF951D93DA1F00D1C578 /* TestMusic1.mp3 */,
-				B651FF961D93DA1F00D1C578 /* TestMusic2.wav */,
-				B651FF971D93DA1F00D1C578 /* TestMusic3.wav */,
-				B651FF981D93DA1F00D1C578 /* TestMusic4.mp3 */,
-				B651FF991D93DA1F00D1C578 /* TestMusic5.mp3 */,
-				B651FF9A1D93DA1F00D1C578 /* xiaoqi1.png */,
-				B651FF9B1D93DA1F00D1C578 /* xiaoqi2.png */,
-			);
-			path = Resource;
 			sourceTree = "<group>";
 		};
 		B6FC33921D93C301004EEE29 /* Supporting Files */ = {
@@ -218,38 +189,87 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		B6FC33A51D93C398004EEE29 /* Weixin */ = {
+		C325CE811F9F3641001C34FF /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				B6FC33A61D93C398004EEE29 /* libWeChatSDK.a */,
-				B6FC33A71D93C398004EEE29 /* README.txt */,
-				B6FC33A81D93C398004EEE29 /* WechatAuthSDK.h */,
-				B6FC33A91D93C398004EEE29 /* WXApi.h */,
-				B6FC33AA1D93C398004EEE29 /* WXApiObject.h */,
+				C325CE821F9F3641001C34FF /* PLMediaViewController.h */,
+				C325CE831F9F3641001C34FF /* PLMediaViewController.m */,
 			);
-			path = Weixin;
+			path = Main;
 			sourceTree = "<group>";
 		};
-		B6FC33BC1D93C970004EEE29 /* PLStreamingKitDemoUtils */ = {
+		C325CE841F9F3652001C34FF /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				B6FC33BD1D93C970004EEE29 /* PLAlertSpinner.h */,
-				B6FC33BE1D93C970004EEE29 /* PLAlertSpinner.m */,
-				B6FC33BF1D93C970004EEE29 /* PLAttributeModel.h */,
-				B6FC33C01D93C970004EEE29 /* PLAttributeModel.m */,
-				B6FC33C11D93C970004EEE29 /* PLDelgateHelper.h */,
-				B6FC33C21D93C970004EEE29 /* PLDelgateHelper.m */,
-				B6FC33C31D93C970004EEE29 /* PLLogDisplayer.h */,
-				B6FC33C41D93C970004EEE29 /* PLLogDisplayer.m */,
-				B6FC33C51D93C970004EEE29 /* PLMainTabBarController.h */,
-				B6FC33C61D93C970004EEE29 /* PLMainTabBarController.m */,
-				B6FC33C71D93C970004EEE29 /* PLPanelModel.h */,
-				B6FC33C81D93C970004EEE29 /* PLPanelModel.m */,
-				B6FC33C91D93C970004EEE29 /* PLStreamingKitDemoUtils.h */,
-				B6FC33CA1D93C970004EEE29 /* PLTitleValueConf.h */,
-				B6FC33CB1D93C970004EEE29 /* PLTitleValueConf.m */,
+				C325CE851F9F3652001C34FF /* PLConfigurationViewController.h */,
+				C325CE861F9F3652001C34FF /* PLConfigurationViewController.m */,
 			);
-			path = PLStreamingKitDemoUtils;
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		C325CE871F9F365B001C34FF /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				C325CE881F9F365B001C34FF /* PLSessionViewController.h */,
+				C325CE891F9F365B001C34FF /* PLSessionViewController.m */,
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
+		C325CE8A1F9F3667001C34FF /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				C325CE8B1F9F3667001C34FF /* PLFilterViewController.h */,
+				C325CE8C1F9F3667001C34FF /* PLFilterViewController.m */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
+		C325CE8D1F9F3670001C34FF /* CellView */ = {
+			isa = PBXGroup;
+			children = (
+				C325CE8E1F9F3670001C34FF /* PLListArrayView.h */,
+				C325CE8F1F9F3670001C34FF /* PLListArrayView.m */,
+				C325CE901F9F3670001C34FF /* PLListArrTableViewCell.h */,
+				C325CE911F9F3670001C34FF /* PLListArrTableViewCell.m */,
+				C325CE921F9F3670001C34FF /* PLSegmentTableViewCell.h */,
+				C325CE931F9F3670001C34FF /* PLSegmentTableViewCell.m */,
+			);
+			path = CellView;
+			sourceTree = "<group>";
+		};
+		C325CE941F9F3678001C34FF /* ScanCode */ = {
+			isa = PBXGroup;
+			children = (
+				C325CE951F9F3678001C34FF /* PLScanViewController.h */,
+				C325CE961F9F3678001C34FF /* PLScanViewController.m */,
+			);
+			path = ScanCode;
+			sourceTree = "<group>";
+		};
+		C325CE971F9F367F001C34FF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C325CE981F9F367F001C34FF /* PLCategoryModel.h */,
+				C325CE991F9F367F001C34FF /* PLCategoryModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C325CE9A1F9F368D001C34FF /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				C325CE9B1F9F368D001C34FF /* LOGO.png */,
+				C325CE9C1F9F368D001C34FF /* LOGO2-05.png */,
+				C325CE9D1F9F368D001C34FF /* pushImage.png */,
+				C325CE9E1F9F368D001C34FF /* qiniu.png */,
+				C325CE9F1F9F368D001C34FF /* TestMusic1.mp3 */,
+				C325CEA01F9F368D001C34FF /* TestMusic2.wav */,
+				C325CEA11F9F368D001C34FF /* TestMusic3.wav */,
+				C325CEA21F9F368D001C34FF /* TestMusic4.mp3 */,
+				C325CEA31F9F368D001C34FF /* TestMusic5.mp3 */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 		F80803209498A6D014ADF6AC /* Pods */ = {
@@ -314,7 +334,7 @@
 				ORGANIZATIONNAME = 0dayZh;
 				TargetAttributes = {
 					6003F589195388D20070C39A = {
-						DevelopmentTeam = GDFHW66V92;
+						DevelopmentTeam = W2TP34G2MM;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -350,17 +370,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C325CEAE1F9F390E001C34FF /* LOGO.png in Resources */,
+				C325CEAF1F9F390E001C34FF /* LOGO2-05.png in Resources */,
+				C325CEB01F9F390E001C34FF /* pushImage.png in Resources */,
+				C325CEB11F9F390E001C34FF /* qiniu.png in Resources */,
+				C325CEB21F9F390E001C34FF /* TestMusic1.mp3 in Resources */,
+				C325CEB31F9F390E001C34FF /* TestMusic2.wav in Resources */,
+				C325CEB41F9F390E001C34FF /* TestMusic3.wav in Resources */,
+				C325CEB51F9F390E001C34FF /* TestMusic4.mp3 in Resources */,
+				C325CEB61F9F390E001C34FF /* TestMusic5.mp3 in Resources */,
 				B6FC33981D93C301004EEE29 /* Images.xcassets in Resources */,
-				B651FFA01D93DA1F00D1C578 /* TestMusic4.mp3 in Resources */,
-				B651FF9E1D93DA1F00D1C578 /* TestMusic2.wav in Resources */,
 				B6FC33B61D93C603004EEE29 /* PLMediaStreamingKit.podspec in Resources */,
-				B651FFA31D93DA1F00D1C578 /* xiaoqi2.png in Resources */,
-				B651FF9C1D93DA1F00D1C578 /* qiniu.png in Resources */,
-				B651FF9D1D93DA1F00D1C578 /* TestMusic1.mp3 in Resources */,
-				B651FFA11D93DA1F00D1C578 /* TestMusic5.mp3 in Resources */,
-				B6FC33B11D93C398004EEE29 /* README.txt in Resources */,
-				B651FFA21D93DA1F00D1C578 /* xiaoqi1.png in Resources */,
-				B651FF9F1D93DA1F00D1C578 /* TestMusic3.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,7 +406,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		B651FF8E1D93D99B00D1C578 /* ShellScript */ = {
@@ -439,20 +459,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6FC33D11D93C970004EEE29 /* PLPanelModel.m in Sources */,
-				B6FC33CD1D93C970004EEE29 /* PLAttributeModel.m in Sources */,
+				C325CEA61F9F3851001C34FF /* PLConfigurationViewController.m in Sources */,
+				C325CEA71F9F3851001C34FF /* PLSessionViewController.m in Sources */,
+				C325CEA81F9F3851001C34FF /* PLFilterViewController.m in Sources */,
+				C325CEA91F9F3851001C34FF /* PLScanViewController.m in Sources */,
+				C325CEAA1F9F3851001C34FF /* PLListArrayView.m in Sources */,
+				C325CEAB1F9F3851001C34FF /* PLListArrTableViewCell.m in Sources */,
+				C325CEAC1F9F3851001C34FF /* PLSegmentTableViewCell.m in Sources */,
+				C325CEAD1F9F3851001C34FF /* PLCategoryModel.m in Sources */,
+				C325CEA51F9F37BB001C34FF /* PLMediaViewController.m in Sources */,
 				B6FC33991D93C301004EEE29 /* main.m in Sources */,
 				B6FC33AB1D93C398004EEE29 /* PLMainViewController.m in Sources */,
-				B6FC33D21D93C970004EEE29 /* PLTitleValueConf.m in Sources */,
-				B6FC33AE1D93C398004EEE29 /* PLPermissionRequestor.m in Sources */,
-				B6FC33D01D93C970004EEE29 /* PLMainTabBarController.m in Sources */,
-				B6FC33CE1D93C970004EEE29 /* PLDelgateHelper.m in Sources */,
-				B6FC33AC1D93C398004EEE29 /* PLModelPanelGenerator.m in Sources */,
 				B6FC33B41D93C470004EEE29 /* PLAppDelegate.m in Sources */,
-				B6FC33CF1D93C970004EEE29 /* PLLogDisplayer.m in Sources */,
-				B6FC33AF1D93C398004EEE29 /* PLStreamingSessionConstructor.m in Sources */,
-				B6FC33CC1D93C970004EEE29 /* PLAlertSpinner.m in Sources */,
-				B6FC33AD1D93C398004EEE29 /* PLPanelDelegateGenerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,15 +592,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = W2TP34G2MM;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
+				GCC_PREFIX_HEADER = PLMediaStreamingKitDemo/PLPublicHeader.h;
 				INFOPLIST_FILE = "$(SRCROOT)/PLMediaStreamingKitDemo/Supporting Files/PLMediaStreamingKitDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/PLMediaStreamingKitDemo/Weixin",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKit";
 				PRODUCT_NAME = PLMediaStreamingKitDemo;
@@ -597,15 +613,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = W2TP34G2MM;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
+				GCC_PREFIX_HEADER = PLMediaStreamingKitDemo/PLPublicHeader.h;
 				INFOPLIST_FILE = "$(SRCROOT)/PLMediaStreamingKitDemo/Supporting Files/PLMediaStreamingKitDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/PLMediaStreamingKitDemo/Weixin",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKit";

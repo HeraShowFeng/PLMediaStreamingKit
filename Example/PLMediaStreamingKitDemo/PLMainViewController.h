@@ -6,8 +6,7 @@
 //  Copyright © 2016年 Pili. All rights reserved.
 //
 
-#import "PLStreamingKitDemoUtils.h"
 
-@interface PLMainViewController : PLMainTabBarController
+@interface PLMainViewController : UIViewController
 
 @end

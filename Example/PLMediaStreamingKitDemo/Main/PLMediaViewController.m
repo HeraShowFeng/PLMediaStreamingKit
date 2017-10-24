@@ -570,43 +570,20 @@
                 }
             }
         } else if ([configureModel.configuraKey containsString:@"previewMirrorFrontFacing"]){
-            if (index == 0) {
-                _streamingSession.previewMirrorFrontFacing = NO;
-            } else{
-                _streamingSession.previewMirrorFrontFacing = YES;
-            }
+            _streamingSession.previewMirrorFrontFacing = index;
+
         } else if ([configureModel.configuraKey containsString:@"previewMirrorRearFacing"]){
-            if (index == 0) {
-                _streamingSession.previewMirrorRearFacing = NO;
-            } else{
-                _streamingSession.previewMirrorRearFacing = YES;
-            }
+            _streamingSession.previewMirrorRearFacing = index;
+
         } else if ([configureModel.configuraKey containsString:@"streamMirrorFrontFacing"]){
-            if (index == 0) {
-                _streamingSession.streamMirrorFrontFacing = NO;
-            } else{
-                _streamingSession.streamMirrorFrontFacing = YES;
-            }
+            _streamingSession.streamMirrorFrontFacing = index;
+
         } else if ([configureModel.configuraKey containsString:@"streamMirrorRearFacing"]){
-            if (index == 0) {
-                _streamingSession.streamMirrorRearFacing = NO;
-            } else{
-                _streamingSession.streamMirrorRearFacing = YES;
-            }
+            _streamingSession.streamMirrorRearFacing = index;
+
         } else if ([configureModel.configuraKey containsString:@"cameraPositon"]){
-            switch (index) {
-                case 0:
-                    _streamingSession.captureDevicePosition = AVCaptureDevicePositionUnspecified;
-                    break;
-                case 1:
-                    _streamingSession.captureDevicePosition = AVCaptureDevicePositionBack;
-                    break;
-                case 2:
-                    _streamingSession.captureDevicePosition = AVCaptureDevicePositionFront;
-                    break;
-                default:
-                    break;
-            }
+            _streamingSession.captureDevicePosition = index;
+
         } else if ([configureModel.configuraKey containsString:@"videoOrientation"]){
             _streamingSession.videoOrientation = index + 1;
         }
@@ -678,29 +655,18 @@
         } else if ([configureModel.configuraKey containsString:@"averageVideoBitRate"]){
             _videoStreamCon.averageVideoBitRate = [configureModel.configuraValue[index] integerValue];
         } else if ([configureModel.configuraKey containsString:@"videoEncoderType"]){
-            if (index == 0) {
-                _videoStreamCon.videoEncoderType = PLH264EncoderType_AVFoundation;
-                
-            } else{
-                _videoStreamCon.videoEncoderType = PLH264EncoderType_VideoToolbox;
-            }
+            _videoStreamCon.videoEncoderType = index;
+
         }
         [_streamingSession reloadVideoStreamingConfiguration:_videoStreamCon];
     
     /// PLAudioCaptureConfiguration
     } else if ([categoryModel.categoryKey isEqualToString:@"PLAudioCaptureConfiguration"]) {
         if ([configureModel.configuraKey containsString:@"channelsPerFrame"]) {
-            if (index == 0) {
-                _streamingSession.audioCaptureConfiguration.channelsPerFrame = 1;
-            } else{
-                _streamingSession.audioCaptureConfiguration.channelsPerFrame = 2;
-            }
+            _streamingSession.audioCaptureConfiguration.channelsPerFrame = index + 1;
+
         } else if ([configureModel.configuraKey containsString:@"acousticEchoCancellationEnable"]){
-            if (index == 0) {
-                _streamingSession.audioCaptureConfiguration.acousticEchoCancellationEnable = NO;
-            } else{
-                _streamingSession.audioCaptureConfiguration.acousticEchoCancellationEnable = YES;
-            }
+            _streamingSession.audioCaptureConfiguration.acousticEchoCancellationEnable = index;
         }
         
     /// PLAudioStreamingConfiguration
@@ -722,25 +688,10 @@
                     break;
             }
         } else if ([configureModel.configuraKey containsString:@"encodedNumberOfChannels"]){
-            if (index == 0) {
-                _streamingSession.audioStreamingConfiguration.encodedNumberOfChannels = 1;
-            } else{
-                _streamingSession.audioStreamingConfiguration.encodedNumberOfChannels = 2;
-            }
+            _streamingSession.audioStreamingConfiguration.encodedNumberOfChannels = (UInt32) index + 1;
+
         } else if ([configureModel.configuraKey containsString:@"audioEncoderType"]){
-            switch (index) {
-                case 0:
-                    _streamingSession.audioStreamingConfiguration.audioEncoderType = PLAACEncoderType_iOS_AAC;
-                    break;
-                case 1:
-                    _streamingSession.audioStreamingConfiguration.audioEncoderType = PLAACEncoderType_fdk_AAC_LC;
-                    break;
-                case 2:
-                    _streamingSession.audioStreamingConfiguration.audioEncoderType = PLAACEncoderType_fdk_AAC__HE_BSR;
-                    break;
-                default:
-                    break;
-            }
+            _streamingSession.audioStreamingConfiguration.audioEncoderType = index;
         }
     }
 }
@@ -755,23 +706,14 @@
             _streamingSession.statusUpdateInterval = [configureModel.configuraValue[index] integerValue];
             
         } else if ([configureModel.configuraKey containsString:@"dynamicFrameEnable"]){
-            if (index == 0) {
-                _streamingSession.dynamicFrameEnable = NO;
-            } else{
-                _streamingSession.dynamicFrameEnable = YES;
-            }
+            _streamingSession.dynamicFrameEnable = index;
+
         } else if ([configureModel.configuraKey containsString:@"autoReconnectEnable"]){
-            if (index == 0) {
-                _streamingSession.autoReconnectEnable = NO;
-            } else{
-                _streamingSession.autoReconnectEnable = YES;
-            }
+            _streamingSession.autoReconnectEnable = index;
+
         } else if ([configureModel.configuraKey containsString:@"monitorNetworkStateEnable"]){
-            if (index == 0) {
-                _streamingSession.monitorNetworkStateEnable = NO;
-            } else{
-                _streamingSession.monitorNetworkStateEnable = YES;
-            }
+            _streamingSession.monitorNetworkStateEnable = index;
+
         } else if ([configureModel.configuraKey containsString:@"threshold"]){
             _streamingSession.threshold = [configureModel.configuraValue[index] floatValue];
         } else if ([configureModel.configuraKey containsString:@"maxCount"]){
@@ -781,61 +723,36 @@
     /// CameraSource
     } else if ([categoryModel.categoryKey isEqualToString:@"CameraSource"]) {
         if ([configureModel.configuraKey containsString:@"continuousAutofocusEnable"]) {
-            if (index == 0) {
-                _streamingSession.continuousAutofocusEnable = NO;
-            } else{
-                _streamingSession.continuousAutofocusEnable = YES;
-            }
+            _streamingSession.continuousAutofocusEnable = index;
+
         } else if ([configureModel.configuraKey containsString:@"touchToFocusEnable"]){
-            if (index == 0) {
-                _streamingSession.touchToFocusEnable = NO;
-            } else{
-                _streamingSession.touchToFocusEnable = YES;
-            }
+            _streamingSession.touchToFocusEnable = index;
             
         } else if ([configureModel.configuraKey containsString:@"smoothAutoFocusEnabled"]){
-            if (index == 0) {
-                _streamingSession.smoothAutoFocusEnabled = YES;
-            } else{
-                _streamingSession.smoothAutoFocusEnabled = NO;
-            }
+            _streamingSession.smoothAutoFocusEnabled = index;
+
             
         } else if ([configureModel.configuraKey containsString:@"torchOn"]){
-            if (index == 0) {
-                _streamingSession.torchOn = NO;
-            } else{
-                _streamingSession.torchOn = YES;
-            }
+            _streamingSession.torchOn = index;
         }
     
     /// MicrophoneSource
     } else if ([categoryModel.categoryKey isEqualToString:@"MicrophoneSource"]) {
         if ([configureModel.configuraKey containsString:@"playback"]) {
-            if (index == 0) {
-                _streamingSession.playback = NO;
-            } else{
-                _streamingSession.playback = YES;
-            }
+            _streamingSession.playback = index;
+
         } else if ([configureModel.configuraKey containsString:@"inputGain"]){
             _streamingSession.inputGain = [configureModel.configuraValue[index] floatValue];
             
         } else if ([configureModel.configuraKey containsString:@"allowAudioMixWithOthers"]){
-            if (index == 0) {
-                _streamingSession.allowAudioMixWithOthers = NO;
-            } else{
-                _streamingSession.allowAudioMixWithOthers = YES;
-            }
+            _streamingSession.allowAudioMixWithOthers = index;
+
         }
         
     /// Applictaion
     } else if ([categoryModel.categoryKey isEqualToString:@"Applictaion"]) {
-        
         if ([configureModel.configuraKey containsString:@"idleTimerDisable"]) {
-            if (index == 0) {
-                _streamingSession.idleTimerDisable = NO;
-            } else{
-                _streamingSession.idleTimerDisable = YES;
-            }
+            _streamingSession.idleTimerDisable = index;
         }
         
     /// AudioEffect

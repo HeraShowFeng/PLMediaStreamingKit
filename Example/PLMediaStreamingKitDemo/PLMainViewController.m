@@ -34,6 +34,15 @@
     [enterButton setTitle:@"进入MediaStreaming" forState:UIControlStateNormal];
     enterButton.titleLabel.font = FONT_MEDIUM(14);
     [self.view addSubview:enterButton];
+    
+    NSLog(@"[PLMediaStreamingSession versionInfo]  %@",[PLMediaStreamingSession versionInfo] );
+//    NSString *versionStr = [[PLMediaStreamingSession versionInfo] componentsSeparatedByString:@"-"][4];
+//    UILabel *versionLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, (KSCREEN_HEIGHT - kLogoSizeHeight - 116)/3 + kLogoSizeHeight + 130, KSCREEN_WIDTH - 60, 34)];
+//    versionLabel.font = FONT_MEDIUM(14);
+//    versionLabel.textColor = COLOR_RGB(181, 68, 68, 1);
+//    versionLabel.textAlignment = NSTextAlignmentCenter;
+//    versionLabel.text = [NSString stringWithFormat:@"PLMediaStreamingKit 版本: v%@", versionStr];
+//    [self.view addSubview:versionLabel];
    
 }
 

@@ -7,7 +7,7 @@
 //
 
 #import "PLListArrayView.h"
-@interface PLListArrayView()<UITableViewDelegate, UITableViewDataSource>
+@interface PLListArrayView()<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UITableView *listTableView;
 
 @end
@@ -20,6 +20,10 @@ static NSString *listIdentifier = @"listCell";
         self.frame = frame;
         self.backgroundColor = COLOR_RGB(210, 210, 210, 1);
         [superView addSubview:self];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
+        tap.delegate = self;
+        [self addGestureRecognizer:tap];
         
         _listArray = listArray;
 
@@ -38,6 +42,20 @@ static NSString *listIdentifier = @"listCell";
         [self addSubview:_listTableView];
     }
     return self;
+}
+
+- (void)tapAction:(UITapGestureRecognizer *)tap {
+    if ([tap.view isEqual:self]) {
+        [self removeFromSuperview];
+    }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([touch.view isEqual:self]) {
+        return YES;
+    } else{
+        return NO;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

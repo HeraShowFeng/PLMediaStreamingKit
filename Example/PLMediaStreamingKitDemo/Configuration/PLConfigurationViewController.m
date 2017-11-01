@@ -264,7 +264,6 @@ static NSString *saveConfigure = @"configure";
     
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(configureStreamWithConfigureModel:categoryModel:)]) {
         [self.delegate configureStreamWithConfigureModel:configureModel categoryModel:categoryModel];
-        [self dismissView];
     }
 }
 

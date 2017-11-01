@@ -1,7 +1,7 @@
 PODS:
   - Crashlytics (3.9.0):
     - Fabric (~> 1.7.0)
-  - Fabric (1.7.0)
+  - Fabric (1.7.1)
   - HappyDNS (0.3.10)
   - Masonry (1.1.0)
   - pili-librtmp (1.0.7)
@@ -53,7 +53,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Crashlytics: 64aad5dd97249dd3ff94b979fea140144590cdd3
-  Fabric: e6be012366472553807dada21243c5ab8d904151
+  Fabric: c7cfc652f036180a72fe2539646c8a624420419d
   HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   pili-librtmp: e8a06a45b0a1a166c48ae6dc718171c0963f32ea

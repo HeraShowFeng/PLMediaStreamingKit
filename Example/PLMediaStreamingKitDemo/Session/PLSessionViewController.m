@@ -250,7 +250,6 @@ static NSString *listIdentifier = @"listCell";
     [self saveSessions];
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(configureSessionWithConfigureModel:categoryModel:)]) {
         [self.delegate configureSessionWithConfigureModel:configureModel categoryModel:categoryModel];
-        [self dismissView];
     }
 }
 

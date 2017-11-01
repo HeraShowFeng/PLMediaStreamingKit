@@ -155,7 +155,6 @@
     }
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(filterChangeBeautyDic:)]) {
         [self.delegate filterChangeBeautyDic:[_filterDictionary copy]];
-        [self dismissView];
     }
 }
 

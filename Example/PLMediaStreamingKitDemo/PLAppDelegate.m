@@ -7,15 +7,8 @@
 //
 
 #import "PLAppDelegate.h"
-<<<<<<< HEAD
 #import "PLMainViewController.h"
 #import "PLMediaViewController.h"
-=======
-#import "PLViewController.h"
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
-#import <PLMediaStreamingKit/PLMediaStreamingKit.h>
->>>>>>> c642719bf8c73fa96c85c3ebc18ada239be0fc85
 
 @interface PLAppDelegate ()
 

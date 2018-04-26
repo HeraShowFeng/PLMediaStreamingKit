@@ -13,10 +13,7 @@
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
-		767D4D8920561FF300E619D2 /* PLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 767D4D8820561FF300E619D2 /* PLViewController.m */; };
 		769750EF1A6331080079423B /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 769750EC1A6329DC0079423B /* VideoToolbox.framework */; };
-		76B2FA6E2052C03600DAF7E8 /* PLMediaStreamingKit-Universal.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 76B2FA6D2052C03600DAF7E8 /* PLMediaStreamingKit-Universal.podspec */; };
-		B651FF9C1D93DA1F00D1C578 /* qiniu.png in Resources */ = {isa = PBXBuildFile; fileRef = B651FF941D93DA1F00D1C578 /* qiniu.png */; };
 		B651FF9D1D93DA1F00D1C578 /* TestMusic1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B651FF951D93DA1F00D1C578 /* TestMusic1.mp3 */; };
 		B651FF9E1D93DA1F00D1C578 /* TestMusic2.wav in Resources */ = {isa = PBXBuildFile; fileRef = B651FF961D93DA1F00D1C578 /* TestMusic2.wav */; };
 		B651FF9F1D93DA1F00D1C578 /* TestMusic3.wav in Resources */ = {isa = PBXBuildFile; fileRef = B651FF971D93DA1F00D1C578 /* TestMusic3.wav */; };
@@ -63,7 +60,6 @@
 		767D4D8820561FF300E619D2 /* PLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLViewController.m; sourceTree = "<group>"; };
 		769750EC1A6329DC0079423B /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		76B2FA6D2052C03600DAF7E8 /* PLMediaStreamingKit-Universal.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "PLMediaStreamingKit-Universal.podspec"; path = "../PLMediaStreamingKit-Universal.podspec"; sourceTree = "<group>"; };
-		B651FF941D93DA1F00D1C578 /* qiniu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qiniu.png; sourceTree = "<group>"; };
 		B651FF951D93DA1F00D1C578 /* TestMusic1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TestMusic1.mp3; sourceTree = "<group>"; };
 		B651FF961D93DA1F00D1C578 /* TestMusic2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = TestMusic2.wav; sourceTree = "<group>"; };
 		B651FF971D93DA1F00D1C578 /* TestMusic3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = TestMusic3.wav; sourceTree = "<group>"; };
@@ -190,7 +186,6 @@
 			isa = PBXGroup;
 			children = (
 				C3B81DC51F46C7A60021EF6A /* LOGO.png */,
-				B651FF941D93DA1F00D1C578 /* qiniu.png */,
 				C3F516B91F0B8DE60002D4C9 /* pushImage.png */,
 				B651FF951D93DA1F00D1C578 /* TestMusic1.mp3 */,
 				B651FF961D93DA1F00D1C578 /* TestMusic2.wav */,
@@ -381,7 +376,6 @@
 				C3F516BA1F0B8DE60002D4C9 /* pushImage.png in Resources */,
 				B651FF9E1D93DA1F00D1C578 /* TestMusic2.wav in Resources */,
 				B6FC33B61D93C603004EEE29 /* PLMediaStreamingKit.podspec in Resources */,
-				B651FF9C1D93DA1F00D1C578 /* qiniu.png in Resources */,
 				B651FF9D1D93DA1F00D1C578 /* TestMusic1.mp3 in Resources */,
 				B651FFA11D93DA1F00D1C578 /* TestMusic5.mp3 in Resources */,
 				B651FF9F1D93DA1F00D1C578 /* TestMusic3.wav in Resources */,

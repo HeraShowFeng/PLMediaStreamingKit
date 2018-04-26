@@ -32,7 +32,7 @@
 
 
 # warning PLMediaStreamingKit 推流核心类
-#import "PLMediaStreamingKit.h"
+#import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 
 /// 第三方
 

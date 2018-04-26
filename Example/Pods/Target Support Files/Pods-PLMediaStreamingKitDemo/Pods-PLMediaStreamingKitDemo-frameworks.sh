@@ -132,8 +132,6 @@ strip_invalid_archs() {
   STRIP_BINARY_RETVAL=1
 }
 
-<<<<<<< HEAD
-=======
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${PODS_ROOT}/../../Pod/Library/PLMediaStreamingKit.framework"
@@ -143,7 +141,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${PODS_ROOT}/../../Pod/Library/PLMediaStreamingKit.framework"
   install_framework "${PODS_ROOT}/../../Pod/Library/HappyDNS.framework"
 fi
->>>>>>> c642719bf8c73fa96c85c3ebc18ada239be0fc85
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait
 fi

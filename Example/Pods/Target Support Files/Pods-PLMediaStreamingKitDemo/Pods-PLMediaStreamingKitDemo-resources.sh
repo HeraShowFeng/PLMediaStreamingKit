@@ -25,12 +25,9 @@ case "${TARGETED_DEVICE_FAMILY}" in
   3)
     TARGET_DEVICE_ARGS="--target-device tv"
     ;;
-<<<<<<< HEAD
-=======
   4)
     TARGET_DEVICE_ARGS="--target-device watch"
     ;;
->>>>>>> c642719bf8c73fa96c85c3ebc18ada239be0fc85
   *)
     TARGET_DEVICE_ARGS="--target-device mac"
     ;;
@@ -86,15 +83,6 @@ EOM
       ;;
   esac
 }
-<<<<<<< HEAD
-=======
-if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_resource "${PODS_ROOT}/WeiboSDK/libWeiboSDK/WeiboSDK.bundle"
-fi
-if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_resource "${PODS_ROOT}/WeiboSDK/libWeiboSDK/WeiboSDK.bundle"
-fi
->>>>>>> c642719bf8c73fa96c85c3ebc18ada239be0fc85
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

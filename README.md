@@ -40,6 +40,8 @@ PLMediaStreamingKit 是一个适用于 iOS 的 RTMP 直播推流 SDK，可高度
 - [x] 支持自定义音视频处理
 - [x] 支持苹果 ATS 安全标准
 - [x] 提供两种层次的 API，灵活选择，高可定制性与简单两不误
+- [x] 支持后台推图片功能
+- [x] 支持 QUIC 推流功能
 
 ## 系统要求
 
@@ -67,6 +69,16 @@ pod 'PLMediaStreamingKit'
 end
 ```
 
+- 默认为真机版
+- 若需要使用模拟器 + 真机版，则改用如下配置
+
+```
+pod "PLMediaStreamingKit", :podspec => 'https://raw.githubusercontent.com/pili-engineering/PLMediaStreamingKit/master/PLMediaStreamingKit-Universal.podspec'
+```
+
+**注意：鉴于目前 iOS 上架，只支持动态库真机，请在 App 上架前，更换至真机版本**
+
+
 然后，运行如下的命令：
 
 ```bash
@@ -75,7 +87,7 @@ $ pod install
 
 ## PLMediaStreamingKit 文档
 
-请参考开发者中心文档：[PLMediaStreamingKit 文档](https://developer.qiniu.com/pili/sdk/1216/PLMediaStreamingKit)
+请参考开发者中心文档：[PLMediaStreamingKit 文档](https://developer.qiniu.com/pili/sdk/3778/PLMediaStreamingKit-overview)
 
 ## 反馈及意见
 

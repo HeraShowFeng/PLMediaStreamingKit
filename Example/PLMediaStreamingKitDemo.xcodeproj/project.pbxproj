@@ -13,7 +13,9 @@
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
+		767D4D8920561FF300E619D2 /* PLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 767D4D8820561FF300E619D2 /* PLViewController.m */; };
 		769750EF1A6331080079423B /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 769750EC1A6329DC0079423B /* VideoToolbox.framework */; };
+		76B2FA6E2052C03600DAF7E8 /* PLMediaStreamingKit-Universal.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 76B2FA6D2052C03600DAF7E8 /* PLMediaStreamingKit-Universal.podspec */; };
 		B651FF9C1D93DA1F00D1C578 /* qiniu.png in Resources */ = {isa = PBXBuildFile; fileRef = B651FF941D93DA1F00D1C578 /* qiniu.png */; };
 		B651FF9D1D93DA1F00D1C578 /* TestMusic1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B651FF951D93DA1F00D1C578 /* TestMusic1.mp3 */; };
 		B651FF9E1D93DA1F00D1C578 /* TestMusic2.wav in Resources */ = {isa = PBXBuildFile; fileRef = B651FF961D93DA1F00D1C578 /* TestMusic2.wav */; };
@@ -57,7 +59,10 @@
 		6003F591195388D20070C39A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6003F5AE195388D20070C39A /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D38E0519CDFBF6954B8389D /* libPods-PLMediaStreamingKitDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PLMediaStreamingKitDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		767D4D8720561FF300E619D2 /* PLViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLViewController.h; sourceTree = "<group>"; };
+		767D4D8820561FF300E619D2 /* PLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLViewController.m; sourceTree = "<group>"; };
 		769750EC1A6329DC0079423B /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		76B2FA6D2052C03600DAF7E8 /* PLMediaStreamingKit-Universal.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "PLMediaStreamingKit-Universal.podspec"; path = "../PLMediaStreamingKit-Universal.podspec"; sourceTree = "<group>"; };
 		B651FF941D93DA1F00D1C578 /* qiniu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qiniu.png; sourceTree = "<group>"; };
 		B651FF951D93DA1F00D1C578 /* TestMusic1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TestMusic1.mp3; sourceTree = "<group>"; };
 		B651FF961D93DA1F00D1C578 /* TestMusic2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = TestMusic2.wav; sourceTree = "<group>"; };
@@ -125,6 +130,7 @@
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
+				76B2FA6D2052C03600DAF7E8 /* PLMediaStreamingKit-Universal.podspec */,
 				B6FC33B51D93C603004EEE29 /* PLMediaStreamingKit.podspec */,
 				B6FC338B1D93C301004EEE29 /* PLMediaStreamingKitDemo */,
 				6003F58C195388D20070C39A /* Frameworks */,
@@ -159,6 +165,8 @@
 			children = (
 				B6FC33B21D93C470004EEE29 /* PLAppDelegate.h */,
 				B6FC33B31D93C470004EEE29 /* PLAppDelegate.m */,
+				767D4D8720561FF300E619D2 /* PLViewController.h */,
+				767D4D8820561FF300E619D2 /* PLViewController.m */,
 				B6FC339B1D93C398004EEE29 /* PLMainViewController.h */,
 				B6FC339C1D93C398004EEE29 /* PLMainViewController.m */,
 				C3FEB1301F035C6300156FE0 /* Main */,
@@ -396,13 +404,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PLMediaStreamingKitDemo-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B651FF8E1D93D99B00D1C578 /* ShellScript */ = {
@@ -424,9 +435,14 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-PLMediaStreamingKitDemo/Pods-PLMediaStreamingKitDemo-frameworks.sh",
+				"${PODS_ROOT}/../../Pod/Library/PLMediaStreamingKit.framework",
+				"${PODS_ROOT}/../../Pod/Library/HappyDNS.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLMediaStreamingKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HappyDNS.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -439,9 +455,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-PLMediaStreamingKitDemo/Pods-PLMediaStreamingKitDemo-resources.sh",
+				"${PODS_ROOT}/WeiboSDK/libWeiboSDK/WeiboSDK.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/WeiboSDK.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -593,7 +612,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = PLMediaStreamingKitDemo/PLPublicHeader.h;
 				INFOPLIST_FILE = "$(SRCROOT)/PLMediaStreamingKitDemo/Supporting Files/PLMediaStreamingKitDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PLMediaStreamingKitDemo/Weixin",
@@ -617,7 +636,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = PLMediaStreamingKitDemo/PLPublicHeader.h;
 				INFOPLIST_FILE = "$(SRCROOT)/PLMediaStreamingKitDemo/Supporting Files/PLMediaStreamingKitDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PLMediaStreamingKitDemo/Weixin",

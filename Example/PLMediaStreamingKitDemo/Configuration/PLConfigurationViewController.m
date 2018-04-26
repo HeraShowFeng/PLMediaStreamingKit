@@ -25,7 +25,6 @@
 @implementation PLConfigurationViewController
 static NSString *segmentIdentifier = @"segmentCell";
 static NSString *listIdentifier = @"listCell";
-static NSString *saveConfigure = @"configure";
 
 - (void)viewDidLoad {
     [super viewDidLoad];

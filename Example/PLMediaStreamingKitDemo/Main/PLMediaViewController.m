@@ -9,7 +9,6 @@
 #import "PLMediaViewController.h"
 
 #import "PLConfigurationViewController.h"
-#import "PLSessionViewController.h"
 #import "PLFilterViewController.h"
 #import "PLScanViewController.h"
 
@@ -21,7 +20,6 @@
  UITextFieldDelegate,
  PLFilterVcDelegate,
  PLConfigurationVcDelegate,
- PLSessionVcDelegate,
  PLScanViewControlerDelegate
 >
 
@@ -404,16 +402,12 @@
 - (void)plClassifyButtonAction:(UIButton *)button {
     NSInteger index = button.tag - 100;
     button.selected = !button.selected;
-    if (index == 0) {
+    if (index == 0 || index == 1) {
         PLConfigurationViewController *configurationVc = [[PLConfigurationViewController alloc]init];
         configurationVc.delegate = self;
+        configurationVc.isSession = index;
         configurationVc.imageStream = _imageStream;
         [self presentViewController:configurationVc animated:NO completion:nil];
-    } else if (index == 1) {
-        PLSessionViewController *sessionVc = [[PLSessionViewController alloc]init];
-        sessionVc.delegate = self;
-        sessionVc.imageStream = _imageStream;
-        [self presentViewController:sessionVc animated:NO completion:nil];
     } else if (index == 2) {
         PLFilterViewController *filterVc = [[PLFilterViewController alloc]init];
         filterVc.delegate = self;
@@ -481,336 +475,332 @@
 
 # warning 界面之间功能切换实现的代理方法
 # pragma mark ---- PLConfigVcDelegate ----
-- (void)configureStreamWithConfigureModel:(PLConfigureModel *)configureModel categoryModel:(PLCategoryModel *)categoryModel {
+- (void)configureStreamWithConfigureModel:(PLConfigureModel *)configureModel categoryModel:(PLCategoryModel *)categoryModel isSession:(BOOL)isSession{
     NSInteger index = [configureModel.selectedNum integerValue];
-    
-    /// PLVideoCaptureConfiguration
-    if ([categoryModel.categoryKey isEqualToString:@"PLVideoCaptureConfiguration"]) {
-        if ([configureModel.configuraKey containsString:@"videoFrameRate"]) {
-            _streamingSession.videoFrameRate = [configureModel.configuraValue[index] integerValue];
-        } else if ([configureModel.configuraKey containsString:@"sessionPreset"]){
-            if ([IOS_SYSTEM_STRING compare:@"9.0.0"] >= 0){
+    if (isSession) {
+        /// PLStreamingKit
+        if ([categoryModel.categoryKey isEqualToString:@"PLStreamingKit"]) {
+            if ([configureModel.configuraKey containsString:@"statusUpdateInterval"]) {
+                _streamingSession.statusUpdateInterval = [configureModel.configuraValue[index] integerValue];
+                
+            } else if ([configureModel.configuraKey containsString:@"dynamicFrameEnable"]){
+                _streamingSession.dynamicFrameEnable = index;
+                
+            } else if ([configureModel.configuraKey containsString:@"autoReconnectEnable"]){
+                _streamingSession.autoReconnectEnable = index;
+                
+            } else if ([configureModel.configuraKey containsString:@"monitorNetworkStateEnable"]){
+                _streamingSession.monitorNetworkStateEnable = index;
+                
+            } else if ([configureModel.configuraKey containsString:@"threshold"]){
+                _streamingSession.threshold = [configureModel.configuraValue[index] floatValue];
+            } else if ([configureModel.configuraKey containsString:@"maxCount"]){
+                _streamingSession.maxCount = [configureModel.configuraValue[index] integerValue];
+            }
+            
+            /// CameraSource
+        } else if ([categoryModel.categoryKey isEqualToString:@"CameraSource"]) {
+            if ([configureModel.configuraKey containsString:@"continuousAutofocusEnable"]) {
+                _streamingSession.continuousAutofocusEnable = index;
+                
+            } else if ([configureModel.configuraKey containsString:@"touchToFocusEnable"]){
+                _streamingSession.touchToFocusEnable = index;
+                
+            } else if ([configureModel.configuraKey containsString:@"smoothAutoFocusEnabled"]){
+                _streamingSession.smoothAutoFocusEnabled = index;
+                
+                
+            } else if ([configureModel.configuraKey containsString:@"torchOn"]){
+                _streamingSession.torchOn = index;
+            }
+            
+            /// MicrophoneSource
+        } else if ([categoryModel.categoryKey isEqualToString:@"MicrophoneSource"]) {
+            if ([configureModel.configuraKey containsString:@"playback"]) {
+                _streamingSession.playback = index;
+                
+            } else if ([configureModel.configuraKey containsString:@"inputGain"]){
+                _streamingSession.inputGain = [configureModel.configuraValue[index] floatValue];
+                
+            } else if ([configureModel.configuraKey containsString:@"allowAudioMixWithOthers"]){
+                _streamingSession.allowAudioMixWithOthers = index;
+                
+            }
+            
+            /// Applictaion
+        } else if ([categoryModel.categoryKey isEqualToString:@"Applictaion"]) {
+            if ([configureModel.configuraKey containsString:@"idleTimerDisable"]) {
+                _streamingSession.idleTimerDisable = index;
+            }
+            
+            /// AudioEffect
+        } else if ([categoryModel.categoryKey isEqualToString:@"AudioEffect"]) {
+            
+            if ([configureModel.configuraKey isEqualToString:@"预设的混响音效配置"]) {
+                NSArray<PLAudioEffectConfiguration *> *configs;
                 switch (index) {
                     case 0:
-                        _streamingSession.sessionPreset = AVCaptureSessionPreset352x288;
+                        configs = @[];
                         break;
                     case 1:
-                        _streamingSession.sessionPreset = AVCaptureSessionPreset640x480;
+                        configs = @[[PLAudioEffectModeConfiguration reverbLowLevelModeConfiguration]];
                         break;
                     case 2:
-                        _streamingSession.sessionPreset = AVCaptureSessionPreset1280x720;
+                        configs = @[[PLAudioEffectModeConfiguration reverbMediumLevelModeConfiguration]];
                         break;
                     case 3:
-                        _streamingSession.sessionPreset = AVCaptureSessionPreset1920x1080;
+                        configs = @[[PLAudioEffectModeConfiguration reverbHeightLevelModeConfiguration]];
+                        break;
+                }
+                _streamingSession.audioEffectConfigurations = configs;
+            }
+            
+            /// PLAudioPlayer
+        } else if ([categoryModel.categoryKey isEqualToString:@"PLAudioPlayer"]){
+            if ([configureModel.configuraKey containsString:@"open player"]) {
+                if (index == 0) {
+                    [_streamingSession closeCurrentAudio];
+                    _audioPlayer = nil;
+                } else{
+                    NSString *audioPath =  [[NSBundle mainBundle] pathForResource:@"TestMusic1" ofType:@"mp3"];
+                    _audioPlayer = [_streamingSession audioPlayerWithFilePath:audioPath];
+                    [_audioPlayer play];
+                }
+                
+            } else if ([configureModel.configuraKey containsString:@"musicFiles"]){
+                NSDictionary *musicDict = @{@"M1":@"TestMusic1.mp3", @"M2":@"TestMusic2.wav", @"M3":@"TestMusic3.wav", @"M4":@"TestMusic4.mp3", @"M5":@"TestMusic5.mp3"};
+                NSString *selectedStr = configureModel.configuraValue[index];
+                NSString *fileName = musicDict[selectedStr];
+                NSArray *arr = [fileName componentsSeparatedByString:@"."];
+                NSString *audioPath = [[NSBundle mainBundle] pathForResource:arr[0] ofType:arr[1]];
+                if (_audioPlayer) {
+                    _audioPlayer.audioFilePath = audioPath;
+                }
+            } else if ([configureModel.configuraKey containsString:@"volume"]){
+                if (_audioPlayer) {
+                    _audioPlayer.volume = [configureModel.configuraValue[index] floatValue];
+                } else{
+                    _audioPlayer.volume = 0;
+                }
+            } else if ([configureModel.configuraKey containsString:@"audioDidPlayedRate"]){
+                if (_audioPlayer) {
+                    _audioPlayer.audioDidPlayedRate = [configureModel.configuraValue[index] floatValue];
+                } else{
+                    _audioPlayer.audioDidPlayedRate = 0;
+                }
+            }
+        }
+    } else{
+        /// PLVideoCaptureConfiguration
+        if ([categoryModel.categoryKey isEqualToString:@"PLVideoCaptureConfiguration"]) {
+            if ([configureModel.configuraKey containsString:@"videoFrameRate"]) {
+                _streamingSession.videoFrameRate = [configureModel.configuraValue[index] integerValue];
+            } else if ([configureModel.configuraKey containsString:@"sessionPreset"]){
+                if ([IOS_SYSTEM_STRING compare:@"9.0.0"] >= 0){
+                    switch (index) {
+                        case 0:
+                            _streamingSession.sessionPreset = AVCaptureSessionPreset352x288;
+                            break;
+                        case 1:
+                            _streamingSession.sessionPreset = AVCaptureSessionPreset640x480;
+                            break;
+                        case 2:
+                            _streamingSession.sessionPreset = AVCaptureSessionPreset1280x720;
+                            break;
+                        case 3:
+                            _streamingSession.sessionPreset = AVCaptureSessionPreset1920x1080;
+                            break;
+                        case 4:
+                            _streamingSession.sessionPreset = AVCaptureSessionPreset3840x2160;
+                            break;
+                        case 5:
+                            _streamingSession.sessionPreset = AVCaptureSessionPresetLow;
+                            break;
+                        case 6:
+                            _streamingSession.sessionPreset = AVCaptureSessionPresetMedium;
+                            break;
+                        case 7:
+                            _streamingSession.sessionPreset = AVCaptureSessionPresetHigh;
+                            break;
+                        case 8:
+                            _streamingSession.sessionPreset = AVCaptureSessionPresetPhoto;
+                            break;
+                        case 9:
+                            _streamingSession.sessionPreset = AVCaptureSessionPresetiFrame960x540;
+                            break;
+                        case 10:
+                            _streamingSession.sessionPreset = AVCaptureSessionPresetiFrame1280x720;
+                            break;
+                        case 11:
+                            _streamingSession.sessionPreset = AVCaptureSessionPresetInputPriority;
+                            break;
+                        default:
+                            break;
+                    }
+                } else {
+                    switch (index) {
+                        case 0:
+                            _streamingSession.sessionPreset = AVCaptureSessionPreset352x288;
+                            break;
+                        case 1:
+                            _streamingSession.sessionPreset = AVCaptureSessionPreset640x480;
+                            break;
+                        case 2:
+                            _streamingSession.sessionPreset = AVCaptureSessionPreset1280x720;
+                            break;
+                        case 3:
+                            _streamingSession.sessionPreset = AVCaptureSessionPreset1920x1080;
+                            break;
+                        case 4:
+                            _streamingSession.sessionPreset = AVCaptureSessionPresetLow;
+                            break;
+                        case 5:
+                            _streamingSession.sessionPreset = AVCaptureSessionPresetMedium;
+                            break;
+                        case 6:
+                            _streamingSession.sessionPreset = AVCaptureSessionPresetHigh;
+                            break;
+                        case 7:
+                            _streamingSession.sessionPreset = AVCaptureSessionPresetPhoto;
+                            break;
+                        case 8:
+                            _streamingSession.sessionPreset = AVCaptureSessionPresetiFrame960x540;
+                            break;
+                        case 9:
+                            _streamingSession.sessionPreset = AVCaptureSessionPresetiFrame1280x720;
+                            break;
+                        case 10:
+                            _streamingSession.sessionPreset = AVCaptureSessionPresetInputPriority;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            } else if ([configureModel.configuraKey containsString:@"previewMirrorFrontFacing"]){
+                _streamingSession.previewMirrorFrontFacing = index;
+                
+            } else if ([configureModel.configuraKey containsString:@"previewMirrorRearFacing"]){
+                _streamingSession.previewMirrorRearFacing = index;
+                
+            } else if ([configureModel.configuraKey containsString:@"streamMirrorFrontFacing"]){
+                _streamingSession.streamMirrorFrontFacing = index;
+                
+            } else if ([configureModel.configuraKey containsString:@"streamMirrorRearFacing"]){
+                _streamingSession.streamMirrorRearFacing = index;
+                
+            } else if ([configureModel.configuraKey containsString:@"cameraPositon"]){
+                _streamingSession.captureDevicePosition = index;
+                
+            } else if ([configureModel.configuraKey containsString:@"videoOrientation"]){
+                _streamingSession.videoOrientation = index + 1;
+            }
+            
+            /// PLVideoStreamingConfiguration
+        } else if ([categoryModel.categoryKey isEqualToString:@"PLVideoStreamingConfiguration"]) {
+            if ([configureModel.configuraKey containsString:@"videoProfileLevel"]) {
+                switch (index) {
+                    case 0:
+                        _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264Baseline30;
+                        break;
+                    case 1:
+                        _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264Baseline31;
+                        break;
+                    case 2:
+                        _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264Baseline41;
+                        break;
+                    case 3:
+                        _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264BaselineAutoLevel;
                         break;
                     case 4:
-                        _streamingSession.sessionPreset = AVCaptureSessionPreset3840x2160;
+                        _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264Main30;
                         break;
                     case 5:
-                        _streamingSession.sessionPreset = AVCaptureSessionPresetLow;
+                        _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264Main31;
                         break;
                     case 6:
-                        _streamingSession.sessionPreset = AVCaptureSessionPresetMedium;
+                        _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264Main32;
                         break;
                     case 7:
-                        _streamingSession.sessionPreset = AVCaptureSessionPresetHigh;
+                        _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264Main41;
                         break;
                     case 8:
-                        _streamingSession.sessionPreset = AVCaptureSessionPresetPhoto;
+                        _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264MainAutoLevel;
                         break;
                     case 9:
-                        _streamingSession.sessionPreset = AVCaptureSessionPresetiFrame960x540;
+                        _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264High40;
                         break;
                     case 10:
-                        _streamingSession.sessionPreset = AVCaptureSessionPresetiFrame1280x720;
+                        _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264High41;
                         break;
                     case 11:
-                        _streamingSession.sessionPreset = AVCaptureSessionPresetInputPriority;
+                        _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264HighAutoLevel;
                         break;
                     default:
                         break;
                 }
-            } else {
+            } else if ([configureModel.configuraKey containsString:@"videoSize"]){
                 switch (index) {
                     case 0:
-                        _streamingSession.sessionPreset = AVCaptureSessionPreset352x288;
+                        _videoStreamCon.videoSize = CGSizeMake(272, 480);
                         break;
                     case 1:
-                        _streamingSession.sessionPreset = AVCaptureSessionPreset640x480;
+                        _videoStreamCon.videoSize = CGSizeMake(368, 640);
                         break;
                     case 2:
-                        _streamingSession.sessionPreset = AVCaptureSessionPreset1280x720;
+                        _videoStreamCon.videoSize = CGSizeMake(400, 720);
                         break;
                     case 3:
-                        _streamingSession.sessionPreset = AVCaptureSessionPreset1920x1080;
-                        break;
-                    case 4:
-                        _streamingSession.sessionPreset = AVCaptureSessionPresetLow;
-                        break;
-                    case 5:
-                        _streamingSession.sessionPreset = AVCaptureSessionPresetMedium;
-                        break;
-                    case 6:
-                        _streamingSession.sessionPreset = AVCaptureSessionPresetHigh;
-                        break;
-                    case 7:
-                        _streamingSession.sessionPreset = AVCaptureSessionPresetPhoto;
-                        break;
-                    case 8:
-                        _streamingSession.sessionPreset = AVCaptureSessionPresetiFrame960x540;
-                        break;
-                    case 9:
-                        _streamingSession.sessionPreset = AVCaptureSessionPresetiFrame1280x720;
-                        break;
-                    case 10:
-                        _streamingSession.sessionPreset = AVCaptureSessionPresetInputPriority;
+                        _videoStreamCon.videoSize = CGSizeMake(720, 1280);
                         break;
                     default:
                         break;
                 }
+            } else if ([configureModel.configuraKey containsString:@"expectedSourceVideoFrameRate"]){
+                _videoStreamCon.expectedSourceVideoFrameRate = [configureModel.configuraValue[index] integerValue];
+            } else if ([configureModel.configuraKey containsString:@"videoMaxKeyframeInterval"]){
+                _videoStreamCon.videoMaxKeyframeInterval = [configureModel.configuraValue[index] integerValue];
+            } else if ([configureModel.configuraKey containsString:@"averageVideoBitRate"]){
+                _videoStreamCon.averageVideoBitRate = [configureModel.configuraValue[index] integerValue];
+            } else if ([configureModel.configuraKey containsString:@"videoEncoderType"]){
+                _videoStreamCon.videoEncoderType = index;
+                
             }
-        } else if ([configureModel.configuraKey containsString:@"previewMirrorFrontFacing"]){
-            _streamingSession.previewMirrorFrontFacing = index;
-
-        } else if ([configureModel.configuraKey containsString:@"previewMirrorRearFacing"]){
-            _streamingSession.previewMirrorRearFacing = index;
-
-        } else if ([configureModel.configuraKey containsString:@"streamMirrorFrontFacing"]){
-            _streamingSession.streamMirrorFrontFacing = index;
-
-        } else if ([configureModel.configuraKey containsString:@"streamMirrorRearFacing"]){
-            _streamingSession.streamMirrorRearFacing = index;
-
-        } else if ([configureModel.configuraKey containsString:@"cameraPositon"]){
-            _streamingSession.captureDevicePosition = index;
-
-        } else if ([configureModel.configuraKey containsString:@"videoOrientation"]){
-            _streamingSession.videoOrientation = index + 1;
-        }
-        
-    /// PLVideoStreamingConfiguration
-    } else if ([categoryModel.categoryKey isEqualToString:@"PLVideoStreamingConfiguration"]) {
-        if ([configureModel.configuraKey containsString:@"videoProfileLevel"]) {
-            switch (index) {
-                case 0:
-                    _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264Baseline30;
-                    break;
-                case 1:
-                    _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264Baseline31;
-                    break;
-                case 2:
-                    _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264Baseline41;
-                    break;
-                case 3:
-                    _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264BaselineAutoLevel;
-                    break;
-                case 4:
-                    _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264Main30;
-                    break;
-                case 5:
-                    _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264Main31;
-                    break;
-                case 6:
-                    _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264Main32;
-                    break;
-                case 7:
-                    _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264Main41;
-                    break;
-                case 8:
-                    _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264MainAutoLevel;
-                    break;
-                case 9:
-                    _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264High40;
-                    break;
-                case 10:
-                    _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264High41;
-                    break;
-                case 11:
-                    _videoStreamCon.videoProfileLevel = AVVideoProfileLevelH264HighAutoLevel;
-                    break;
-                default:
-                    break;
-            }
-        } else if ([configureModel.configuraKey containsString:@"videoSize"]){
-            switch (index) {
-                case 0:
-                    _videoStreamCon.videoSize = CGSizeMake(272, 480);
-                    break;
-                case 1:
-                    _videoStreamCon.videoSize = CGSizeMake(368, 640);
-                    break;
-                case 2:
-                    _videoStreamCon.videoSize = CGSizeMake(400, 720);
-                    break;
-                case 3:
-                    _videoStreamCon.videoSize = CGSizeMake(720, 1280);
-                    break;
-                default:
-                    break;
-            }
-        } else if ([configureModel.configuraKey containsString:@"expectedSourceVideoFrameRate"]){
-            _videoStreamCon.expectedSourceVideoFrameRate = [configureModel.configuraValue[index] integerValue];
-        } else if ([configureModel.configuraKey containsString:@"videoMaxKeyframeInterval"]){
-            _videoStreamCon.videoMaxKeyframeInterval = [configureModel.configuraValue[index] integerValue];
-        } else if ([configureModel.configuraKey containsString:@"averageVideoBitRate"]){
-            _videoStreamCon.averageVideoBitRate = [configureModel.configuraValue[index] integerValue];
-        } else if ([configureModel.configuraKey containsString:@"videoEncoderType"]){
-            _videoStreamCon.videoEncoderType = index;
-
-        }
-        [_streamingSession reloadVideoStreamingConfiguration:_videoStreamCon];
-    
-    /// PLAudioCaptureConfiguration
-    } else if ([categoryModel.categoryKey isEqualToString:@"PLAudioCaptureConfiguration"]) {
-        if ([configureModel.configuraKey containsString:@"channelsPerFrame"]) {
-            _streamingSession.audioCaptureConfiguration.channelsPerFrame = index + 1;
-
-        } else if ([configureModel.configuraKey containsString:@"acousticEchoCancellationEnable"]){
-            _streamingSession.audioCaptureConfiguration.acousticEchoCancellationEnable = index;
-        }
-        
-    /// PLAudioStreamingConfiguration
-    } else if ([categoryModel.categoryKey isEqualToString:@"PLAudioStreamingConfiguration"]) {
-        if ([configureModel.configuraKey containsString:@"encodedAudioSampleRate"]) {
-            _streamingSession.audioStreamingConfiguration.encodedAudioSampleRate = index;
-        } else if ([configureModel.configuraKey containsString:@"audioBitRate"]){
-            switch (index) {
-                case 0:
-                    _streamingSession.audioStreamingConfiguration.audioBitRate = PLStreamingAudioBitRate_64Kbps;
-                    break;
-                case 1:
-                    _streamingSession.audioStreamingConfiguration.audioBitRate = PLStreamingAudioBitRate_96Kbps;
-                    break;
-                case 2:
-                    _streamingSession.audioStreamingConfiguration.audioBitRate = PLStreamingAudioBitRate_128Kbps;
-                    break;
-                default:
-                    break;
-            }
-        } else if ([configureModel.configuraKey containsString:@"encodedNumberOfChannels"]){
-            _streamingSession.audioStreamingConfiguration.encodedNumberOfChannels = (UInt32) index + 1;
-
-        } else if ([configureModel.configuraKey containsString:@"audioEncoderType"]){
-            _streamingSession.audioStreamingConfiguration.audioEncoderType = index;
-        }
-    }
-}
-
-# pragma mark ---- PLSessiomVcDelegate ----
-- (void)configureSessionWithConfigureModel:(PLConfigureModel *)configureModel categoryModel:(PLCategoryModel *)categoryModel {
-    NSInteger index = [configureModel.selectedNum integerValue];
-    
-    /// PLStreamingKit
-    if ([categoryModel.categoryKey isEqualToString:@"PLStreamingKit"]) {
-        if ([configureModel.configuraKey containsString:@"statusUpdateInterval"]) {
-            _streamingSession.statusUpdateInterval = [configureModel.configuraValue[index] integerValue];
+            [_streamingSession reloadVideoStreamingConfiguration:_videoStreamCon];
             
-        } else if ([configureModel.configuraKey containsString:@"dynamicFrameEnable"]){
-            _streamingSession.dynamicFrameEnable = index;
-
-        } else if ([configureModel.configuraKey containsString:@"autoReconnectEnable"]){
-            _streamingSession.autoReconnectEnable = index;
-
-        } else if ([configureModel.configuraKey containsString:@"monitorNetworkStateEnable"]){
-            _streamingSession.monitorNetworkStateEnable = index;
-
-        } else if ([configureModel.configuraKey containsString:@"threshold"]){
-            _streamingSession.threshold = [configureModel.configuraValue[index] floatValue];
-        } else if ([configureModel.configuraKey containsString:@"maxCount"]){
-            _streamingSession.maxCount = [configureModel.configuraValue[index] integerValue];
-        }
-    
-    /// CameraSource
-    } else if ([categoryModel.categoryKey isEqualToString:@"CameraSource"]) {
-        if ([configureModel.configuraKey containsString:@"continuousAutofocusEnable"]) {
-            _streamingSession.continuousAutofocusEnable = index;
-
-        } else if ([configureModel.configuraKey containsString:@"touchToFocusEnable"]){
-            _streamingSession.touchToFocusEnable = index;
-            
-        } else if ([configureModel.configuraKey containsString:@"smoothAutoFocusEnabled"]){
-            _streamingSession.smoothAutoFocusEnabled = index;
-
-            
-        } else if ([configureModel.configuraKey containsString:@"torchOn"]){
-            _streamingSession.torchOn = index;
-        }
-    
-    /// MicrophoneSource
-    } else if ([categoryModel.categoryKey isEqualToString:@"MicrophoneSource"]) {
-        if ([configureModel.configuraKey containsString:@"playback"]) {
-            _streamingSession.playback = index;
-
-        } else if ([configureModel.configuraKey containsString:@"inputGain"]){
-            _streamingSession.inputGain = [configureModel.configuraValue[index] floatValue];
-            
-        } else if ([configureModel.configuraKey containsString:@"allowAudioMixWithOthers"]){
-            _streamingSession.allowAudioMixWithOthers = index;
-
-        }
-        
-    /// Applictaion
-    } else if ([categoryModel.categoryKey isEqualToString:@"Applictaion"]) {
-        if ([configureModel.configuraKey containsString:@"idleTimerDisable"]) {
-            _streamingSession.idleTimerDisable = index;
-        }
-        
-    /// AudioEffect
-    } else if ([categoryModel.categoryKey isEqualToString:@"AudioEffect"]) {
-        
-        if ([configureModel.configuraKey isEqualToString:@"预设的混响音效配置"]) {
-            NSArray<PLAudioEffectConfiguration *> *configs;
-            switch (index) {
-                case 0:
-                    configs = @[];
-                    break;
-                case 1:
-                    configs = @[[PLAudioEffectModeConfiguration reverbLowLevelModeConfiguration]];
-                    break;
-                case 2:
-                    configs = @[[PLAudioEffectModeConfiguration reverbMediumLevelModeConfiguration]];
-                    break;
-                case 3:
-                    configs = @[[PLAudioEffectModeConfiguration reverbHeightLevelModeConfiguration]];
-                    break;
-            }
-            _streamingSession.audioEffectConfigurations = configs;
-        }
-        
-    /// PLAudioPlayer
-    } else if ([categoryModel.categoryKey isEqualToString:@"PLAudioPlayer"]){
-        if ([configureModel.configuraKey containsString:@"open player"]) {
-            if (index == 0) {
-                [_streamingSession closeCurrentAudio];
-                _audioPlayer = nil;
-            } else{
-                NSString *audioPath =  [[NSBundle mainBundle] pathForResource:@"TestMusic1" ofType:@"mp3"];
-                _audioPlayer = [_streamingSession audioPlayerWithFilePath:audioPath];
-                [_audioPlayer play];
+            /// PLAudioCaptureConfiguration
+        } else if ([categoryModel.categoryKey isEqualToString:@"PLAudioCaptureConfiguration"]) {
+            if ([configureModel.configuraKey containsString:@"channelsPerFrame"]) {
+                _streamingSession.audioCaptureConfiguration.channelsPerFrame = index + 1;
+                
+            } else if ([configureModel.configuraKey containsString:@"acousticEchoCancellationEnable"]){
+                _streamingSession.audioCaptureConfiguration.acousticEchoCancellationEnable = index;
             }
             
-        } else if ([configureModel.configuraKey containsString:@"musicFiles"]){
-            NSDictionary *musicDict = @{@"M1":@"TestMusic1.mp3", @"M2":@"TestMusic2.wav", @"M3":@"TestMusic3.wav", @"M4":@"TestMusic4.mp3", @"M5":@"TestMusic5.mp3"};
-            NSString *selectedStr = configureModel.configuraValue[index];
-            NSString *fileName = musicDict[selectedStr];
-            NSArray *arr = [fileName componentsSeparatedByString:@"."];
-            NSString *audioPath = [[NSBundle mainBundle] pathForResource:arr[0] ofType:arr[1]];
-            if (_audioPlayer) {
-                _audioPlayer.audioFilePath = audioPath;
+            /// PLAudioStreamingConfiguration
+        } else if ([categoryModel.categoryKey isEqualToString:@"PLAudioStreamingConfiguration"]) {
+            if ([configureModel.configuraKey containsString:@"encodedAudioSampleRate"]) {
+                _streamingSession.audioStreamingConfiguration.encodedAudioSampleRate = index;
+            } else if ([configureModel.configuraKey containsString:@"audioBitRate"]){
+                switch (index) {
+                    case 0:
+                        _streamingSession.audioStreamingConfiguration.audioBitRate = PLStreamingAudioBitRate_64Kbps;
+                        break;
+                    case 1:
+                        _streamingSession.audioStreamingConfiguration.audioBitRate = PLStreamingAudioBitRate_96Kbps;
+                        break;
+                    case 2:
+                        _streamingSession.audioStreamingConfiguration.audioBitRate = PLStreamingAudioBitRate_128Kbps;
+                        break;
+                    default:
+                        break;
+                }
+            } else if ([configureModel.configuraKey containsString:@"encodedNumberOfChannels"]){
+                _streamingSession.audioStreamingConfiguration.encodedNumberOfChannels = (UInt32) index + 1;
+                
+            } else if ([configureModel.configuraKey containsString:@"audioEncoderType"]){
+                _streamingSession.audioStreamingConfiguration.audioEncoderType = index;
             }
-        } else if ([configureModel.configuraKey containsString:@"volume"]){
-            if (_audioPlayer) {
-                _audioPlayer.volume = [configureModel.configuraValue[index] floatValue];
-            } else{
-                _audioPlayer.volume = 0;
-            }
-        } else if ([configureModel.configuraKey containsString:@"audioDidPlayedRate"]){
-            if (_audioPlayer) {
-                _audioPlayer.audioDidPlayedRate = [configureModel.configuraValue[index] floatValue];
-            } else{
-                _audioPlayer.audioDidPlayedRate = 0;
-            }
-        } 
+        }
     }
 }
 

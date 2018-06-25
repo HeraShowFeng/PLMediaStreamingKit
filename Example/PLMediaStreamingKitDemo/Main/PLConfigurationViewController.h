@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @protocol PLConfigurationVcDelegate<NSObject>
-- (void)configureStreamWithConfigureModel:(PLConfigureModel *)configureModel categoryModel:(PLCategoryModel *)categoryModel;
+- (void)configureStreamWithConfigureModel:(PLConfigureModel *)configureModel categoryModel:(PLCategoryModel *)categoryModel isSession:(BOOL)isSession;
 @end
 
 @interface PLConfigurationViewController : UIViewController
@@ -16,5 +16,6 @@
 @property (nonatomic, weak) id<PLConfigurationVcDelegate> delegate;
 /// 是否是图片推流
 @property (nonatomic, assign) BOOL imageStream;
-
+/// 是否session
+@property (nonatomic, assign) BOOL isSession;
 @end

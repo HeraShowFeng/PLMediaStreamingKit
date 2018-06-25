@@ -49,7 +49,12 @@ static NSString *listIdentifier = @"listCell";
 - (void)layoutConfigurationsView {
     UILabel *titleLab = [[UILabel alloc]init];
     titleLab.font = FONT_MEDIUM(16);
-    titleLab.text = @"configurations 设置";
+    titleLab.textAlignment = NSTextAlignmentCenter;
+    if (_isSession) {
+        titleLab.text = @"session 设置";
+    } else{
+        titleLab.text = @"configurations 设置";
+    }
     [self.view addSubview:titleLab];
     [titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(160, 30));
@@ -82,7 +87,12 @@ static NSString *listIdentifier = @"listCell";
 - (void)showMediaStreamingConfigurations {
     NSUserDefaults *userdafault = [NSUserDefaults standardUserDefaults];
     NSArray *dataArr = [userdafault objectForKey:@"configure"];
-    
+
+    if (_isSession) {
+        dataArr = [userdafault objectForKey:@"session"];
+    } else{
+        dataArr = [userdafault objectForKey:@"configure"];
+    }
     
     NSInteger compareOrigin = 0;
     NSString *originVersion = [userdafault objectForKey:@"system_version"];
@@ -98,46 +108,81 @@ static NSString *listIdentifier = @"listCell";
         }
         _configurArray = [arr copy];
     } else {
-        NSUserDefaults *userdafault = [NSUserDefaults standardUserDefaults];
-        [userdafault setObject:IOS_SYSTEM_STRING forKey:@"system_version"];
-        
-        /// PLVideoCaptureConfiguration 相关属性
-        NSDictionary *videoFrameRateDict = @{@"videoFrameRate - 帧率 ( Default：24fps )":@[@"5", @"15", @"20", @"24", @"30"], @"default":@3};
-        
-        NSDictionary *sessionPresetDict;
-        if ([IOS_SYSTEM_STRING compare:@"9.0.0"] >= 0){
-            sessionPresetDict = @{@"sessionPreset - 预览分辨率 ( Default：640x480 )":@[@"352x288", @"640x480", @"1280x720", @"1920x1080", @"3840x2160", @"Low", @"Medium", @"High", @"Photo", @"iFrame960x540", @"iFrame1280x720", @"InputPriority"], @"default":@1};
-        } else {
-            sessionPresetDict = @{@"sessionPreset - 预览分辨率 ( Default：640x480 )":@[@"352x288", @"640x480", @"1280x720", @"1920x1080", @"Low", @"Medium", @"High", @"Photo", @"iFrame960x540", @"iFrame1280x720", @"InputPriority"], @"default":@1};
+        NSArray *configureArr;
+        if (_isSession) {
+            /// PLStreamingKit 相关属性
+            NSDictionary *statusUpdateIntervalDict = @{@"statusUpdateInterval - 流状态更新间隔 ( Default：3s )":@[@"1", @"3", @"5", @"10", @"15", @"20", @"30"], @"default":@1};
+            NSDictionary *dynamicFrameEnableDict = @{@"dynamicFrameEnable - 动态帧率 ( Default：NO )":@[@"NO", @"YES"], @"default":@0};
+            NSDictionary *autoReconnectEnableDict = @{@"autoReconnectEnable - 自动断线重连 ( Default：NO )":@[@"NO", @"YES"], @"default":@0};
+            NSDictionary *monitorNetworkStateEnableDict = @{@"monitorNetworkStateEnable - 网络切换监测  ( Default：NO )":@[@"NO", @"YES"], @"default":@0};
+            NSDictionary *thresholdDict = @{@"threshold - 丢包策略的阀值 ( Default：0.5 )":@[@"0", @"0.5", @"0.25", @"0.75", @"1"], @"default":@0};
+            NSDictionary *maxCountDict = @{@"maxCount - 队列最大容纳包 ( Default：300 )":@[@"0", @"50", @"100", @"150", @"300", @"450", @"600"], @"default":@4};
+            
+            
+            NSDictionary *PLStreamingKitDict = @{@"PLStreamingKit":@[statusUpdateIntervalDict, dynamicFrameEnableDict, autoReconnectEnableDict, monitorNetworkStateEnableDict, thresholdDict, maxCountDict]};
+            
+            /// CameraSource 相关属性
+            NSDictionary *cameraSourceDict = @{@"CameraSource": @[@{@"continuousAutofocusEnable - 连续自动对焦 ( Default：YES )":@[@"NO", @"YES"], @"default":@1}, @{@"touchToFocusEnable - 手动对焦 ( Default：YES )":@[@"NO", @"YES"], @"default":@1}, @{@"smoothAutoFocusEnabled - 减缓自动对焦抖动 ( Default：YES )":@[@"NO", @"YES"], @"default":@1}, @{@"torchOn - 手电筒 ( Default：NO )":@[@"NO", @"YES"], @"default":@0}]};
+            
+            /// MicrophoneSource 相关属性
+            NSDictionary *microphoneSourceDict = @{@"MicrophoneSource":@[@{@"playback - 返听功能 ( Default：NO )":@[@"NO", @"YES"], @"default":@0}, @{@"inputGain - 麦克风采集的音量 ( Default：1 )":@[@"1", @"0.75", @"0.5", @"0.25"], @"default":@0}, @{@"allowAudioMixWithOthers - 允许在后台与其他App混音不被打断 ( Default：NO )":@[@"NO", @"YES"], @"default":@0}]};
+            
+            /// Applictaion
+            NSDictionary *applicationDict = @{@"Applictaion":@[@{@"idleTimerDisable - 是否关闭系统屏幕自动锁屏 ( Default：YES )":@[@"NO", @"YES"], @"default":@1}]};
+            
+            /// AudioEffect 相关属性
+            NSDictionary *audioEffectDict = @{@"AudioEffect":@[@{@"预设的混响音效配置 ( Default：None )":@[@"None", @"Low", @"Medium", @"Height"], @"default":@0}]};
+            
+            /// PLAudioPlayer 相关属性
+            NSDictionary *openPlayerDict = @{@"open player - 是否打开PLAudioPlayer ( Default：NO )":@[@"NO", @"YES"], @"default":@0};
+            NSDictionary *musicFileDict = @{@"musicFiles - 可选择的音乐文件":@[@"M1", @"M2", @"M3", @"M4"], @"default":@0};
+            NSDictionary *volumeDict = @{@"volume - 音量":@[@"0", @"0.25", @"0.5", @"0.75", @"1"], @"default":@2};
+            NSDictionary *audioDidPlayedRateDict = @{@"audioDidPlayedRate - 播放进度":@[@"0", @"0.25", @"0.5", @"0.75", @"1"], @"default":@0};
+            
+            NSDictionary *PLAudioPlayerDict = @{@"PLAudioPlayer":@[openPlayerDict, musicFileDict, volumeDict, audioDidPlayedRateDict]};
+            
+            configureArr = @[PLStreamingKitDict, cameraSourceDict, microphoneSourceDict, applicationDict, audioEffectDict, PLAudioPlayerDict];
+        } else{
+            NSUserDefaults *userdafault = [NSUserDefaults standardUserDefaults];
+            [userdafault setObject:IOS_SYSTEM_STRING forKey:@"system_version"];
+            
+            /// PLVideoCaptureConfiguration 相关属性
+            NSDictionary *videoFrameRateDict = @{@"videoFrameRate - 帧率 ( Default：24fps )":@[@"5", @"15", @"20", @"24", @"30"], @"default":@3};
+            
+            NSDictionary *sessionPresetDict;
+            if ([IOS_SYSTEM_STRING compare:@"9.0.0"] >= 0){
+                sessionPresetDict = @{@"sessionPreset - 预览分辨率 ( Default：640x480 )":@[@"352x288", @"640x480", @"1280x720", @"1920x1080", @"3840x2160", @"Low", @"Medium", @"High", @"Photo", @"iFrame960x540", @"iFrame1280x720", @"InputPriority"], @"default":@1};
+            } else {
+                sessionPresetDict = @{@"sessionPreset - 预览分辨率 ( Default：640x480 )":@[@"352x288", @"640x480", @"1280x720", @"1920x1080", @"Low", @"Medium", @"High", @"Photo", @"iFrame960x540", @"iFrame1280x720", @"InputPriority"], @"default":@1};
+            }
+            
+            NSDictionary *previewMirrorFrontFacingDict = @{@"previewMirrorFrontFacing - 前置预览镜像 ( Default：YES )":@[@"NO", @"YES"], @"default":@1};
+            NSDictionary *previewMirrorRearFacingDict = @{@"previewMirrorRearFacing - 后置预览镜像 ( Default：NO )":@[@"NO", @"YES"], @"default":@0};
+            NSDictionary *streamMirrorFrontFacingDict = @{@"streamMirrorFrontFacing - 前置推流镜像 ( Default：NO )":@[@"NO", @"YES"], @"default":@0};
+            NSDictionary *streamMirrorRearFacingDict = @{@"streamMirrorRearFacing - 后置推流镜像 ( Default：NO )":@[@"NO", @"YES"], @"default":@0};
+            NSDictionary *cameraPositionDict = @{@"cameraPositon - 采集摄像头位置 ( Default：Back )":@[@"Unspecified", @"Back", @"Front"], @"default":@1};
+            NSDictionary *videoOrientationDict = @{@"videoOrientation - 采集摄像头旋转方向 ( Default：Portrait )":@[@"Portrait", @"PortraitUpsideDown", @"LandscapeRight", @"LandscapeLeft"], @"default":@0};
+            
+            NSDictionary *videoCaptureDict = @{@"PLVideoCaptureConfiguration":@[videoFrameRateDict, sessionPresetDict, previewMirrorFrontFacingDict, previewMirrorRearFacingDict, streamMirrorFrontFacingDict, streamMirrorRearFacingDict, cameraPositionDict, videoOrientationDict]};
+            
+            /// PLVideoStreamingConfiguration 相关属性
+            NSDictionary *videoProfileLevelDict = @{@"videoProfileLevel - 编码的 Profile Level ( Default：H264Baseline31 )":@[@"H264Baseline30", @"H264Baseline31", @"H264Baseline41", @"H264BaselineAutoLevel", @"H264Main30", @"H264Main31", @"H264Main32", @"H264Main41", @"H264MainAutoLevel", @"H264High40", @"H264High41", @"H264HighAutoLevel"], @"default":@1};
+            NSDictionary *videoSizeDict = @{@"videoSize - 编码时的视频分辨率 ( Default：720x1280 )":@[@"272x480", @"368x640", @"400x720", @"720x1280"], @"default":@3};
+            NSDictionary *expectedSourceVideoFrameRateDict = @{@"expectedSourceVideoFrameRate - 预期视频的帧率 ( Default：24fps )":@[@"5", @"10", @"15", @"20", @"24", @"30"], @"default":@4};
+            NSDictionary *videoMaxKeyframeIntervalDict = @{@"videoMaxKeyframeInterval - 视频编码关键帧最大间隔 ( Default：72fps )":@[@"15", @"30", @"45", @"60", @"72", @"90"], @"default":@4};
+            NSDictionary *averageVideoBitRateDict = @{@"averageVideoBitRate - 平均视频编码码率 ( Default：768Kbps )":@[@"256Kbps", @"512Kbps", @"768Kbps", @"1024Kbps", @"1280Kbps", @"1536Kbps", @"2048Kbps"], @"default":@2};
+            NSDictionary *videoEncoderTypeDict = @{@"videoEncoderType - H.264 编码器类型 ( Default：AVFoundation )":@[@"AVFoundation", @"VideoToolbox"], @"default":@0};
+            
+            NSDictionary *videoStreamingDict = @{@"PLVideoStreamingConfiguration":@[videoProfileLevelDict, videoSizeDict, expectedSourceVideoFrameRateDict, videoMaxKeyframeIntervalDict, averageVideoBitRateDict, videoEncoderTypeDict]};
+            
+            /// PLAudioCaptureConfiguration 相关属性
+            NSDictionary *audioCaptureDict = @{@"PLAudioCaptureConfiguration":@[@{@"channelsPerFrame - 采集音频声道数 ( Default：1 )":@[@"1", @"2"], @"default":@0}, @{@"acousticEchoCancellationEnable - 回声消除 ( Default：NO )":@[@"NO", @"YES"], @"default":@0}]};
+            
+            /// PLAudioStreamingConfiguration 相关属性
+            NSDictionary *audioStreamingDict = @{@"PLAudioStreamingConfiguration":@[@{@"encodedAudioSampleRate - 音频采样率 ( Default：48000Hz )":@[@"48000Hz",@"44100Hz",@"22050Hz", @"11025Hz"], @"default":@0}, @{@"audioBitRate - 音频编码比特率 ( Default：96Kbps )":@[@"64Kbps", @"96Kbps", @"128Kbps"], @"default":@1}, @{@"encodedNumberOfChannels - 编码声道数 ( Default：1 )":@[@"1", @"2"], @"default":@0}, @{@"audioEncoderType - 编码模式 ( Default：iOS_AAC )":@[@"iOS_AAC", @"fdk_AAC_LC", @"fdk_AAC__HE_BSR"], @"default":@0}]};
+            
+            configureArr = @[videoCaptureDict, videoStreamingDict, audioCaptureDict, audioStreamingDict];
         }
-       
-        NSDictionary *previewMirrorFrontFacingDict = @{@"previewMirrorFrontFacing - 前置预览镜像 ( Default：YES )":@[@"NO", @"YES"], @"default":@1};
-        NSDictionary *previewMirrorRearFacingDict = @{@"previewMirrorRearFacing - 后置预览镜像 ( Default：NO )":@[@"NO", @"YES"], @"default":@0};
-        NSDictionary *streamMirrorFrontFacingDict = @{@"streamMirrorFrontFacing - 前置推流镜像 ( Default：NO )":@[@"NO", @"YES"], @"default":@0};
-        NSDictionary *streamMirrorRearFacingDict = @{@"streamMirrorRearFacing - 后置推流镜像 ( Default：NO )":@[@"NO", @"YES"], @"default":@0};
-        NSDictionary *cameraPositionDict = @{@"cameraPositon - 采集摄像头位置 ( Default：Back )":@[@"Unspecified", @"Back", @"Front"], @"default":@1};
-        NSDictionary *videoOrientationDict = @{@"videoOrientation - 采集摄像头旋转方向 ( Default：Portrait )":@[@"Portrait", @"PortraitUpsideDown", @"LandscapeRight", @"LandscapeLeft"], @"default":@0};
-        
-        NSDictionary *videoCaptureDict = @{@"PLVideoCaptureConfiguration":@[videoFrameRateDict, sessionPresetDict, previewMirrorFrontFacingDict, previewMirrorRearFacingDict, streamMirrorFrontFacingDict, streamMirrorRearFacingDict, cameraPositionDict, videoOrientationDict]};
-        
-        /// PLVideoStreamingConfiguration 相关属性
-        NSDictionary *videoProfileLevelDict = @{@"videoProfileLevel - 编码的 Profile Level ( Default：H264Baseline31 )":@[@"H264Baseline30", @"H264Baseline31", @"H264Baseline41", @"H264BaselineAutoLevel", @"H264Main30", @"H264Main31", @"H264Main32", @"H264Main41", @"H264MainAutoLevel", @"H264High40", @"H264High41", @"H264HighAutoLevel"], @"default":@1};
-        NSDictionary *videoSizeDict = @{@"videoSize - 编码时的视频分辨率 ( Default：720x1280 )":@[@"272x480", @"368x640", @"400x720", @"720x1280"], @"default":@3};
-        NSDictionary *expectedSourceVideoFrameRateDict = @{@"expectedSourceVideoFrameRate - 预期视频的帧率 ( Default：24fps )":@[@"5", @"10", @"15", @"20", @"24", @"30"], @"default":@4};
-        NSDictionary *videoMaxKeyframeIntervalDict = @{@"videoMaxKeyframeInterval - 视频编码关键帧最大间隔 ( Default：72fps )":@[@"15", @"30", @"45", @"60", @"72", @"90"], @"default":@4};
-        NSDictionary *averageVideoBitRateDict = @{@"averageVideoBitRate - 平均视频编码码率 ( Default：768Kbps )":@[@"256Kbps", @"512Kbps", @"768Kbps", @"1024Kbps", @"1280Kbps", @"1536Kbps", @"2048Kbps"], @"default":@2};
-        NSDictionary *videoEncoderTypeDict = @{@"videoEncoderType - H.264 编码器类型 ( Default：AVFoundation )":@[@"AVFoundation", @"VideoToolbox"], @"default":@0};
-        
-        NSDictionary *videoStreamingDict = @{@"PLVideoStreamingConfiguration":@[videoProfileLevelDict, videoSizeDict, expectedSourceVideoFrameRateDict, videoMaxKeyframeIntervalDict, averageVideoBitRateDict, videoEncoderTypeDict]};
-        
-        /// PLAudioCaptureConfiguration 相关属性
-        NSDictionary *audioCaptureDict = @{@"PLAudioCaptureConfiguration":@[@{@"channelsPerFrame - 采集音频声道数 ( Default：1 )":@[@"1", @"2"], @"default":@0}, @{@"acousticEchoCancellationEnable - 回声消除 ( Default：NO )":@[@"NO", @"YES"], @"default":@0}]};
-        
-        /// PLAudioStreamingConfiguration 相关属性
-        NSDictionary *audioStreamingDict = @{@"PLAudioStreamingConfiguration":@[@{@"encodedAudioSampleRate - 音频采样率 ( Default：48000Hz )":@[@"48000Hz",@"44100Hz",@"22050Hz", @"11025Hz"], @"default":@0}, @{@"audioBitRate - 音频编码比特率 ( Default：96Kbps )":@[@"64Kbps", @"96Kbps", @"128Kbps"], @"default":@1}, @{@"encodedNumberOfChannels - 编码声道数 ( Default：1 )":@[@"1", @"2"], @"default":@0}, @{@"audioEncoderType - 编码模式 ( Default：iOS_AAC )":@[@"iOS_AAC", @"fdk_AAC_LC", @"fdk_AAC__HE_BSR"], @"default":@0}]};
-        
-        NSArray *configureArr = @[videoCaptureDict, videoStreamingDict, audioCaptureDict, audioStreamingDict];
-        
         /// 装入属性数组
         _configurArray = [PLCategoryModel categoryArrayWithArray:configureArr];
     }
@@ -161,7 +206,7 @@ static NSString *listIdentifier = @"listCell";
     NSArray *array = categoryModel.categoryValue;
     PLConfigureModel *configureModel = array[indexPath.row];
     NSArray *rowArray = configureModel.configuraValue;
-    if ((rowArray.count <= 7 && [rowArray[0] length] < 6) || (rowArray.count <= 3 && [rowArray[1] length] < 10)) {
+    if ((rowArray.count <= 7 && [rowArray[0] length] < 6) || (rowArray.count <= 3 && [rowArray[1] length] < 14)) {
         PLSegmentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:segmentIdentifier forIndexPath:indexPath];
         [cell confugureSegmentCellWithConfigureModel:configureModel];
         cell.segmentControl.tag = 100 * indexPath.section + indexPath.row;
@@ -261,8 +306,8 @@ static NSString *listIdentifier = @"listCell";
     [_configurTableView reloadData];
     [self saveConfigurations];
     
-    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(configureStreamWithConfigureModel:categoryModel:)]) {
-        [self.delegate configureStreamWithConfigureModel:configureModel categoryModel:categoryModel];
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(configureStreamWithConfigureModel:categoryModel:isSession:)]) {
+        [self.delegate configureStreamWithConfigureModel:configureModel categoryModel:categoryModel isSession:_isSession];
         [self dismissView];
     }
 }

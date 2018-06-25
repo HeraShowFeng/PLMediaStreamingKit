@@ -25,16 +25,15 @@
 		B6FC33B41D93C470004EEE29 /* PLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33B31D93C470004EEE29 /* PLAppDelegate.m */; };
 		B6FC33B61D93C603004EEE29 /* PLMediaStreamingKit.podspec in Resources */ = {isa = PBXBuildFile; fileRef = B6FC33B51D93C603004EEE29 /* PLMediaStreamingKit.podspec */; };
 		C3289FA01F691C1900872955 /* PLScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3289F9F1F691C1900872955 /* PLScanViewController.m */; };
+		C33881912091CB1C004ECC1F /* PLConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C338818F2091CB1B004ECC1F /* PLConfigurationViewController.m */; };
+		C33881942091CB6F004ECC1F /* PLFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C33881932091CB6F004ECC1F /* PLFilterViewController.m */; };
 		C3B81DC61F46C7A60021EF6A /* LOGO.png in Resources */ = {isa = PBXBuildFile; fileRef = C3B81DC51F46C7A60021EF6A /* LOGO.png */; };
-		C3EFA93D1F186225007F18E7 /* PLConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EFA93C1F186225007F18E7 /* PLConfigurationViewController.m */; };
 		C3F516AE1F09DE590002D4C9 /* PLListArrayView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F516A91F09DE590002D4C9 /* PLListArrayView.m */; };
 		C3F516AF1F09DE590002D4C9 /* PLListArrTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F516AB1F09DE590002D4C9 /* PLListArrTableViewCell.m */; };
 		C3F516B01F09DE590002D4C9 /* PLSegmentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F516AD1F09DE590002D4C9 /* PLSegmentTableViewCell.m */; };
 		C3F516B41F09DE640002D4C9 /* PLCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F516B31F09DE640002D4C9 /* PLCategoryModel.m */; };
 		C3F516BA1F0B8DE60002D4C9 /* pushImage.png in Resources */ = {isa = PBXBuildFile; fileRef = C3F516B91F0B8DE60002D4C9 /* pushImage.png */; };
 		C3FEB1331F035C6300156FE0 /* PLMediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FEB1321F035C6300156FE0 /* PLMediaViewController.m */; };
-		C3FEB13C1F035C8000156FE0 /* PLFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FEB13B1F035C8000156FE0 /* PLFilterViewController.m */; };
-		C3FEB14A1F035DC400156FE0 /* PLSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FEB1491F035DC400156FE0 /* PLSessionViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,10 +76,12 @@
 		B6FC33B51D93C603004EEE29 /* PLMediaStreamingKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PLMediaStreamingKit.podspec; path = ../PLMediaStreamingKit.podspec; sourceTree = "<group>"; };
 		C3289F9E1F691C1900872955 /* PLScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLScanViewController.h; sourceTree = "<group>"; };
 		C3289F9F1F691C1900872955 /* PLScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLScanViewController.m; sourceTree = "<group>"; };
+		C338818F2091CB1B004ECC1F /* PLConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLConfigurationViewController.m; sourceTree = "<group>"; };
+		C33881902091CB1C004ECC1F /* PLConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLConfigurationViewController.h; sourceTree = "<group>"; };
+		C33881922091CB6F004ECC1F /* PLFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLFilterViewController.h; sourceTree = "<group>"; };
+		C33881932091CB6F004ECC1F /* PLFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLFilterViewController.m; sourceTree = "<group>"; };
 		C34A40A51EFD03F300F733AC /* PLPublicHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLPublicHeader.h; sourceTree = "<group>"; };
 		C3B81DC51F46C7A60021EF6A /* LOGO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LOGO.png; sourceTree = "<group>"; };
-		C3EFA93B1F186225007F18E7 /* PLConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLConfigurationViewController.h; sourceTree = "<group>"; };
-		C3EFA93C1F186225007F18E7 /* PLConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLConfigurationViewController.m; sourceTree = "<group>"; };
 		C3F516A81F09DE590002D4C9 /* PLListArrayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLListArrayView.h; sourceTree = "<group>"; };
 		C3F516A91F09DE590002D4C9 /* PLListArrayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLListArrayView.m; sourceTree = "<group>"; };
 		C3F516AA1F09DE590002D4C9 /* PLListArrTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLListArrTableViewCell.h; sourceTree = "<group>"; };
@@ -92,10 +93,6 @@
 		C3F516B91F0B8DE60002D4C9 /* pushImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pushImage.png; sourceTree = "<group>"; };
 		C3FEB1311F035C6300156FE0 /* PLMediaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLMediaViewController.h; sourceTree = "<group>"; };
 		C3FEB1321F035C6300156FE0 /* PLMediaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLMediaViewController.m; sourceTree = "<group>"; };
-		C3FEB13A1F035C8000156FE0 /* PLFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLFilterViewController.h; sourceTree = "<group>"; };
-		C3FEB13B1F035C8000156FE0 /* PLFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLFilterViewController.m; sourceTree = "<group>"; };
-		C3FEB1481F035DC400156FE0 /* PLSessionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSessionViewController.h; sourceTree = "<group>"; };
-		C3FEB1491F035DC400156FE0 /* PLSessionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSessionViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,9 +163,6 @@
 				B6FC339B1D93C398004EEE29 /* PLMainViewController.h */,
 				B6FC339C1D93C398004EEE29 /* PLMainViewController.m */,
 				C3FEB1301F035C6300156FE0 /* Main */,
-				C3EFA93A1F186225007F18E7 /* Configuration */,
-				C3FEB1471F035DC400156FE0 /* Session */,
-				C3FEB1391F035C8000156FE0 /* Filter */,
 				C3F516A71F09DE590002D4C9 /* CellView */,
 				C3F516B11F09DE640002D4C9 /* Model */,
 				C3289F9D1F691C1900872955 /* ScanCode */,
@@ -214,15 +208,6 @@
 			path = ScanCode;
 			sourceTree = "<group>";
 		};
-		C3EFA93A1F186225007F18E7 /* Configuration */ = {
-			isa = PBXGroup;
-			children = (
-				C3EFA93B1F186225007F18E7 /* PLConfigurationViewController.h */,
-				C3EFA93C1F186225007F18E7 /* PLConfigurationViewController.m */,
-			);
-			path = Configuration;
-			sourceTree = "<group>";
-		};
 		C3F516A71F09DE590002D4C9 /* CellView */ = {
 			isa = PBXGroup;
 			children = (
@@ -250,26 +235,12 @@
 			children = (
 				C3FEB1311F035C6300156FE0 /* PLMediaViewController.h */,
 				C3FEB1321F035C6300156FE0 /* PLMediaViewController.m */,
+				C33881902091CB1C004ECC1F /* PLConfigurationViewController.h */,
+				C338818F2091CB1B004ECC1F /* PLConfigurationViewController.m */,
+				C33881922091CB6F004ECC1F /* PLFilterViewController.h */,
+				C33881932091CB6F004ECC1F /* PLFilterViewController.m */,
 			);
 			path = Main;
-			sourceTree = "<group>";
-		};
-		C3FEB1391F035C8000156FE0 /* Filter */ = {
-			isa = PBXGroup;
-			children = (
-				C3FEB13A1F035C8000156FE0 /* PLFilterViewController.h */,
-				C3FEB13B1F035C8000156FE0 /* PLFilterViewController.m */,
-			);
-			path = Filter;
-			sourceTree = "<group>";
-		};
-		C3FEB1471F035DC400156FE0 /* Session */ = {
-			isa = PBXGroup;
-			children = (
-				C3FEB1481F035DC400156FE0 /* PLSessionViewController.h */,
-				C3FEB1491F035DC400156FE0 /* PLSessionViewController.m */,
-			);
-			path = Session;
 			sourceTree = "<group>";
 		};
 		F80803209498A6D014ADF6AC /* Pods */ = {
@@ -468,18 +439,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3FEB13C1F035C8000156FE0 /* PLFilterViewController.m in Sources */,
 				B6FC33991D93C301004EEE29 /* main.m in Sources */,
-				C3FEB14A1F035DC400156FE0 /* PLSessionViewController.m in Sources */,
 				B6FC33AB1D93C398004EEE29 /* PLMainViewController.m in Sources */,
 				B6FC33B41D93C470004EEE29 /* PLAppDelegate.m in Sources */,
 				C3FEB1331F035C6300156FE0 /* PLMediaViewController.m in Sources */,
 				C3F516B41F09DE640002D4C9 /* PLCategoryModel.m in Sources */,
 				C3F516AE1F09DE590002D4C9 /* PLListArrayView.m in Sources */,
+				C33881942091CB6F004ECC1F /* PLFilterViewController.m in Sources */,
 				C3F516B01F09DE590002D4C9 /* PLSegmentTableViewCell.m in Sources */,
 				C3289FA01F691C1900872955 /* PLScanViewController.m in Sources */,
+				C33881912091CB1C004ECC1F /* PLConfigurationViewController.m in Sources */,
 				C3F516AF1F09DE590002D4C9 /* PLListArrTableViewCell.m in Sources */,
-				C3EFA93D1F186225007F18E7 /* PLConfigurationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

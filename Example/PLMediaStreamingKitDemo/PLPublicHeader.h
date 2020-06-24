@@ -39,6 +39,7 @@
 // 第三方 SDK
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import "Masonry.h"
 
 // 推流 SDK
 #import <PLMediaStreamingKit/PLMediaStreamingKit.h>

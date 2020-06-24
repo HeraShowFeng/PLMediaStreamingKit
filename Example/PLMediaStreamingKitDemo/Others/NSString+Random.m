@@ -23,42 +23,36 @@
 #import "NSString+Random.h"
 #include <stdlib.h>
 
-#define DEFAULT_LENGTH  8
+#define DEFAULT_LENGTH  3
+//#define DEFAULT_LENGTH  8
 
 @implementation NSString (Randomized)
 
-+ (NSString *)defaultAlphabet
-{
++ (NSString *)defaultAlphabet {
     return @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZY0123456789";
 }
 
-+ (id)randomizedString
-{
++ (id)randomizedString {
     return [self randomizedStringWithAlphabet:[self defaultAlphabet]];
 }
 
-+ (id)randomizedStringWithAlphabet:(NSString *)alphabet
-{
++ (id)randomizedStringWithAlphabet:(NSString *)alphabet {
     return [self randomizedStringWithAlphabet:alphabet length:DEFAULT_LENGTH];
 }
 
-+ (id)randomizedStringWithAlphabet:(NSString *)alphabet length:(NSUInteger)len
-{
++ (id)randomizedStringWithAlphabet:(NSString *)alphabet length:(NSUInteger)len {
     return [[self alloc] initWithAlphabet:alphabet length:len];
 }
 
-- (id)initWithDefaultAlphabet
-{
+- (id)initWithDefaultAlphabet {
     return [self initWithAlphabet:[NSString defaultAlphabet]];
 }
 
-- (id)initWithAlphabet:(NSString *)alphabet
-{
+- (id)initWithAlphabet:(NSString *)alphabet {
     return [self initWithAlphabet:alphabet length:DEFAULT_LENGTH];
 }
 
-- (id)initWithAlphabet:(NSString *)alphabet length:(NSUInteger)len
-{
+- (id)initWithAlphabet:(NSString *)alphabet length:(NSUInteger)len {
     NSMutableString *s = [NSMutableString stringWithCapacity:len];
     for (NSUInteger i = 0U; i < len; i++) {
         u_int32_t r = arc4random() % [alphabet length];

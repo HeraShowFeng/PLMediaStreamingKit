@@ -18,6 +18,7 @@ PLPasterScrollViewDelegate,
 PLPasterViewDelegate
 >
 
+@property (nonatomic, strong) UIView *backView;
 @property (nonatomic, assign) PLSetDetailViewType type;
 @property (nonatomic, assign) CGFloat width;
 @property (nonatomic, assign) CGFloat height;
@@ -38,6 +39,7 @@ PLPasterViewDelegate
 
 @property (nonatomic, strong) UIView *audioMixSetView;
 @property (nonatomic, copy) NSString *musicFileString;
+@property (nonatomic, strong) UISegmentedControl *fileSegmentControl;
 @property (nonatomic, strong) UIButton *playbutton;
 @property (nonatomic, strong) UIButton *playBackbutton;
 @property (nonatomic, strong) UISlider *volumeSlider;
@@ -46,13 +48,15 @@ PLPasterViewDelegate
 
 @implementation PLShowDetailView
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame backView:(UIView *)backView{
     if ([super initWithFrame:frame]) {
-        self.backgroundColor = COLOR_RGB(0, 0, 0, 0.5);
+        self.backgroundColor = COLOR_RGB(0, 0, 0, 0.42);
         
-        _width = CGRectGetWidth(frame);
-        _height = CGRectGetWidth(frame);
+        _backView = backView;
         
+        _width = CGRectGetWidth(_backView.frame);
+        _height = CGRectGetHeight(_backView.frame);
+
         // 旋转方向 view
         [self layoutOrientaionView];
         
@@ -73,6 +77,9 @@ PLPasterViewDelegate
                 
         // 音效设置 view
         [self layoutAudioEffectView];
+        
+        
+        [self commonSegmentControlStyle];
     }
     return self;
 }
@@ -80,45 +87,65 @@ PLPasterViewDelegate
 #pragma mark - 旋转方向
 - (void)layoutOrientaionView {
     _orientaionSegmentControl = [[UISegmentedControl alloc] initWithItems:@[@"Portrait", @"UpsideDown", @"Right", @"Left"]];
-    _orientaionSegmentControl.frame = CGRectMake(PL_X_SPACE, PL_Y_SPACE, _width - PL_X_SPACE*2, 30);
-    _orientaionSegmentControl.tintColor = COLOR_RGB(16, 169, 235, 1);
     _orientaionSegmentControl.selectedSegmentIndex = 0;
     _orientaionSegmentControl.hidden = YES;
     [_orientaionSegmentControl addTarget:self action:@selector(selectedSegmentedControl:) forControlEvents:UIControlEventValueChanged];
     [self addSubview:_orientaionSegmentControl];
+    
+    [_orientaionSegmentControl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.mas_left).offset(PL_X_SPACE);
+        make.right.mas_equalTo(self.mas_right).offset(-PL_X_SPACE);
+        make.top.mas_equalTo(PL_Y_SPACE);
+        make.height.mas_equalTo(30);
+    }];
 }
 
 #pragma mark - 图片推流
 - (void)layoutImagePushView {
     _imgPushSegmentControl = [[UISegmentedControl alloc] initWithItems:@[@"nil", @"七牛", @"leave"]];
-    _imgPushSegmentControl.frame = CGRectMake(PL_X_SPACE, PL_Y_SPACE, _width - PL_X_SPACE*2, 30);
-    _imgPushSegmentControl.tintColor = COLOR_RGB(16, 169, 235, 1);
     _imgPushSegmentControl.selectedSegmentIndex = 0;
     _imgPushSegmentControl.hidden = YES;
     [_imgPushSegmentControl addTarget:self action:@selector(selectedSegmentedControl:) forControlEvents:UIControlEventValueChanged];
     [self addSubview:_imgPushSegmentControl];
+    
+    [_imgPushSegmentControl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.mas_left).offset(PL_X_SPACE);
+        make.right.mas_equalTo(self.mas_right).offset(-PL_X_SPACE);
+        make.top.mas_equalTo(PL_Y_SPACE);
+        make.height.mas_equalTo(30);
+    }];
 }
 
 #pragma mark - 水印
 - (void)layoutWatermarkView {
-    _watermarkSegmentControl = [[UISegmentedControl alloc] initWithItems:@[@"nil", @"七牛", @"小七1", @"小七2"]];
-    _watermarkSegmentControl.frame = CGRectMake(PL_X_SPACE, PL_Y_SPACE, _width - PL_X_SPACE*2, 30);
-    _watermarkSegmentControl.tintColor = COLOR_RGB(16, 169, 235, 1);
+    _watermarkSegmentControl = [[UISegmentedControl alloc] initWithItems:@[@"nil", @"110x34", @"592x330", @"592x362"]];
     _watermarkSegmentControl.selectedSegmentIndex = 0;
     _watermarkSegmentControl.hidden = YES;
     [_watermarkSegmentControl addTarget:self action:@selector(selectedSegmentedControl:) forControlEvents:UIControlEventValueChanged];
     [self addSubview:_watermarkSegmentControl];
+    
+    [_watermarkSegmentControl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.mas_left).offset(PL_X_SPACE);
+        make.right.mas_equalTo(self.mas_right).offset(-PL_X_SPACE);
+        make.top.mas_equalTo(PL_Y_SPACE);
+        make.height.mas_equalTo(30);
+    }];
 }
 
 #pragma mark - 音效
 - (void)layoutAudioEffectView {
     _audioEffectSegmentControl = [[UISegmentedControl alloc] initWithItems:@[@"none", @"Low", @"Medium", @"Height"]];
-    _audioEffectSegmentControl.frame = CGRectMake(PL_X_SPACE, PL_Y_SPACE, _width - PL_X_SPACE*2, 30);
-    _audioEffectSegmentControl.tintColor = COLOR_RGB(16, 169, 235, 1);
     _audioEffectSegmentControl.selectedSegmentIndex = 0;
     _audioEffectSegmentControl.hidden = YES;
     [_audioEffectSegmentControl addTarget:self action:@selector(selectedSegmentedControl:) forControlEvents:UIControlEventValueChanged];
     [self addSubview:_audioEffectSegmentControl];
+    
+    [_audioEffectSegmentControl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.mas_left).offset(PL_X_SPACE);
+        make.right.mas_equalTo(self.mas_right).offset(-PL_X_SPACE);
+        make.top.mas_equalTo(PL_Y_SPACE);
+        make.height.mas_equalTo(30);
+    }];
 }
 
 // 分栏选择
@@ -130,11 +157,18 @@ PLPasterViewDelegate
 
 #pragma mark - 美颜
 - (void)layoutBeautyView {
-    _beautySetView = [[UIView alloc] initWithFrame:CGRectMake(PL_X_SPACE, PL_Y_SPACE, _width - PL_X_SPACE*2, 128)];
+    _beautySetView = [[UIView alloc] init];
     _beautySetView.hidden = YES;
     [self addSubview:_beautySetView];
     
-    UILabel *configLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 78, 26)];
+    [_beautySetView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.mas_left).offset(PL_X_SPACE);
+        make.right.mas_equalTo(self.mas_right).offset(-PL_X_SPACE);
+        make.top.mas_equalTo(PL_Y_SPACE);
+        make.height.mas_equalTo(128);
+    }];
+    
+    UILabel *configLabel = [[UILabel alloc] init];
     configLabel.numberOfLines = 0;
     configLabel.textColor = [UIColor whiteColor];
     configLabel.textAlignment = NSTextAlignmentLeft;
@@ -143,36 +177,58 @@ PLPasterViewDelegate
     [_beautySetView addSubview:configLabel];
     
     _beautyModeSegmentControl = [[UISegmentedControl alloc]initWithItems:@[@"NO", @"YES"]];
-    _beautyModeSegmentControl.frame = CGRectMake(82, 0, _width - 82 - PL_X_SPACE*2, 26);
     _beautyModeSegmentControl.tintColor = COLOR_RGB(16, 169, 235, 1);
     [_beautyModeSegmentControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
     [_beautySetView addSubview:_beautyModeSegmentControl];
     _beautyModeSegmentControl.selectedSegmentIndex = 1;
 
+    [configLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.top.mas_equalTo(_beautySetView);
+        make.size.mas_equalTo(CGSizeMake(78, 26));
+    }];
+    
+    [_beautyModeSegmentControl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(configLabel);
+        make.right.mas_equalTo(_beautySetView);
+        make.top.mas_equalTo(_beautySetView);
+        make.height.mas_equalTo(26);
+    }];
     
     _beautySliderArray = [NSMutableArray array];
     
     // 美颜／美白／红润
     NSArray *titleArr = @[@"setBeautify:",@"setWhiten:",@"setRedden:"];
     for (NSInteger i = 0; i < 3; i++) {
-        UILabel *hintLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 33 * (i + 1), 68, 26)];
+        UILabel *hintLab = [[UILabel alloc]init];
         hintLab.font = FONT_LIGHT(12.f);
         hintLab.textColor = [UIColor whiteColor];
         hintLab.textAlignment = NSTextAlignmentLeft;
         hintLab.text = titleArr[i];
         [_beautySetView addSubview:hintLab];
         
-        UISlider *slider = [[UISlider alloc]initWithFrame:CGRectMake(72, 33 * (i + 1), _width - 72 - PL_X_SPACE*2, 26)];
+        UISlider *slider = [[UISlider alloc]init];
         slider.tag = 100 + i;
         slider.minimumTrackTintColor = COLOR_RGB(147, 185, 242, 1);
         slider.maximumTrackTintColor = LINE_COLOR;
-                
         slider.minimumValue = 0;
         slider.maximumValue = 1;
         slider.continuous = NO;
         slider.value = 0.5;
         [slider addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
         [_beautySetView addSubview:slider];
+        
+        [hintLab mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(_beautySetView);
+            make.top.mas_equalTo(33 * (i + 1));
+            make.size.mas_equalTo(CGSizeMake(68, 26));
+        }];
+        
+        [slider mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(hintLab.mas_right).offset(6);
+            make.right.mas_equalTo(_beautySetView);
+            make.top.mas_equalTo(33 * (i + 1));
+            make.height.mas_equalTo(26);
+        }];
         
         [_beautySliderArray addObject:slider];
     }
@@ -225,9 +281,16 @@ PLPasterViewDelegate
 
 #pragma mark - 贴纸
 - (void)layoutStickerView {
-    _stickerSetView = [[UIView alloc] initWithFrame:CGRectMake(PL_X_SPACE, PL_Y_SPACE, _width - PL_X_SPACE*2, 80)];
+    _stickerSetView = [[UIView alloc] init];
     _stickerSetView.hidden = YES;
     [self addSubview:_stickerSetView];
+    
+    [_stickerSetView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.mas_left).offset(PL_X_SPACE);
+        make.right.mas_equalTo(self.mas_right).offset(-PL_X_SPACE);
+        make.top.mas_equalTo(PL_Y_SPACE);
+        make.height.mas_equalTo(80);
+    }];
     
     _stickerImageArray = [NSMutableArray array];
     for (int i = 1; i <= 9; i++) {
@@ -243,6 +306,11 @@ PLPasterViewDelegate
     _pasterScrollView.contentSize = CGSizeMake(_pasterScrollView.pasterImage_W_H * _pasterScrollView.pasterImageArray.count + 15 * (_pasterScrollView.pasterImageArray.count + 1), 0);
     _pasterScrollView.pasterDelegate = self;
     [_stickerSetView addSubview:_pasterScrollView];
+    
+    [_pasterScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.top.mas_equalTo(_stickerSetView);
+        make.height.mas_equalTo(80);
+    }];
 }
 
 #pragma mark - PLPasterScrollViewDelegate
@@ -279,11 +347,18 @@ PLPasterViewDelegate
 
 #pragma mark - 混音
 - (void)layoutAudioMixView {
-    _audioMixSetView = [[UIView alloc] initWithFrame:CGRectMake(PL_X_SPACE, PL_Y_SPACE, _width - PL_X_SPACE*2, 142)];
+    _audioMixSetView = [[UIView alloc] init];
     _audioMixSetView.hidden = YES;
     [self addSubview:_audioMixSetView];
     
-    _playbutton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, _width/2 - PL_X_SPACE - 5, 28)];
+    [_audioMixSetView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.mas_left).offset(PL_X_SPACE);
+        make.right.mas_equalTo(self.mas_right).offset(-PL_X_SPACE);
+        make.top.mas_equalTo(PL_Y_SPACE);
+        make.height.mas_equalTo(142);
+    }];
+    
+    _playbutton = [[UIButton alloc] init];
     [_playbutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _playbutton.layer.borderColor = [UIColor whiteColor].CGColor;
     _playbutton.layer.borderWidth = 0.5f;
@@ -293,7 +368,7 @@ PLPasterViewDelegate
     [_playbutton addTarget:self action:@selector(playAction:) forControlEvents:UIControlEventTouchDown];
     [_audioMixSetView addSubview:_playbutton];
     
-    _playBackbutton = [[UIButton alloc] initWithFrame:CGRectMake(_width/2 - PL_X_SPACE + 5, 0, _width/2 - PL_X_SPACE - 5, 28)];
+    _playBackbutton = [[UIButton alloc] init];
     [_playBackbutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _playBackbutton.layer.borderColor = [UIColor whiteColor].CGColor;
     _playBackbutton.layer.borderWidth = 0.5f;
@@ -303,7 +378,14 @@ PLPasterViewDelegate
     [_playBackbutton addTarget:self action:@selector(playBackAction:) forControlEvents:UIControlEventTouchDown];
     [_audioMixSetView addSubview:_playBackbutton];
     
-    UILabel *configLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 42, 74, 26)];
+    NSArray *buttonArray = @[_playbutton, _playBackbutton];
+    [buttonArray mas_distributeViewsAlongAxis:MASAxisTypeHorizontal withFixedSpacing:10 leadSpacing:0 tailSpacing:0];
+    [buttonArray mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(_audioMixSetView);
+        make.height.mas_equalTo(20);
+    }];
+    
+    UILabel *configLabel = [[UILabel alloc]init];
     configLabel.numberOfLines = 0;
     configLabel.textColor = [UIColor whiteColor];
     configLabel.textAlignment = NSTextAlignmentLeft;
@@ -311,21 +393,33 @@ PLPasterViewDelegate
     configLabel.text = @"Music File：";
     [_audioMixSetView addSubview:configLabel];
     
-    _beautyModeSegmentControl = [[UISegmentedControl alloc]initWithItems:@[@"M1", @"M2", @"M3", @"M4", @"M5"]];
-    _beautyModeSegmentControl.frame = CGRectMake(78, 42, _width - 78 - PL_X_SPACE*2, 26);
-    _beautyModeSegmentControl.tintColor = COLOR_RGB(16, 169, 235, 1);
-    [_beautyModeSegmentControl addTarget:self action:@selector(musicSegmentAction:) forControlEvents:UIControlEventValueChanged];
-    [_audioMixSetView addSubview:_beautyModeSegmentControl];
-    _beautyModeSegmentControl.selectedSegmentIndex = 0;
+    _fileSegmentControl = [[UISegmentedControl alloc]initWithItems:@[@"M1", @"M2", @"M3", @"M4", @"M5"]];
+    _fileSegmentControl.tintColor = COLOR_RGB(16, 169, 235, 1);
+    [_fileSegmentControl addTarget:self action:@selector(musicSegmentAction:) forControlEvents:UIControlEventValueChanged];
+    [_audioMixSetView addSubview:_fileSegmentControl];
+    _fileSegmentControl.selectedSegmentIndex = 0;
+    
+    [configLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(_audioMixSetView);
+        make.top.mas_equalTo(_playbutton.mas_bottom).offset(12);
+        make.size.mas_equalTo(CGSizeMake(74, 26));
+    }];
+    
+    [_fileSegmentControl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(configLabel.mas_right);
+        make.right.mas_equalTo(_audioMixSetView);
+        make.top.mas_equalTo(_playbutton.mas_bottom).offset(12);
+        make.height.mas_equalTo(26);
+    }];
         
-    UILabel *volumeHintLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 78, 68, 26)];
+    UILabel *volumeHintLab = [[UILabel alloc]init];
     volumeHintLab.font = FONT_LIGHT(12.f);
     volumeHintLab.textColor = [UIColor whiteColor];
     volumeHintLab.textAlignment = NSTextAlignmentLeft;
     volumeHintLab.text = @"volume：";
     [_audioMixSetView addSubview:volumeHintLab];
     
-    _volumeSlider = [[UISlider alloc]initWithFrame:CGRectMake(72, 78, _width - 72 - PL_X_SPACE*2, 26)];
+    _volumeSlider = [[UISlider alloc]init];
     _volumeSlider.minimumTrackTintColor = COLOR_RGB(147, 185, 242, 1);
     _volumeSlider.maximumTrackTintColor = LINE_COLOR;
     _volumeSlider.minimumValue = 0;
@@ -335,14 +429,27 @@ PLPasterViewDelegate
     [_volumeSlider addTarget:self action:@selector(volumeSliderAction:) forControlEvents:UIControlEventValueChanged];
     [_audioMixSetView addSubview:_volumeSlider];
     
-    UILabel *progressHintLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 115, 68, 26)];
+    [volumeHintLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(_audioMixSetView);
+        make.top.mas_equalTo(configLabel.mas_bottom).offset(12);
+        make.size.mas_equalTo(CGSizeMake(68, 26));
+    }];
+    
+    [_volumeSlider mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(volumeHintLab.mas_right);
+        make.right.mas_equalTo(_audioMixSetView);
+        make.top.mas_equalTo(_fileSegmentControl.mas_bottom).offset(12);
+        make.height.mas_equalTo(26);
+    }];
+    
+    UILabel *progressHintLab = [[UILabel alloc]init];
     progressHintLab.font = FONT_LIGHT(12.f);
     progressHintLab.textColor = [UIColor whiteColor];
     progressHintLab.textAlignment = NSTextAlignmentLeft;
     progressHintLab.text = @"progress：";
     [_audioMixSetView addSubview:progressHintLab];
     
-    _progressSlider = [[UISlider alloc]initWithFrame:CGRectMake(72, 115, _width - 72 - PL_X_SPACE*2, 26)];
+    _progressSlider = [[UISlider alloc]init];
     _progressSlider.minimumTrackTintColor = COLOR_RGB(147, 185, 242, 1);
     _progressSlider.maximumTrackTintColor = LINE_COLOR;
     _progressSlider.minimumValue = 0;
@@ -350,6 +457,19 @@ PLPasterViewDelegate
     _progressSlider.continuous = NO;
     [_progressSlider addTarget:self action:@selector(progressSliderAction:) forControlEvents:UIControlEventValueChanged];
     [_audioMixSetView addSubview:_progressSlider];
+    
+    [progressHintLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(_audioMixSetView);
+        make.top.mas_equalTo(volumeHintLab.mas_bottom).offset(12);
+        make.size.mas_equalTo(CGSizeMake(68, 26));
+    }];
+    
+    [_progressSlider mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(volumeHintLab.mas_right);
+        make.right.mas_equalTo(_audioMixSetView);
+        make.top.mas_equalTo(_volumeSlider.mas_bottom).offset(12);
+        make.height.mas_equalTo(26);
+    }];
     
     _musicFileString = [[NSBundle mainBundle] pathForResource:@"TestMusic1" ofType:@"m4a"];
 }
@@ -437,16 +557,21 @@ PLPasterViewDelegate
         default:
             break;
     }
-    [UIView animateWithDuration:0.3 animations:^{
-        self.frame = CGRectMake(0, KSCREEN_HEIGHT - _height, _width, _height);
+    [self mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.size.height.mas_equalTo(_height);
+        make.left.right.mas_equalTo(_backView);
+        make.top.mas_equalTo(_backView.mas_bottom).offset(-_height);
     }];
 }
 
 #pragma mark - 隐藏细节配置视图
 - (void)hideDetailSettingView {
-    [UIView animateWithDuration:0.3 animations:^{
-        self.frame = CGRectMake(0, KSCREEN_HEIGHT, _width, self.frame.size.height);
+    [self mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.size.height.mas_equalTo(_height);
+        make.left.right.mas_equalTo(_backView);
+        make.top.mas_equalTo(_backView.mas_bottom);
     }];
+
     _orientaionSegmentControl.hidden = YES;
     _imgPushSegmentControl.hidden = YES;
     _watermarkSegmentControl.hidden = YES;
@@ -455,6 +580,26 @@ PLPasterViewDelegate
     _beautySetView.hidden = YES;
     _stickerSetView.hidden = YES;
     _audioMixSetView.hidden = YES;
+}
+
+- (void)commonSegmentControlStyle{
+    UIColor *color = COLOR_RGB(16, 169, 235, 1);
+    
+    if ([IOS_SYSTEM_STRING compare:@"12.0.0"] >= 0) {
+        _orientaionSegmentControl.backgroundColor = color;
+        _imgPushSegmentControl.backgroundColor = color;
+        _watermarkSegmentControl.backgroundColor = color;
+        _audioEffectSegmentControl.backgroundColor = color;
+        _beautyModeSegmentControl.backgroundColor = color;
+        _fileSegmentControl.backgroundColor = color;
+    } else{
+        _orientaionSegmentControl.tintColor = color;
+        _imgPushSegmentControl.tintColor = color;
+        _watermarkSegmentControl.tintColor = color;
+        _audioEffectSegmentControl.tintColor = color;
+        _beautyModeSegmentControl.tintColor = color;
+        _fileSegmentControl.tintColor = color;
+    }
 }
 
 /*

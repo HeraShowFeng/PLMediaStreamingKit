@@ -30,6 +30,8 @@
 		0AA48E502102001A00EA31B7 /* TestMusic4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA48E4B2102001A00EA31B7 /* TestMusic4.mp3 */; };
 		0AA48E512102001A00EA31B7 /* TestMusic3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA48E4C2102001A00EA31B7 /* TestMusic3.mp3 */; };
 		1CB31FA1A509BFCE50E56392 /* libPods-PLMediaStreamingKitDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D38E0519CDFBF6954B8389D /* libPods-PLMediaStreamingKitDemo.a */; };
+		2CC04E38E3E74CA7FD47963C /* libPods-PLBroadcastExtensionSetupUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B8EE1A8DC9BC78C2239FAB6D /* libPods-PLBroadcastExtensionSetupUI.a */; };
+		39D40E003461D41E765889FF /* libPods-PLBroadcastExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A308E598CF830D41BA9C8DB /* libPods-PLBroadcastExtension.a */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -49,6 +51,14 @@
 		AA28AF7224975F49003D86FF /* PLInitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA28AF6D24975F49003D86FF /* PLInitViewController.m */; };
 		AA28AF7324975F49003D86FF /* PLScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA28AF6E24975F49003D86FF /* PLScanViewController.m */; };
 		AA28AF7424975F49003D86FF /* PLStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA28AF6F24975F49003D86FF /* PLStreamViewController.m */; };
+		AA44D32B24A21A0B007F94CE /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA44D32A24A21A0B007F94CE /* ReplayKit.framework */; };
+		AA44D32F24A21A0B007F94CE /* SampleHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA44D32E24A21A0B007F94CE /* SampleHandler.m */; };
+		AA44D33624A21A0B007F94CE /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA44D32A24A21A0B007F94CE /* ReplayKit.framework */; };
+		AA44D33724A21A0B007F94CE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
+		AA44D33B24A21A0B007F94CE /* BroadcastSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA44D33A24A21A0B007F94CE /* BroadcastSetupViewController.m */; };
+		AA44D33F24A21A0B007F94CE /* PLBroadcastExtensionSetupUI.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AA44D33524A21A0B007F94CE /* PLBroadcastExtensionSetupUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AA44D34224A21A0B007F94CE /* PLBroadcastExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AA44D32924A21A0B007F94CE /* PLBroadcastExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AA44D34C24A21BA2007F94CE /* BroadcastManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA44D34B24A21BA2007F94CE /* BroadcastManager.m */; };
 		AA94A0E6249771230071A33D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA94A0E5249771220071A33D /* Launch Screen.storyboard */; };
 		B651FF9C1D93DA1F00D1C578 /* qiniu.png in Resources */ = {isa = PBXBuildFile; fileRef = B651FF941D93DA1F00D1C578 /* qiniu.png */; };
 		B651FFA21D93DA1F00D1C578 /* xiaoqi1.png in Resources */ = {isa = PBXBuildFile; fileRef = B651FF9A1D93DA1F00D1C578 /* xiaoqi1.png */; };
@@ -67,7 +77,36 @@
 			remoteGlobalIDString = 6003F589195388D20070C39A;
 			remoteInfo = PLCameraStreamingKit;
 		};
+		AA44D33D24A21A0B007F94CE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6003F582195388D10070C39A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA44D33424A21A0B007F94CE;
+			remoteInfo = PLBroadcastExtensionSetupUI;
+		};
+		AA44D34024A21A0B007F94CE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6003F582195388D10070C39A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA44D32824A21A0B007F94CE;
+			remoteInfo = PLBroadcastExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AA44D34324A21A0B007F94CE /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				AA44D34224A21A0B007F94CE /* PLBroadcastExtension.appex in Embed App Extensions */,
+				AA44D33F24A21A0B007F94CE /* PLBroadcastExtensionSetupUI.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		09EF86FE485DC921D9EC2C00 /* Pods-PLMediaStreamingKitDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLMediaStreamingKitDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PLMediaStreamingKitDemo/Pods-PLMediaStreamingKitDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -96,6 +135,7 @@
 		0AA48E4B2102001A00EA31B7 /* TestMusic4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TestMusic4.mp3; sourceTree = "<group>"; };
 		0AA48E4C2102001A00EA31B7 /* TestMusic3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TestMusic3.mp3; sourceTree = "<group>"; };
 		0C618BE754D25865CFB92AE2 /* Pods-PLMediaStreamingKitDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLMediaStreamingKitDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PLMediaStreamingKitDemo/Pods-PLMediaStreamingKitDemo.release.xcconfig"; sourceTree = "<group>"; };
+		2A308E598CF830D41BA9C8DB /* libPods-PLBroadcastExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PLBroadcastExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58A195388D20070C39A /* PLMediaStreamingKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PLMediaStreamingKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -104,6 +144,7 @@
 		6D38E0519CDFBF6954B8389D /* libPods-PLMediaStreamingKitDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PLMediaStreamingKitDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		769750EC1A6329DC0079423B /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		76B2FA6D2052C03600DAF7E8 /* PLMediaStreamingKit-Universal.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "PLMediaStreamingKit-Universal.podspec"; path = "../PLMediaStreamingKit-Universal.podspec"; sourceTree = "<group>"; };
+		9BABA5B28DC3CD3C63ECFCD6 /* Pods-PLBroadcastExtensionSetupUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLBroadcastExtensionSetupUI.release.xcconfig"; path = "Pods/Target Support Files/Pods-PLBroadcastExtensionSetupUI/Pods-PLBroadcastExtensionSetupUI.release.xcconfig"; sourceTree = "<group>"; };
 		AA28AF5024975F3C003D86FF /* PLCategoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLCategoryModel.m; sourceTree = "<group>"; };
 		AA28AF5124975F3C003D86FF /* PLAssetReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAssetReader.h; sourceTree = "<group>"; };
 		AA28AF5224975F3C003D86FF /* NSString+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Random.h"; sourceTree = "<group>"; };
@@ -129,7 +170,19 @@
 		AA28AF7024975F49003D86FF /* PLInitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLInitViewController.h; sourceTree = "<group>"; };
 		AA28AF7124975F49003D86FF /* PLStreamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLStreamViewController.h; sourceTree = "<group>"; };
 		AA28AF7524975F9A003D86FF /* PLPublicHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLPublicHeader.h; sourceTree = "<group>"; };
+		AA44D32924A21A0B007F94CE /* PLBroadcastExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PLBroadcastExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA44D32A24A21A0B007F94CE /* ReplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReplayKit.framework; path = System/Library/Frameworks/ReplayKit.framework; sourceTree = SDKROOT; };
+		AA44D32D24A21A0B007F94CE /* SampleHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SampleHandler.h; sourceTree = "<group>"; };
+		AA44D32E24A21A0B007F94CE /* SampleHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SampleHandler.m; sourceTree = "<group>"; };
+		AA44D33024A21A0B007F94CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA44D33524A21A0B007F94CE /* PLBroadcastExtensionSetupUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PLBroadcastExtensionSetupUI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA44D33924A21A0B007F94CE /* BroadcastSetupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BroadcastSetupViewController.h; sourceTree = "<group>"; };
+		AA44D33A24A21A0B007F94CE /* BroadcastSetupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BroadcastSetupViewController.m; sourceTree = "<group>"; };
+		AA44D33C24A21A0B007F94CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA44D34A24A21BA1007F94CE /* BroadcastManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BroadcastManager.h; sourceTree = "<group>"; };
+		AA44D34B24A21BA2007F94CE /* BroadcastManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BroadcastManager.m; sourceTree = "<group>"; };
 		AA94A0E5249771220071A33D /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		B05420F36550C28AA35EE14A /* Pods-PLBroadcastExtensionSetupUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLBroadcastExtensionSetupUI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PLBroadcastExtensionSetupUI/Pods-PLBroadcastExtensionSetupUI.debug.xcconfig"; sourceTree = "<group>"; };
 		B651FF941D93DA1F00D1C578 /* qiniu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qiniu.png; sourceTree = "<group>"; };
 		B651FF9A1D93DA1F00D1C578 /* xiaoqi1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiaoqi1.png; sourceTree = "<group>"; };
 		B651FF9B1D93DA1F00D1C578 /* xiaoqi2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiaoqi2.png; sourceTree = "<group>"; };
@@ -140,6 +193,9 @@
 		B6FC33B21D93C470004EEE29 /* PLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAppDelegate.h; sourceTree = "<group>"; };
 		B6FC33B31D93C470004EEE29 /* PLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAppDelegate.m; sourceTree = "<group>"; };
 		B6FC33B51D93C603004EEE29 /* PLMediaStreamingKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PLMediaStreamingKit.podspec; path = ../PLMediaStreamingKit.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		B8EE1A8DC9BC78C2239FAB6D /* libPods-PLBroadcastExtensionSetupUI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PLBroadcastExtensionSetupUI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E52245F07BD6CA9C6B8F6E8E /* Pods-PLBroadcastExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLBroadcastExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-PLBroadcastExtension/Pods-PLBroadcastExtension.release.xcconfig"; sourceTree = "<group>"; };
+		F5895622AF23ED667A3381CE /* Pods-PLBroadcastExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLBroadcastExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PLBroadcastExtension/Pods-PLBroadcastExtension.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +217,25 @@
 			files = (
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA44D32624A21A0B007F94CE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA44D32B24A21A0B007F94CE /* ReplayKit.framework in Frameworks */,
+				39D40E003461D41E765889FF /* libPods-PLBroadcastExtension.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA44D33224A21A0B007F94CE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA44D33624A21A0B007F94CE /* ReplayKit.framework in Frameworks */,
+				AA44D33724A21A0B007F94CE /* UIKit.framework in Frameworks */,
+				2CC04E38E3E74CA7FD47963C /* libPods-PLBroadcastExtensionSetupUI.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,6 +282,8 @@
 				76B2FA6D2052C03600DAF7E8 /* PLMediaStreamingKit-Universal.podspec */,
 				B6FC33B51D93C603004EEE29 /* PLMediaStreamingKit.podspec */,
 				B6FC338B1D93C301004EEE29 /* PLMediaStreamingKitDemo */,
+				AA44D32C24A21A0B007F94CE /* PLBroadcastExtension */,
+				AA44D33824A21A0B007F94CE /* PLBroadcastExtensionSetupUI */,
 				6003F58C195388D20070C39A /* Frameworks */,
 				6003F58B195388D20070C39A /* Products */,
 				F80803209498A6D014ADF6AC /* Pods */,
@@ -218,6 +295,8 @@
 			children = (
 				6003F58A195388D20070C39A /* PLMediaStreamingKitDemo.app */,
 				6003F5AE195388D20070C39A /* Tests.xctest */,
+				AA44D32924A21A0B007F94CE /* PLBroadcastExtension.appex */,
+				AA44D33524A21A0B007F94CE /* PLBroadcastExtensionSetupUI.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -230,6 +309,9 @@
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
 				6D38E0519CDFBF6954B8389D /* libPods-PLMediaStreamingKitDemo.a */,
+				AA44D32A24A21A0B007F94CE /* ReplayKit.framework */,
+				2A308E598CF830D41BA9C8DB /* libPods-PLBroadcastExtension.a */,
+				B8EE1A8DC9BC78C2239FAB6D /* libPods-PLBroadcastExtensionSetupUI.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -264,6 +346,28 @@
 				AA28AF5F24975F3C003D86FF /* PLShowDetailView.m */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		AA44D32C24A21A0B007F94CE /* PLBroadcastExtension */ = {
+			isa = PBXGroup;
+			children = (
+				AA44D32D24A21A0B007F94CE /* SampleHandler.h */,
+				AA44D32E24A21A0B007F94CE /* SampleHandler.m */,
+				AA44D34A24A21BA1007F94CE /* BroadcastManager.h */,
+				AA44D34B24A21BA2007F94CE /* BroadcastManager.m */,
+				AA44D33024A21A0B007F94CE /* Info.plist */,
+			);
+			path = PLBroadcastExtension;
+			sourceTree = "<group>";
+		};
+		AA44D33824A21A0B007F94CE /* PLBroadcastExtensionSetupUI */ = {
+			isa = PBXGroup;
+			children = (
+				AA44D33924A21A0B007F94CE /* BroadcastSetupViewController.h */,
+				AA44D33A24A21A0B007F94CE /* BroadcastSetupViewController.m */,
+				AA44D33C24A21A0B007F94CE /* Info.plist */,
+			);
+			path = PLBroadcastExtensionSetupUI;
 			sourceTree = "<group>";
 		};
 		B6FC338B1D93C301004EEE29 /* PLMediaStreamingKitDemo */ = {
@@ -319,6 +423,10 @@
 			children = (
 				09EF86FE485DC921D9EC2C00 /* Pods-PLMediaStreamingKitDemo.debug.xcconfig */,
 				0C618BE754D25865CFB92AE2 /* Pods-PLMediaStreamingKitDemo.release.xcconfig */,
+				F5895622AF23ED667A3381CE /* Pods-PLBroadcastExtension.debug.xcconfig */,
+				E52245F07BD6CA9C6B8F6E8E /* Pods-PLBroadcastExtension.release.xcconfig */,
+				B05420F36550C28AA35EE14A /* Pods-PLBroadcastExtensionSetupUI.debug.xcconfig */,
+				9BABA5B28DC3CD3C63ECFCD6 /* Pods-PLBroadcastExtensionSetupUI.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -336,10 +444,13 @@
 				6003F588195388D20070C39A /* Resources */,
 				C4A42BD82CFC393B83A372D1 /* [CP] Embed Pods Frameworks */,
 				B651FF8E1D93D99B00D1C578 /* ShellScript */,
+				AA44D34324A21A0B007F94CE /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				AA44D33E24A21A0B007F94CE /* PBXTargetDependency */,
+				AA44D34124A21A0B007F94CE /* PBXTargetDependency */,
 			);
 			name = PLMediaStreamingKitDemo;
 			productName = PLCameraStreamingKit;
@@ -364,6 +475,42 @@
 			productReference = 6003F5AE195388D20070C39A /* Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		AA44D32824A21A0B007F94CE /* PLBroadcastExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA44D34924A21A0B007F94CE /* Build configuration list for PBXNativeTarget "PLBroadcastExtension" */;
+			buildPhases = (
+				3F15240A6232224471224131 /* [CP] Check Pods Manifest.lock */,
+				AA44D32524A21A0B007F94CE /* Sources */,
+				AA44D32624A21A0B007F94CE /* Frameworks */,
+				AA44D32724A21A0B007F94CE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PLBroadcastExtension;
+			productName = PLBroadcastExtension;
+			productReference = AA44D32924A21A0B007F94CE /* PLBroadcastExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		AA44D33424A21A0B007F94CE /* PLBroadcastExtensionSetupUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA44D34824A21A0B007F94CE /* Build configuration list for PBXNativeTarget "PLBroadcastExtensionSetupUI" */;
+			buildPhases = (
+				26956EBD0EB31D6D44DC35BB /* [CP] Check Pods Manifest.lock */,
+				AA44D33124A21A0B007F94CE /* Sources */,
+				AA44D33224A21A0B007F94CE /* Frameworks */,
+				AA44D33324A21A0B007F94CE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PLBroadcastExtensionSetupUI;
+			productName = PLBroadcastExtensionSetupUI;
+			productReference = AA44D33524A21A0B007F94CE /* PLBroadcastExtensionSetupUI.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -385,6 +532,16 @@
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};
+					AA44D32824A21A0B007F94CE = {
+						CreatedOnToolsVersion = 11.3.1;
+						DevelopmentTeam = W2TP34G2MM;
+						ProvisioningStyle = Automatic;
+					};
+					AA44D33424A21A0B007F94CE = {
+						CreatedOnToolsVersion = 11.3.1;
+						DevelopmentTeam = W2TP34G2MM;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 6003F585195388D10070C39A /* Build configuration list for PBXProject "PLMediaStreamingKitDemo" */;
@@ -403,6 +560,8 @@
 			targets = (
 				6003F589195388D20070C39A /* PLMediaStreamingKitDemo */,
 				6003F5AD195388D20070C39A /* Tests */,
+				AA44D32824A21A0B007F94CE /* PLBroadcastExtension */,
+				AA44D33424A21A0B007F94CE /* PLBroadcastExtensionSetupUI */,
 			);
 		};
 /* End PBXProject section */
@@ -449,9 +608,67 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AA44D32724A21A0B007F94CE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA44D33324A21A0B007F94CE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		26956EBD0EB31D6D44DC35BB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PLBroadcastExtensionSetupUI-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3F15240A6232224471224131 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PLBroadcastExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A1E7FB20C839273AD4B3F024 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -536,6 +753,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AA44D32524A21A0B007F94CE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA44D32F24A21A0B007F94CE /* SampleHandler.m in Sources */,
+				AA44D34C24A21BA2007F94CE /* BroadcastManager.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA44D33124A21A0B007F94CE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA44D33B24A21A0B007F94CE /* BroadcastSetupViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -543,6 +777,16 @@
 			isa = PBXTargetDependency;
 			target = 6003F589195388D20070C39A /* PLMediaStreamingKitDemo */;
 			targetProxy = 6003F5B3195388D20070C39A /* PBXContainerItemProxy */;
+		};
+		AA44D33E24A21A0B007F94CE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA44D33424A21A0B007F94CE /* PLBroadcastExtensionSetupUI */;
+			targetProxy = AA44D33D24A21A0B007F94CE /* PBXContainerItemProxy */;
+		};
+		AA44D34124A21A0B007F94CE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA44D32824A21A0B007F94CE /* PLBroadcastExtension */;
+			targetProxy = AA44D34024A21A0B007F94CE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -639,6 +883,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_ENTITLEMENTS = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W2TP34G2MM;
 				ENABLE_BITCODE = YES;
@@ -665,6 +910,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_ENTITLEMENTS = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W2TP34G2MM;
 				ENABLE_BITCODE = YES;
@@ -726,6 +972,162 @@
 			};
 			name = Release;
 		};
+		AA44D34424A21A0B007F94CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5895622AF23ED667A3381CE /* Pods-PLBroadcastExtension.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = W2TP34G2MM;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = PLBroadcastExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKit.PLBroadcastExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AA44D34524A21A0B007F94CE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E52245F07BD6CA9C6B8F6E8E /* Pods-PLBroadcastExtension.release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = W2TP34G2MM;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = PLBroadcastExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKit.PLBroadcastExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AA44D34624A21A0B007F94CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B05420F36550C28AA35EE14A /* Pods-PLBroadcastExtensionSetupUI.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = W2TP34G2MM;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = PLBroadcastExtensionSetupUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKit.PLBroadcastExtensionSetupUI";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AA44D34724A21A0B007F94CE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9BABA5B28DC3CD3C63ECFCD6 /* Pods-PLBroadcastExtensionSetupUI.release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = W2TP34G2MM;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = PLBroadcastExtensionSetupUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKit.PLBroadcastExtensionSetupUI";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -752,6 +1154,24 @@
 			buildConfigurations = (
 				6003F5C3195388D20070C39A /* Debug */,
 				6003F5C4195388D20070C39A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA44D34824A21A0B007F94CE /* Build configuration list for PBXNativeTarget "PLBroadcastExtensionSetupUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA44D34624A21A0B007F94CE /* Debug */,
+				AA44D34724A21A0B007F94CE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA44D34924A21A0B007F94CE /* Build configuration list for PBXNativeTarget "PLBroadcastExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA44D34424A21A0B007F94CE /* Debug */,
+				AA44D34524A21A0B007F94CE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

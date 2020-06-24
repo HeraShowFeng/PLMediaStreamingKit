@@ -52,6 +52,8 @@ PLStreamingSessionDelegate,
 // 系统 RPBroadcast
 RPBroadcastActivityViewControllerDelegate,
 RPBroadcastControllerDelegate,
+// RPScreenRecorder
+RPScreenRecorderDelegate,
 
 // 自定义 view 的代理
 PLButtonControlsViewDelegate,
@@ -95,9 +97,15 @@ PLShowDetailViewDelegate
 @property (nonatomic, strong) NSTimer *timer;
 
 // 录屏
-@property (nonatomic, strong) RPBroadcastActivityViewController *broadcastAVC;
-@property (nonatomic, strong) RPBroadcastController *broadcastController;
+@property (nonatomic, strong) RPBroadcastActivityViewController *broadcastActivityVC API_AVAILABLE(ios(10.0));
+@property (nonatomic, strong) RPBroadcastController *broadcastController API_AVAILABLE(ios(10.0));
+@property (nonatomic, strong) RPSystemBroadcastPickerView *broadcastPickerView API_AVAILABLE(ios(12.0));
+@property (nonatomic, strong) RPScreenRecorder *screenRecorder;
 @property (nonatomic, assign) BOOL isReplayRunning;
+@property (nonatomic, assign) BOOL needRecordSystem;
+
+@property (nonatomic, strong) NSString *systemVersion;
+
 @end
 
 @implementation PLStreamViewController
@@ -135,6 +143,34 @@ PLShowDetailViewDelegate
     NSLog(@"[PLStreamViewController] dealloc !");
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if (_streamSession && _type == 3) {
+        // 录制 App 内容，进行推流：
+        // 1）iOS 11.0 以上，使用 RPScreenRecorder 直接录制
+        // 2）iOS 10.0 上，使用 RPBroadcastController 调起，可对应自己 App 也可对应其他支持 Extension 的 App
+        
+        // 录制系统全屏，进行推流：
+        // 1）iOS 12.0 以上，使用 RPSystemBroadcastPickerView 直接调起
+        // 2）iOS 11.0 上，外部系统设置长按录屏
+        
+        // 弹框询问，录屏 App 内容，还是录制手机全屏
+        UIAlertController *alertViewController = [UIAlertController alertControllerWithTitle:@"录屏选择" message:@"是否录制手机全屏？" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            _needRecordSystem = YES;
+        }];
+        [alertViewController addAction:yesAction];
+        
+        UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            _needRecordSystem = NO;
+        }];
+        [alertViewController addAction:noAction];
+
+        [self presentViewController:alertViewController animated:YES completion:nil];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -158,9 +194,13 @@ PLShowDetailViewDelegate
         _mediaSession.delegate = self;
 
         // 纯音频 本地背景板
-        UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 24, KSCREEN_WIDTH, KSCREEN_HEIGHT - 24)];
+        UIImageView *backImageView = [[UIImageView alloc] init];
         backImageView.image = [UIImage imageNamed:@"pl_audio_only_bg"];
         [self.view addSubview:backImageView];
+        
+        [backImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.top.bottom.mas_equalTo(self.view);
+        }];
     // 外部数据导入推流
     } else if (_streamSession && _type == 2) {
         // 遵守代理 PLStreamingSessionDelegate
@@ -170,26 +210,57 @@ PLShowDetailViewDelegate
         [self initAssetReader];
         
         // 提示 label
-        UILabel *tintLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_WIDTH, 26)];
+        UILabel *tintLabel = [[UILabel alloc] init];
         tintLabel.center = self.view.center;
         tintLabel.font = FONT_MEDIUM(11);
         tintLabel.textColor = [UIColor blackColor];
         tintLabel.textAlignment = NSTextAlignmentCenter;
         tintLabel.text = @"将直接使用选择的视频进行推流，请至拉流端观看！";
         [self.view addSubview:tintLabel];
+        
+        [tintLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.mas_equalTo(self.view);
+            make.width.mas_equalTo(self.view.mas_width);
+            make.height.mas_equalTo(26);
+        }];
     // 录屏推流
     } else if (_streamSession && _type == 3) {
         // 遵守代理 PLStreamingSessionDelegate
         _streamSession.delegate = self;
+        
+        // RPScreenRecorder 设置
+        _screenRecorder = [RPScreenRecorder sharedRecorder];
+        _screenRecorder.delegate = self;
+        _screenRecorder.microphoneEnabled = YES;
+        if (@available(iOS 10.0, *)) {
+            _screenRecorder.cameraEnabled = YES;
+        }
+        if (@available(iOS 11.0, *)) {
+            _screenRecorder.cameraPosition = RPCameraPositionFront;
+        }
+        
+        // 缓存，传递推流地址给 Extension
+        NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.qbox"];
+        [userDefaults setObject:_streamSession.pushURL forKey:@"PLReplayStreamURL"];
                 
+        _systemVersion = [[UIDevice currentDevice] systemVersion];
+
         // 计时时间显示
-        _timingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_WIDTH, 26)];
+        _timingLabel = [[UILabel alloc] init];
+        _timingLabel.numberOfLines = 0;
         _timingLabel.center = self.view.center;
         _timingLabel.font = FONT_MEDIUM(12);
         _timingLabel.textColor = [UIColor blackColor];
         _timingLabel.textAlignment = NSTextAlignmentCenter;
-        _timingLabel.text = [NSString stringWithFormat:@"当前时间: %@", [self getCurrentTime]];
+        _timingLabel.text = [NSString stringWithFormat:@"系统 iOS %@\n当前时间: %@", _systemVersion, [self getCurrentTime]];
         [self.view addSubview:_timingLabel];
+        
+        [_timingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.mas_equalTo(self.view);
+            make.width.mas_equalTo(self.view.mas_width);
+            make.height.mas_equalTo(56);
+        }];
+
         // 计时器
         _timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(timingAction:) userInfo:nil repeats:YES];
     }
@@ -203,15 +274,16 @@ PLShowDetailViewDelegate
 
 #pragma mark - 音视频采集推流
 - (void)configurateAVMediaStreamingSession {
-    // 配置采集预览视图
-    _mediaSession.previewView.frame = CGRectMake(0, 0, KSCREEN_WIDTH, KSCREEN_HEIGHT);
-    _mediaSession.previewView.backgroundColor = COLOR_RGB(246, 246, 246, 1);
+    // 添加预览视图到父视图
+    [self.view insertSubview:_mediaSession.previewView atIndex:0];
+    
+    // 配置采集预览视图 frame
+    [_mediaSession.previewView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.insets = UIEdgeInsetsZero;
+    }];
     
     // 遵守代理 PLMediaStreamingSessionDelegate
     _mediaSession.delegate = self;
-    
-    // 添加预览视图到父视图
-    [self.view insertSubview:_mediaSession.previewView atIndex:0];
     
     // 美颜配置开启，且参数均为 0.5
     [_mediaSession setBeautifyModeOn:YES];
@@ -318,7 +390,7 @@ PLShowDetailViewDelegate
 
 - (void)layoutCommonView {
     // 返回按钮
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(10, _topSpace, 65, 26)];
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(15, _topSpace, 65, 26)];
     backButton.backgroundColor = COLOR_RGB(0, 0, 0, 0.3);
     [backButton setTitle:@"返回" forState:UIControlStateNormal];
     [backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -327,7 +399,7 @@ PLShowDetailViewDelegate
     [self.view addSubview:backButton];
 
     // 流状态 label
-    _streamLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, _topSpace + 32, 150, 26)];
+    _streamLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, _topSpace + 32, 150, 26)];
     _streamLabel.font = FONT_MEDIUM(11);
     _streamLabel.textColor = COLOR_RGB(181, 68, 68, 1);
     _streamLabel.textAlignment = NSTextAlignmentLeft;
@@ -335,17 +407,17 @@ PLShowDetailViewDelegate
     [self.view addSubview:_streamLabel];
 
     // 流信息 label
-    _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, _topSpace + 58, 150, 60)];
+    _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, _topSpace + 58, 150, 60)];
     _statusLabel.backgroundColor = COLOR_RGB(0, 0, 0, 0.3);
     _statusLabel.font = FONT_LIGHT(11);
     _statusLabel.textColor = [UIColor whiteColor];
     _statusLabel.textAlignment = NSTextAlignmentLeft;
     _statusLabel.numberOfLines = 0;
-    _statusLabel.text = @"video 0.0 fps\naudio 0.0 fps\ntotal bitrate 0.0kbps";
+    _statusLabel.text = @" video 0.0 fps\n audio 0.0 fps\n total bitrate 0.0kbps";
     [self.view addSubview:_statusLabel];
     
     // SEI 按钮
-    UIButton *seiButton = [[UIButton alloc] initWithFrame:CGRectMake(10, _topSpace + 130, 65, 26)];
+    UIButton *seiButton = [[UIButton alloc] initWithFrame:CGRectMake(15, _topSpace + 130, 65, 26)];
     seiButton.backgroundColor = COLOR_RGB(0, 0, 0, 0.3);
     [seiButton setTitle:@"发送 SEI" forState:UIControlStateNormal];
     [seiButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -354,7 +426,7 @@ PLShowDetailViewDelegate
     [self.view addSubview:seiButton];
     
     // 开始/停止推流按钮
-    UIButton *startButton = [[UIButton alloc] initWithFrame:CGRectMake(10, _topSpace + 168, 65, 26)];
+    UIButton *startButton = [[UIButton alloc] initWithFrame:CGRectMake(15, _topSpace + 168, 65, 26)];
     startButton.backgroundColor = COLOR_RGB(0, 0, 0, 0.3);
     [startButton setTitle:@"开始推流" forState:UIControlStateNormal];
     [startButton setTitle:@"停止推流" forState:UIControlStateSelected];
@@ -362,38 +434,69 @@ PLShowDetailViewDelegate
     startButton.titleLabel.font = FONT_MEDIUM(12.f);
     [startButton addTarget:self action:@selector(startStream:) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:startButton];
+
 }
 
 #pragma mark - UI 视图
 - (void)layoutButtonViewInterface {
     // 摄像头转换按钮
-    UIButton *cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(KSCREEN_WIDTH/2 - 15, _topSpace, 30, 30)];
+    UIButton *cameraButton = [[UIButton alloc] init];
     [cameraButton setImage:[UIImage imageNamed:@"pl_switch_camera"] forState:UIControlStateNormal];
     cameraButton.titleLabel.font = FONT_MEDIUM(12.f);
     [cameraButton addTarget:self action:@selector(switchCamera) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:cameraButton];
     
     // 按钮控件视图
-    _buttonControlsView = [[PLButtonControlsView alloc] initWithFrame:CGRectMake(KSCREEN_WIDTH - 75, _topSpace, 65, 496) show:YES];
+    _buttonControlsView = [[PLButtonControlsView alloc] initWithFrame:CGRectZero show:NO];
     _buttonControlsView.delegate = self;
     [self.view addSubview:_buttonControlsView];
     
     // 细节设置 view
-    _detailView = [[PLShowDetailView alloc] initWithFrame:CGRectMake(0, KSCREEN_HEIGHT, KSCREEN_WIDTH, 0)];
+    _detailView = [[PLShowDetailView alloc] initWithFrame:CGRectZero backView:self.view];
     _detailView.delegate = self;
     [self.view addSubview:_detailView];
     
     // 图片推流 覆盖卡住的预览视图
-    _pushImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    _pushImageView = [[UIImageView alloc] init];
     
     // 缩放的滑条
-    _zoomSlider = [[UISlider alloc] initWithFrame:CGRectMake(15, KSCREEN_HEIGHT - 50, KSCREEN_WIDTH - 30, 30)];
+    CGFloat width = KSCREEN_WIDTH - 30;
+    if (KSCREEN_HEIGHT < 667) {
+        width = KSCREEN_WIDTH - 105;
+    }
+    _zoomSlider = [[UISlider alloc] init];
     _zoomSlider.value = 1.0;
     _zoomSlider.minimumValue = 1.0;
     // 获取相机实际的 videoMaxZoomFactor
     _zoomSlider.maximumValue = MIN(5, _mediaSession.videoActiveFormat.videoMaxZoomFactor);
     [_zoomSlider addTarget:self action:@selector(zoomVideo:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:_zoomSlider];
+    
+    // masonry 集中布局
+    [cameraButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(30, 30));
+        make.left.mas_equalTo(self.view.mas_centerX);
+        make.top.mas_equalTo(_topSpace);
+    }];
+    
+    [_buttonControlsView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(65, 496));
+        make.right.equalTo(self.view.mas_right).with.offset(-15);
+        make.top.mas_equalTo(_topSpace);
+    }];
+    
+    [_detailView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+        make.top.equalTo(self.view.mas_bottom);
+    }];
+    
+    [_zoomSlider mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(30);
+        make.left.equalTo(self.view).with.offset(18);
+        make.right.equalTo(self.view).with.offset(-18);
+        make.top.equalTo(self.view.mas_bottom).offset(-60);
+    }];
 }
 
 #pragma mark - PLButtonControlsViewDelegate
@@ -460,9 +563,7 @@ PLShowDetailViewDelegate
 - (void)showDetailView:(PLShowDetailView *)showDetailView didClickIndex:(NSInteger)index currentType:(PLSetDetailViewType)type {
     // 转换方向
     if (type == PLSetDetailViewOrientaion) {
-        // 摄像头采集方向数组
-        NSArray *videoOrientationArray = @[@(AVCaptureVideoOrientationPortrait), @(AVCaptureVideoOrientationPortraitUpsideDown), @(AVCaptureVideoOrientationLandscapeRight), @(AVCaptureVideoOrientationLandscapeLeft)];
-        _mediaSession.videoOrientation = [videoOrientationArray[index] integerValue];
+        [self adjustInterfaceAndDeviceIndex:index];
     }
     // 图片推流
     if (type == PLSetDetailViewImagePush) {
@@ -474,7 +575,10 @@ PLShowDetailViewDelegate
             [_mediaSession setPushImage:image];
             
             _pushImageView.image = image;
-            [self.view insertSubview:_pushImageView aboveSubview:_mediaSession.previewView];
+            [_mediaSession.previewView addSubview:_pushImageView];
+            [_pushImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.top.bottom.mas_equalTo(_mediaSession.previewView);
+            }];
         } else {
             [_mediaSession setPushImage:nil];
             [_pushImageView removeFromSuperview];
@@ -485,7 +589,25 @@ PLShowDetailViewDelegate
         NSArray *imageArray = @[@"", @"qiniu", @"xiaoqi1", @"xiaoqi2"];
         NSString *imageStr = imageArray[index];
         if (imageStr.length != 0) {
-            [_mediaSession setWaterMarkWithImage:[UIImage imageNamed:imageStr] position:CGPointMake(KSCREEN_WIDTH - 300, KSCREEN_HEIGHT - 100)];
+            UIImage *image = [UIImage imageNamed:imageStr];
+            CGPoint point = CGPointZero;
+            // 根据实际分辨率，显示水印位置
+            if ([_mediaSession.sessionPreset isEqualToString:AVCaptureSessionPreset352x288]) {
+                point = CGPointMake(144 - image.size.width/2, 234 - image.size.height/3*2);
+            }
+            if ([_mediaSession.sessionPreset isEqualToString:AVCaptureSessionPreset640x480]) {
+                point = CGPointMake(240 - image.size.width/2, 426 - image.size.height/3*2);
+            }
+            if ([_mediaSession.sessionPreset isEqualToString:AVCaptureSessionPreset1280x720]) {
+                point = CGPointMake(360 - image.size.width/2, 894 - image.size.height/3*2);
+            }
+            if ([_mediaSession.sessionPreset isEqualToString:AVCaptureSessionPreset1920x1080]) {
+                point = CGPointMake(540 - image.size.width/2, 1320 - image.size.height/3*2);
+            }
+            if ([_mediaSession.sessionPreset isEqualToString:AVCaptureSessionPreset3840x2160]) {
+                point = CGPointMake(1080 - image.size.width/2, 2560 - image.size.height/3*2);
+            }
+            [_mediaSession setWaterMarkWithImage:image position:point];
         } else {
             [_mediaSession clearWaterMark];
         }
@@ -559,6 +681,42 @@ PLShowDetailViewDelegate
     _audioPlayer.audioDidPlayedRate = progress;
 }
 
+- (void)adjustInterfaceAndDeviceIndex:(NSInteger)index {
+    // 摄像头采集方向数组
+    NSArray *videoOrientationArray = @[@(AVCaptureVideoOrientationPortrait), @(AVCaptureVideoOrientationPortraitUpsideDown), @(AVCaptureVideoOrientationLandscapeRight), @(AVCaptureVideoOrientationLandscapeLeft)];
+    NSArray *interfaceOrientationArray = @[@(UIInterfaceOrientationUnknown), @(UIInterfaceOrientationPortrait), @(UIInterfaceOrientationPortraitUpsideDown), @(UIInterfaceOrientationLandscapeRight), @(UIInterfaceOrientationLandscapeLeft)];
+    NSInteger orientation = [videoOrientationArray[index] integerValue];
+
+    CGFloat width = _mediaSession.videoStreamingConfiguration.videoSize.width;
+    CGFloat height = _mediaSession.videoStreamingConfiguration.videoSize.height;
+    CGSize videoSize = CGSizeZero;
+    if (index == 2 || index == 3) {
+        if (width > height) {
+            videoSize = CGSizeMake(width, height);
+        } else{
+            videoSize = CGSizeMake(height, width);
+        }
+    } else{
+        if (width > height) {
+            videoSize = CGSizeMake(height, width);
+        } else{
+            videoSize = CGSizeMake(width, height);
+        }
+    }
+
+    [[UIDevice currentDevice] setValue:interfaceOrientationArray[index + 1] forKey:@"orientation"];
+    _mediaSession.videoOrientation = orientation;
+
+    if (!CGSizeEqualToSize(videoSize,_mediaSession.videoStreamingConfiguration.videoSize)) {
+        PLVideoStreamingConfiguration *videoStreamingConfiguration = [[PLVideoStreamingConfiguration alloc] initWithVideoSize:videoSize expectedSourceVideoFrameRate:_mediaSession.videoStreamingConfiguration.expectedSourceVideoFrameRate
+            videoMaxKeyframeInterval:_mediaSession.videoStreamingConfiguration.videoMaxKeyframeInterval
+            averageVideoBitRate:_mediaSession.videoStreamingConfiguration.averageVideoBitRate
+            videoProfileLevel:_mediaSession.videoStreamingConfiguration.videoProfileLevel
+            videoEncoderType:_mediaSession.videoStreamingConfiguration.videoEncoderType];
+        [self.mediaSession reloadVideoStreamingConfiguration:videoStreamingConfiguration];
+    }
+}
+
 #pragma mark - buttons event
 // 切换摄像头
 - (void)switchCamera {
@@ -570,45 +728,44 @@ PLShowDetailViewDelegate
 
 // 开始/停止推流
 - (void)startStream:(UIButton *)button {
-    button.selected = !button.selected;
     // PLMediaStreamingSession
     if (_type == 0 || _type == 1) {
         // 开始/停止 推流
-        if (button.selected) {
+        if (!button.selected) {
             [_mediaSession startStreamingWithPushURL:_pushURL feedback:^(PLStreamStartStateFeedback feedback) {
+                button.selected = YES;
                 [self streamStateAlert:feedback];
             }];
         } else{
+            button.selected = NO;
             [_mediaSession stopStreaming];
         }
     }
+    
     // PLStreamingSession
     if (_type == 2 || _type == 3) {
         // 开始/停止 推流
-        if (button.selected) {
+        if (!button.selected) {
             // 开始外部数据导入
             if (_assetReader) {
                 [self startPushBuffer];
+                [_streamSession startWithPushURL:_pushURL feedback:^(PLStreamStartStateFeedback feedback) {
+                    button.selected = YES;
+                    [self streamStateAlert:feedback];
+                }];
             // 启动录屏
             } else{
-                if (@available(iOS 11.0, *)) {
-                    // 注意选择 broadcast 将以 broadcast view 中的 URL 进行推流
-                    [self loadBroadcast];
-                }
+                [self startScreenRecorder];
             }
-            [_streamSession startWithPushURL:_pushURL feedback:^(PLStreamStartStateFeedback feedback) {
-                [self streamStateAlert:feedback];
-            }];
         } else{
-            [_streamSession stop];
             // 停止外部数据导入
             if (_assetReader) {
+                button.selected = NO;
+                [_streamSession stop];
                 [self stopPushBuffer];
-            //
+            // 停止录屏
             } else{
-                if (@available(iOS 11.0, *)) {
-                    [self stopReplayLive];
-                }
+                [self stopScreenRecorder];
             }
         }
     }
@@ -658,7 +815,7 @@ PLShowDetailViewDelegate
 // 流信息更新的回调
 - (void)streamingSession:(PLStreamingSession *)session streamStatusDidUpdate:(PLStreamStatus *)status {
     dispatch_async(dispatch_get_main_queue(), ^{
-        _statusLabel.text = [NSString stringWithFormat:@"video %.1f fps\naudio %.1f fps\ntotal bitrate %.1f kbps",status.videoFPS, status.audioFPS, status.totalBitrate/1000];
+        _statusLabel.text = [NSString stringWithFormat:@" video %.1f fps\n audio %.1f fps\n total bitrate %.1f kbps",status.videoFPS, status.audioFPS, status.totalBitrate/1000];
         NSLog(@"[PLStreamViewController] PLStreamStatus 的信息: video FPS %.1f, audio FPS %.1f, total bitrate %.1f", status.videoFPS, status.audioFPS, status.totalBitrate);
     });
 }
@@ -762,88 +919,178 @@ PLShowDetailViewDelegate
 }
 
 #pragma mark - 录屏相关
+- (void)startScreenRecorder {
+    if (_needRecordSystem) {
+        // 使用 RPSystemBroadcastPickerView 展示启动 view
+        if (@available(iOS 12.0, *)) {
+            // iOS 12.0 以上
+            _broadcastPickerView = [[RPSystemBroadcastPickerView alloc] initWithFrame:CGRectMake(0, 0, 100, 200)];
+            _broadcastPickerView.showsMicrophoneButton = YES;
+            // 对使用 upload extension 的 bundle id，必须要填写对
+            _broadcastPickerView.preferredExtension = @"com.pili-engineering.PLMediaStreamingKit.PLBroadcastExtension";
+            [self.view addSubview:_broadcastPickerView];
+            _broadcastPickerView.center = CGPointMake(self.view.center.x, self.view.center.y + 100);
+        } else{
+            if (@available(iOS 11.0, *)) {
+                // iOS 11.0 以上录制手机屏幕
+                // 1）首先在设置-控制中心-自定控制，添加屏幕录制
+                // 2）然后上拉调出控制中心，长按录制按钮，调出录屏控制面板
+                // 3）选择对应直播功能的 Extension 开始
+                [self presentViewAlert:@"1）首先在设置-控制中心-自定控制，添加屏幕录制\n2）然后上拉调出控制中心，长按录制按钮，调出录屏控制面板\n3）选择对应直播功能的 Extension 开始"];
+            } else{
+                // iOS 10.0 上不支持录制手机屏幕
+                // 由于 Apple 对 Extension App 严格的内存大小的限制，一旦超过这个阈值（50M）就会引起 Crash
+                [self presentViewAlert:@"iOS 10.0 上不支持录制手机屏幕"];
+            }
+        }
+    } else{
+        // 可以使用 RPScreenRecorder
+        if (@available(iOS 11.0, *)) {
+            _screenRecorder.cameraPreviewView.frame = self.view.bounds;
+            [self.view insertSubview:_screenRecorder.cameraPreviewView atIndex:0];
+
+            [_screenRecorder startCaptureWithHandler:^(CMSampleBufferRef  _Nonnull sampleBuffer, RPSampleBufferType bufferType, NSError * _Nullable error) {
+                if (bufferType == RPSampleBufferTypeVideo) {
+                    // 这里选择了推 App 的画面内容，也可使用系统相机采集数据去推
+                    [_streamSession pushVideoSampleBuffer:sampleBuffer];
+                }
+
+                // 音频推 2 路的话，需要配置 PLAudioStreamingConfiguration 的 inputAudioChannelDescriptions 为 @[kPLAudioChannelApp, kPLAudioChannelMic]
+                if (bufferType == RPSampleBufferTypeAudioApp) {
+                    [_streamSession pushAudioSampleBuffer:sampleBuffer];
+                }
+                if (bufferType == RPSampleBufferTypeAudioMic) {
+                    [_streamSession pushAudioSampleBuffer:sampleBuffer];
+                }
+
+                if (error) {
+                    NSLog(@"[PLStreamViewController] RPScreenRecorder startCaptureWithHandler, error code %ld description %@", error.code, error.localizedDescription);
+                } else {
+                    _isReplayRunning = YES;
+                }
+
+            } completionHandler:^(NSError * _Nullable error) {
+                if (error) {
+                    NSLog(@"[PLStreamViewController] RPScreenRecorder completionHandler, error code %ld description %@", error.code, error.localizedDescription);
+                }
+            }];
+
+            [_streamSession startWithPushURL:_pushURL feedback:^(PLStreamStartStateFeedback feedback) {
+                [self streamStateAlert:feedback];
+            }];
+        } else{
+            // 关于 iOS 10.3.3
+            // 注意：1）Extension 中 Info.plist 的 key NSExtensionPointIdentifier 对应的 value 都改为 com.apple.broadcast-services 才能正常在 iOS 10.3.3 的机器上正常运行
+            //      2）iOS 11 以上 NSExtensionPointIdentifier 需要分别对应配置为 com.apple.broadcast-services-upload、com.apple.broadcast-services-setupui 才能在屏幕录制的系统控制面板显示
+            
+            // 调起 RPBroadcastActivityViewController 用 extension 录制
+            [self loadBroadcast];
+        }
+    }
+}
+
+- (void)stopScreenRecorder {
+    if (_needRecordSystem) {
+        // 使用 RPSystemBroadcastPickerView 展示启动 view
+        if (@available(iOS 12.0, *)) {
+            // iOS 12.0 上录制手机屏幕
+        } else{
+            if (@available(iOS 11.0, *)) {
+                // iOS 11.0 上录制手机屏幕
+            } else{
+                // iOS 10.0 上不支持录制手机屏幕
+            }
+        }
+    } else{
+        // 使用 RPScreenRecorder
+        if (@available(iOS 11.0, *)) {
+            [_streamSession stop];
+
+            [_screenRecorder.cameraPreviewView removeFromSuperview];
+            [_screenRecorder stopRecordingWithHandler:^(RPPreviewViewController * _Nullable previewViewController, NSError * _Nullable error) {
+                if (!error) {
+                    _isReplayRunning = NO;
+                    NSLog(@"[PLStreamViewController] RPScreenRecorder stop recording success!");
+                } else {
+                    NSLog(@"[PLStreamViewController] RPScreenRecorder stop recording, error code %ld description %@", error.code, error.localizedDescription);
+                }
+            }];
+        }
+    }
+}
+
 - (void)loadBroadcast {
     NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.qbox"];
     [userDefaults setObject:@(PLStreamStateUnknow) forKey:@"PLReplayStreamState"];
     if (!_isReplayRunning) {
-        [RPBroadcastActivityViewController loadBroadcastActivityViewControllerWithHandler:^(RPBroadcastActivityViewController * _Nullable broadcastActivityViewController, NSError * _Nullable error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (!error) {
-                    self.broadcastAVC = broadcastActivityViewController;
-                    self.broadcastAVC.delegate = self;
-                    [self presentViewController:self.broadcastAVC animated:YES completion:nil];
-                } else {
-                   NSLog(@"[PLStreamViewController] loadBroadcast, error code %ld description %@", error.code, error.localizedDescription);
-                   [self presentViewAlert:[NSString stringWithFormat:@"loadBroadcast 无法启动 ReplayKit 录屏，发生错误 code:%ld %@", error.code, error.localizedDescription]];
-                }
-            });
-        }];
+        __weak typeof(self) weakSelf = self;
+        if (@available(iOS 11.0, *)) {
+            [RPBroadcastActivityViewController loadBroadcastActivityViewControllerWithPreferredExtension:@"com.qbox.PLMediaStreamingKitDemo.PLReplaykitExtension" handler:^(RPBroadcastActivityViewController * _Nullable broadcastActivityViewController, NSError * _Nullable error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (!error) {
+                        weakSelf.broadcastActivityVC = broadcastActivityViewController;
+                        weakSelf.broadcastActivityVC.delegate = self;
+                        [weakSelf presentViewController:weakSelf.broadcastActivityVC animated:YES completion:nil];
+                    } else {
+                       NSLog(@"[PLStreamViewController] loadBroadcast PreferredExtension, error code %ld description %@", error.code, error.localizedDescription);
+                       [self presentViewAlert:[NSString stringWithFormat:@"loadBroadcast PreferredExtension 无法启动 ReplayKit 录屏，发生错误 code:%ld %@", error.code, error.localizedDescription]];
+                    }
+                });
+            }];
+        } else{
+            [RPBroadcastActivityViewController loadBroadcastActivityViewControllerWithHandler:^(RPBroadcastActivityViewController * _Nullable broadcastActivityViewController, NSError * _Nullable error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (!error) {
+                        weakSelf.broadcastActivityVC = broadcastActivityViewController;
+                        weakSelf.broadcastActivityVC.delegate = self;
+                        [weakSelf presentViewController:weakSelf.broadcastActivityVC animated:YES completion:nil];
+                    } else {
+                       NSLog(@"[PLStreamViewController] loadBroadcast, error code %ld description %@", error.code, error.localizedDescription);
+                       [self presentViewAlert:[NSString stringWithFormat:@"loadBroadcast 无法启动 ReplayKit 录屏，发生错误 code:%ld %@", error.code, error.localizedDescription]];
+                    }
+                });
+            }];
+        }
     } else {
         [self stopReplayLive];
     }
 }
 
 - (void)stopReplayLive {
+    __weak typeof(self) weakSelf = self;
     [self.broadcastController finishBroadcastWithHandler:^(NSError * _Nullable error) {
         if (!error) {
+            [weakSelf stopScreenRecorder];
             NSLog(@"[PLStreamViewController] stopReplayLive finsh broadcast success!");
         } else {
             NSLog(@"[PLStreamViewController] stopReplayLive, error code %ld description %@", error.code, error.localizedDescription);
         }
     }];
-    
-    [[RPScreenRecorder sharedRecorder] stopRecordingWithHandler:^(RPPreviewViewController * _Nullable previewViewController, NSError * _Nullable error) {
-        if (!error) {
-            NSLog(@"[PLStreamViewController] RPScreenRecorder stop recording success!");
-        } else {
-            NSLog(@"[PLStreamViewController] RPScreenRecorder stop recording, error code %ld description %@", error.code, error.localizedDescription);
-        }
-    }];
-    _isReplayRunning = NO;
 }
 
 // RPBroadcastActivityViewControllerDelegate
 - (void)broadcastActivityViewController:(RPBroadcastActivityViewController *)broadcastActivityViewController didFinishWithBroadcastController:(RPBroadcastController *)broadcastController error:(NSError *)error {
+    [self.broadcastActivityVC dismissViewControllerAnimated:YES completion:nil];
+
     NSLog(@"[PLStreamViewController] broadcastActivityViewController finsh with broadcast, error code %ld description %@", error.code, error.localizedDescription);
     if (error) {
         [self presentViewAlert:[NSString stringWithFormat:@"结束 broadcast 发生错误 code:%ld %@", error.code, error.localizedDescription]];
-        return;
-    }
-    
-    [self.broadcastAVC dismissViewControllerAnimated:YES completion:nil];
-    self.broadcastController = broadcastController;
-    self.broadcastController.delegate = self;
-    
-    [RPScreenRecorder sharedRecorder].microphoneEnabled = YES;
-    
-    [broadcastController startBroadcastWithHandler:^(NSError * _Nullable error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (!error) {
-                if (@available(iOS 11.0, *)) {
-                    [[RPScreenRecorder sharedRecorder] startCaptureWithHandler:^(CMSampleBufferRef  _Nonnull sampleBuffer, RPSampleBufferType bufferType, NSError * _Nullable error) {
-                        if (bufferType == RPSampleBufferTypeVideo) {
-                            [_streamSession pushVideoSampleBuffer:sampleBuffer];
-                        }
-
-                        if (bufferType == RPSampleBufferTypeAudioApp) {
-                            [_streamSession pushAudioSampleBuffer:sampleBuffer];
-                        }
-
-                        if (bufferType == RPSampleBufferTypeAudioMic) {
-                            [_streamSession pushAudioSampleBuffer:sampleBuffer];
-                        }
-                    } completionHandler:^(NSError * _Nullable error) {
-                        NSLog(@"[PLStreamViewController] RPScreenRecorder start, error code %ld description %@", error.code, error.localizedDescription);
-                    }];
-                } else{
-                    [self presentViewAlert:@"低于 iOS 11.0 版本，暂不支持！"];
+    } else{
+        self.broadcastController = broadcastController;
+        self.broadcastController.delegate = self;
+        
+        __weak typeof(self) weakSelf = self;
+        [broadcastController startBroadcastWithHandler:^(NSError * _Nullable error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (!error) {
+                    [weakSelf startScreenRecorder];
+                } else {
+                    NSLog(@"[PLStreamViewController] start broadcast, error code %ld description %@", error.code, error.localizedDescription);
+                    [weakSelf presentViewAlert:[NSString stringWithFormat:@"无法启动 ReplayKit 录屏，发生错误 code:%ld %@", error.code, error.localizedDescription]];
                 }
-            } else {
-                NSLog(@"[PLStreamViewController] start broadcast, error code %ld description %@", error.code, error.localizedDescription);
-                [self presentViewAlert:[NSString stringWithFormat:@"无法启动 ReplayKit 录屏，发生错误 code:%ld %@", error.code, error.localizedDescription]];
-            }
-        });
-    }];
+            });
+        }];
+    }
 }
 
 // RPBroadcastControllerDelegate
@@ -860,9 +1107,17 @@ PLShowDetailViewDelegate
     NSLog(@"[PLStreamViewController] broadcastController 更新 serviceInfo:%@", serviceInfo);
 }
 
+// RPScreenRecorderDelegate
+- (void)screenRecorder:(RPScreenRecorder *)screenRecorder didStopRecordingWithError:(NSError *)error previewViewController:(RPPreviewViewController *)previewViewController {
+    NSLog(@"[PLStreamViewController] screenRecorder didStopRecordingWithError:code %ld description %@", error.code, error.localizedDescription);
+}
+- (void)screenRecorder:(RPScreenRecorder *)screenRecorder didStopRecordingWithPreviewViewController:(RPPreviewViewController *)previewViewController error:(NSError *)error {
+    NSLog(@"[PLStreamViewController] screenRecorder didStopRecordingWithPreviewViewController error:code %ld description %@", error.code, error.localizedDescription);
+}
+
 // 计时器事件
 - (void)timingAction:(NSTimer *)timer {
-    _timingLabel.text = [NSString stringWithFormat:@"当前时间: %@", [self getCurrentTime]];
+    _timingLabel.text = [NSString stringWithFormat:@"系统 iOS %@\n当前时间: %@", _systemVersion, [self getCurrentTime]];
 }
 
 #pragma mark - 退前后台相关处理

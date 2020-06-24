@@ -66,8 +66,8 @@ PLListArrayViewDelegate
     if ([super initWithFrame:frame]) {
         
         self.backgroundColor = [UIColor whiteColor];
-        
-        _urlTextField = [[UITextField alloc] initWithFrame:CGRectMake(PL_SETTING_X_SPACE, PL_SETTING_Y_SPACE, KSCREEN_WIDTH - 110, 26)];
+
+        _urlTextField = [[UITextField alloc] init];
         _urlTextField.borderStyle = UITextBorderStyleRoundedRect;
         _urlTextField.font = FONT_LIGHT(11.f);
         _urlTextField.textColor = [UIColor blackColor];
@@ -75,10 +75,9 @@ PLListArrayViewDelegate
         _urlTextField.delegate = self;
         [self addSubview:_urlTextField];
         
-        // 存在可请求获取推流地址的 request host 时，可添加实现
-//        [self requestPublishURL];
+        [self requestPublishURL];
         
-        _setButton = [[UIButton alloc] initWithFrame:CGRectMake(KSCREEN_WIDTH - 80, PL_SETTING_Y_SPACE, 60, 26)];
+        _setButton = [[UIButton alloc] init];
         _setButton.layer.borderColor = [UIColor blackColor].CGColor;
         _setButton.layer.borderWidth = 0.5f;
         _setButton.titleLabel.font = FONT_LIGHT(11.f);
@@ -96,7 +95,7 @@ PLListArrayViewDelegate
         _streamType = PLStreamTypeAll;
         
         // 推流类型
-        UILabel *streamTypeLab = [[UILabel alloc]initWithFrame:CGRectMake(PL_SETTING_X_SPACE, 40 + PL_SETTING_Y_SPACE, 68, 26)];
+        UILabel *streamTypeLab = [[UILabel alloc]init];
         streamTypeLab.font = FONT_LIGHT(12.f);
         streamTypeLab.textColor = [UIColor blackColor];
         streamTypeLab.textAlignment = NSTextAlignmentLeft;
@@ -104,8 +103,7 @@ PLListArrayViewDelegate
         [self addSubview:streamTypeLab];
         
         // 类型选择
-        _typeSegmentControl = [[UISegmentedControl alloc] initWithItems:@[@"A&V", @"Auio only", @"Import", @"Screen"]];
-        _typeSegmentControl.frame = CGRectMake(PL_SETTING_X_SPACE + 72, 40 + PL_SETTING_Y_SPACE, KSCREEN_WIDTH - PL_SETTING_X_SPACE*2 - 72, 26);
+        _typeSegmentControl = [[UISegmentedControl alloc] initWithItems:@[@"A&V", @"Audio only", @"Import", @"Screen"]];
         _typeSegmentControl.backgroundColor = [UIColor whiteColor];
         _typeSegmentControl.tintColor = COLOR_RGB(16, 169, 235, 1);
         _typeSegmentControl.selectedSegmentIndex = 0;
@@ -114,7 +112,6 @@ PLListArrayViewDelegate
         
         // 先确认分类
         _setSegmentControl = [[UISegmentedControl alloc] initWithItems:@[@"Configuration 配置", @"Session 配置"]];
-        _setSegmentControl.frame = CGRectMake(PL_SETTING_X_SPACE, 80 + PL_SETTING_Y_SPACE, KSCREEN_WIDTH - PL_SETTING_X_SPACE * 2, 26);
         _setSegmentControl.backgroundColor = [UIColor whiteColor];
         _setSegmentControl.tintColor = COLOR_RGB(16, 169, 235, 1);
         _setSegmentControl.selectedSegmentIndex = 0;
@@ -127,7 +124,7 @@ PLListArrayViewDelegate
         _isSession = 0;
         
         // 再给数据
-        _settingsTableView = [[UITableView alloc] initWithFrame:CGRectMake(PL_SETTING_X_SPACE, 116 + PL_SETTING_Y_SPACE, KSCREEN_WIDTH - PL_SETTING_X_SPACE * 2, 380) style:UITableViewStylePlain];
+        _settingsTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _settingsTableView.backgroundColor = [UIColor whiteColor];
         _settingsTableView.delegate = self;
         _settingsTableView.dataSource = self;
@@ -136,16 +133,66 @@ PLListArrayViewDelegate
         [_settingsTableView registerClass:[PLListArrTableViewCell class] forCellReuseIdentifier:listIdentifier];
         [self addSubview:_settingsTableView];
         
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(PL_SETTING_X_SPACE, 508 + PL_SETTING_Y_SPACE, KSCREEN_WIDTH - PL_SETTING_X_SPACE * 2, 0.8f)];
+        UIView *lineView = [[UIView alloc] init];
         lineView.backgroundColor = [UIColor blackColor];
         [self addSubview:lineView];
+        
+        
+        // masonry 集中布局
+        [_setButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.mas_equalTo(self.mas_right).offset(-PL_SETTING_X_SPACE);
+            make.top.mas_equalTo(PL_SETTING_Y_SPACE);
+            make.size.mas_equalTo(CGSizeMake(60, 26));
+        }];
+        
+        [_urlTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.mas_left).offset(PL_SETTING_X_SPACE);
+            make.right.mas_equalTo(_setButton.mas_left).offset(-15);
+            make.top.mas_equalTo(PL_SETTING_Y_SPACE);
+            make.height.mas_equalTo(26);
+        }];
+        
+        [streamTypeLab mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.mas_left).offset(PL_SETTING_X_SPACE);
+            make.top.mas_equalTo(_urlTextField.mas_bottom).offset(14);
+            make.size.mas_equalTo(CGSizeMake(60, 26));
+        }];
+        
+        [_typeSegmentControl mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(streamTypeLab.mas_right).offset(10);
+            make.right.mas_equalTo(self.mas_right).offset(-PL_SETTING_X_SPACE);
+            make.top.mas_equalTo(streamTypeLab.mas_top);
+            make.height.mas_equalTo(26);
+        }];
+        
+        [_setSegmentControl mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.mas_left).offset(PL_SETTING_X_SPACE);
+            make.right.mas_equalTo(self.mas_right).offset(-PL_SETTING_X_SPACE);
+            make.top.mas_equalTo(streamTypeLab.mas_bottom).offset(10);
+            make.height.mas_equalTo(26);
+        }];
+        
+        [_settingsTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.mas_left).offset(PL_SETTING_X_SPACE);
+            make.right.mas_equalTo(self.mas_right).offset(-PL_SETTING_X_SPACE);
+            make.top.mas_equalTo(_setSegmentControl.mas_bottom).offset(10);
+            make.bottom.mas_equalTo(self.mas_bottom).offset(7);
+        }];
+        
+        [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.mas_left).offset(PL_SETTING_X_SPACE);
+            make.right.mas_equalTo(self.mas_right).offset(-PL_SETTING_X_SPACE);
+            make.top.mas_equalTo(_settingsTableView.mas_bottom).offset(6);
+            make.height.mas_equalTo(0.8);
+        }];
+
     }
     return self;
 }
 
 #pragma mark - 请求获取推流地址 URL
 - (void)requestPublishURL {
-    NSString *streamServer = @"请求推流地址 host";
+    NSString *streamServer = @"https://api-demo.qnsdk.com/v1/live/stream";
     NSString *streamID = [NSString randomizedString];
     NSString *streamURLString = [streamServer stringByAppendingPathComponent:streamID];
     NSURL *URL = [NSURL URLWithString:streamURLString];

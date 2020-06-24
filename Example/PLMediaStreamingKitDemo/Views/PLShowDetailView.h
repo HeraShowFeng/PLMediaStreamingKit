@@ -52,6 +52,8 @@ typedef enum {
 @property (nonatomic, assign) id<PLShowDetailViewDelegate> delegate;
 @property (nonatomic, strong) UISlider *progressSlider;
 
+- (id)initWithFrame:(CGRect)frame backView:(UIView *)backView;
+
 // 根据类型显示
 - (void)showDetailSettingViewWithType:(PLSetDetailViewType)type;
 

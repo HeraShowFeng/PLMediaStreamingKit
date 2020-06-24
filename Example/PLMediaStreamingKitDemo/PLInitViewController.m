@@ -101,7 +101,7 @@ UINavigationControllerDelegate
 - (void)initUISettingView {
     // 推流 SDK 版本号展示
     NSString *versionStr = [PLMediaStreamingSession versionInfo];
-    UILabel *versionLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, _topSpace, KSCREEN_WIDTH - 40, 30)];
+    UILabel *versionLabel = [[UILabel alloc] init];
     versionLabel.font = FONT_MEDIUM(13.f);
     versionLabel.textColor = COLOR_RGB(181, 68, 68, 1);
     versionLabel.textAlignment = NSTextAlignmentLeft;
@@ -109,12 +109,12 @@ UINavigationControllerDelegate
     versionLabel.text = [NSString stringWithFormat:@"Version: %@       Code: %@", PL_MEDIA_STREAM_VERSION, versionStr];
     [self.view addSubview:versionLabel];
     
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(20, _topSpace + 30, KSCREEN_WIDTH - 40, 0.6f)];
+    UIView *lineView = [[UIView alloc] init];
     lineView.backgroundColor = [UIColor blackColor];
     [self.view addSubview:lineView];
 
     // 操作按钮
-    _playURLButton = [[UIButton alloc] initWithFrame:CGRectMake(20, KSCREEN_HEIGHT - 50, KSCREEN_WIDTH/4 - 70/4, 30)];
+    _playURLButton = [[UIButton alloc] init];
     _playURLButton.titleLabel.font = FONT_LIGHT(11.f);
     _playURLButton.layer.borderColor = [UIColor blackColor].CGColor;
     _playURLButton.layer.borderWidth = 0.5f;
@@ -124,7 +124,7 @@ UINavigationControllerDelegate
     [self.view addSubview:_playURLButton];
     
     // 鉴权按钮
-    _authButton = [[UIButton alloc] initWithFrame:CGRectMake(KSCREEN_WIDTH/4 - 70/4 + 30, KSCREEN_HEIGHT - 50, KSCREEN_WIDTH/4 - 70/4, 30)];
+    _authButton = [[UIButton alloc] init];
     _authButton.titleLabel.font = FONT_LIGHT(11.f);
     _authButton.layer.borderColor = [UIColor blackColor].CGColor;
     _authButton.layer.borderWidth = 0.5f;
@@ -134,7 +134,7 @@ UINavigationControllerDelegate
     [self.view addSubview:_authButton];
     
     // 扫描按钮
-    _scanButton = [[UIButton alloc] initWithFrame:CGRectMake(KSCREEN_WIDTH/2 + 5, KSCREEN_HEIGHT - 50, KSCREEN_WIDTH/4 - 70/4, 30)];
+    _scanButton = [[UIButton alloc] init];
     _scanButton.titleLabel.font = FONT_LIGHT(11.f);
     _scanButton.layer.borderColor = [UIColor blackColor].CGColor;
     _scanButton.layer.borderWidth = 0.5f;
@@ -144,7 +144,7 @@ UINavigationControllerDelegate
     [self.view addSubview:_scanButton];
 
     // 进入 PLStreamViewController 按钮
-    _enterPushButton = [[UIButton alloc] initWithFrame:CGRectMake(KSCREEN_WIDTH/4*3 + 15 - 70/4, KSCREEN_HEIGHT - 50, KSCREEN_WIDTH/4 - 70/4, 30)];
+    _enterPushButton = [[UIButton alloc] init];
     _enterPushButton.titleLabel.font = FONT_LIGHT(11.f);
     _enterPushButton.layer.borderColor = [UIColor blackColor].CGColor;
     _enterPushButton.layer.borderWidth = 0.5f;
@@ -153,12 +153,44 @@ UINavigationControllerDelegate
     [_enterPushButton addTarget:self action:@selector(nextStep) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_enterPushButton];
     
+    // masonry 集中布局
+    [versionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.view.mas_left).offset(20);
+        make.right.mas_equalTo(self.view.mas_right).offset(-20);
+        make.top.mas_equalTo(_topSpace);
+        make.height.mas_equalTo(30);
+    }];
+    
+    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(versionLabel);
+        make.right.equalTo(versionLabel);
+        make.top.mas_equalTo(versionLabel.mas_bottom);
+        make.height.mas_equalTo(0.6f);
+    }];
+    
+    NSArray *buttonArray = @[_playURLButton, _authButton, _scanButton, _enterPushButton];
+    [buttonArray mas_distributeViewsAlongAxis:MASAxisTypeHorizontal withFixedSpacing:10 leadSpacing:20 tailSpacing:20];
+    [buttonArray mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.view.mas_bottom).offset(-55);
+        make.height.mas_equalTo(30);
+    }];
+    
     // 配置视图
-#warning 可配置传入推流地址
-    _settingsView = [[PLSettingsView alloc] initWithFrame:CGRectMake(0, _topSpace + 36, KSCREEN_WIDTH, 516) mediaSession:_mediaSession streamSession:_streamSession pushURL:@"rtmp://pili-publish.qnsdk.com/sdk-live/TestDemo001"];
+    CGFloat setViewHeight = 516;
+    if (KSCREEN_HEIGHT < 667) {
+        setViewHeight = KSCREEN_HEIGHT - 116;
+    }
+    _settingsView = [[PLSettingsView alloc] initWithFrame:CGRectMake(0, 0, 0, setViewHeight) mediaSession:_mediaSession streamSession:_streamSession pushURL:@"rtmp://"];
     _settingsView.delegate = self;
     _settingsView.listSuperView = self.view;
     [self.view addSubview:_settingsView];
+    
+    [_settingsView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.view.mas_left);
+        make.right.mas_equalTo(self.view.mas_right);
+        make.top.mas_equalTo(lineView.mas_bottom).offset(15);
+        make.bottom.mas_equalTo(_playURLButton.mas_top).offset(-50);
+    }];
 }
 
 #pragma mark - PLSettingsViewDelegate
@@ -254,11 +286,11 @@ UINavigationControllerDelegate
     streamViewController.mediaURL = mediaURL;
     
     if (_settingsView.streamType == 3) {
-        if (@available(iOS 11.0, *)) {
+        if (@available(iOS 10.0, *)) {
             [self presentViewController:streamViewController animated:YES completion:nil];
         } else{
-            // 剔除 iOS 11.0 以下的版本，因为 RPScreenRecorder 在 iOS 11.0 以下不支持 startCaptureWithHandler
-            [self alertViewWithMessage:@"低于 iOS 11.0 版本，RPScreenRecorder startCaptureWithHandler 不支持！"];
+            // 剔除 iOS 10.0 以下的版本，因为 RPScreenRecorder 在 iOS 10.0 以下不支持
+            [self alertViewWithMessage:@"低于 iOS 10.0 版本，无法支持录屏推流！"];
             return;
         }
     } else{

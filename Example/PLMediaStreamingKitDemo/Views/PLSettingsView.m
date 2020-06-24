@@ -159,7 +159,7 @@ PLListArrayViewDelegate
         }];
         
         [_typeSegmentControl mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(streamTypeLab.mas_right).offset(10);
+            make.left.mas_equalTo(streamTypeLab.mas_right);
             make.right.mas_equalTo(self.mas_right).offset(-PL_SETTING_X_SPACE);
             make.top.mas_equalTo(streamTypeLab.mas_top);
             make.height.mas_equalTo(26);

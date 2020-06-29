@@ -183,12 +183,12 @@ PLPasterViewDelegate
     _beautyModeSegmentControl.selectedSegmentIndex = 1;
 
     [configLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.top.mas_equalTo(_beautySetView);
+        make.left.top.mas_equalTo(_beautySetView);
         make.size.mas_equalTo(CGSizeMake(78, 26));
     }];
     
     [_beautyModeSegmentControl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(configLabel);
+        make.left.mas_equalTo(configLabel.mas_right);
         make.right.mas_equalTo(_beautySetView);
         make.top.mas_equalTo(_beautySetView);
         make.height.mas_equalTo(26);
@@ -585,7 +585,7 @@ PLPasterViewDelegate
 - (void)commonSegmentControlStyle{
     UIColor *color = COLOR_RGB(16, 169, 235, 1);
     
-    if ([IOS_SYSTEM_STRING compare:@"12.0.0"] >= 0) {
+    if ([IOS_SYSTEM_STRING compare:@"13.0.0"] >= 0) {
         _orientaionSegmentControl.backgroundColor = color;
         _imgPushSegmentControl.backgroundColor = color;
         _watermarkSegmentControl.backgroundColor = color;

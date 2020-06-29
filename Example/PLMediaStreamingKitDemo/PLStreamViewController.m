@@ -82,7 +82,9 @@ PLShowDetailViewDelegate
 @property (nonatomic, strong) PLShowDetailView *detailView;
 @property (nonatomic, strong) UIImageView *pushImageView;
 @property (nonatomic, strong) UISlider *zoomSlider;
+// 录制全屏时，不显示
 @property (nonatomic, strong) UIButton *startButton;
+@property (nonatomic, strong) UIButton *seiButton;
 
 @property (nonatomic, assign) CGFloat topSpace;
 
@@ -394,13 +396,13 @@ PLShowDetailViewDelegate
     [self.view addSubview:_statusLabel];
     
     // SEI 按钮
-    UIButton *seiButton = [[UIButton alloc] initWithFrame:CGRectMake(15, _topSpace + 130, 65, 26)];
-    seiButton.backgroundColor = COLOR_RGB(0, 0, 0, 0.3);
-    [seiButton setTitle:@"发送 SEI" forState:UIControlStateNormal];
-    [seiButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    seiButton.titleLabel.font = FONT_MEDIUM(12.f);
-    [seiButton addTarget:self action:@selector(pushSEIData:) forControlEvents:UIControlEventTouchDown];
-    [self.view addSubview:seiButton];
+    _seiButton = [[UIButton alloc] initWithFrame:CGRectMake(15, _topSpace + 130, 65, 26)];
+    _seiButton.backgroundColor = COLOR_RGB(0, 0, 0, 0.3);
+    [_seiButton setTitle:@"发送 SEI" forState:UIControlStateNormal];
+    [_seiButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _seiButton.titleLabel.font = FONT_MEDIUM(12.f);
+    [_seiButton addTarget:self action:@selector(pushSEIData:) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:_seiButton];
     
     // 开始/停止推流按钮
     _startButton = [[UIButton alloc] initWithFrame:CGRectMake(15, _topSpace + 168, 65, 26)];
@@ -1149,11 +1151,14 @@ PLShowDetailViewDelegate
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         weakSelf.needRecordSystem = YES;
         weakSelf.startButton.hidden = YES;
+        weakSelf.seiButton.hidden = YES;
     }];
     [alertViewController addAction:yesAction];
     
     UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         weakSelf.needRecordSystem = NO;
+        weakSelf.startButton.hidden = NO;
+        weakSelf.seiButton.hidden = NO;
     }];
     [alertViewController addAction:noAction];
 

@@ -14,7 +14,6 @@
 >
 
 @property (nonatomic, strong) UIView *boxView;
-@property (nonatomic, strong) CALayer *scanLayer;
 @property (nonatomic, strong) AVCaptureSession *captureSession;
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *videoPreviewLayer;
 
@@ -84,22 +83,15 @@
     captureMetadataOutput.rectOfInterest = CGRectMake(0.2f, 0.2f, 0.8f, 0.8f);
     
     // 扫描框
-    CGSize size = self.view.bounds.size;
-    _boxView = [[UIView alloc] initWithFrame:CGRectMake(size.width * 0.1f, (size.height - (size.width - size.width * 0.2f))/2, size.width - size.width * 0.2f, size.width - size.width * 0.2f)];
+    _boxView = [[UIView alloc] init];
     _boxView.layer.borderColor = [UIColor greenColor].CGColor;
     _boxView.layer.borderWidth = 1.0f;
-    
     [self.view addSubview:_boxView];
-    
-    // 扫描线
-    _scanLayer = [[CALayer alloc] init];
-    _scanLayer.frame = CGRectMake(0, 0, _boxView.bounds.size.width, 1);
-    _scanLayer.backgroundColor = COLOR_RGB(16, 169, 235, 1).CGColor;
-    
-    [_boxView.layer addSublayer:_scanLayer];
-    
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.2f target:self selector:@selector(moveScanLayer:) userInfo:nil repeats:YES];
-    [timer fire];
+    [_boxView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(300, 300));
+        make.centerX.mas_equalTo(self.view.mas_centerX);
+        make.centerY.mas_equalTo(self.view.mas_centerY).offset(22);
+    }];
     
     // 开始扫描
     [_captureSession startRunning];
@@ -110,25 +102,42 @@
 - (void)stopReading {
     [_captureSession stopRunning];
     _captureSession = nil;
-    [_scanLayer removeFromSuperlayer];
     [_videoPreviewLayer removeFromSuperlayer];
 }
 
 #pragma mark - UI 布局
 - (void)layoutUIInterface {
-    UILabel *titleLab = [[UILabel alloc]initWithFrame:CGRectMake(KSCREEN_WIDTH/2 - 80, 64, 160, 26)];
+    // 适配顶部
+    CGFloat space = 26;
+    if (PL_iPhoneX || PL_iPhoneXR || PL_iPhoneXSMAX) {
+        space = 44;
+    }
+    
+    UILabel *titleLab = [[UILabel alloc]init];
     titleLab.font = FONT_MEDIUM(13);
     titleLab.text = @"推流地址二维码扫描";
     titleLab.textColor = [UIColor whiteColor];
     titleLab.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:titleLab];
     
-    UIButton *closeButton = [[UIButton alloc]initWithFrame:CGRectMake(15, 34, 56, 26)];
+    UIButton *closeButton = [[UIButton alloc]init];
     closeButton.backgroundColor = COLOR_RGB(0, 0, 0, 0.3);
     [closeButton addTarget:self action:@selector(closeButtonSelected) forControlEvents:UIControlEventTouchDown];
     [closeButton setTitle:@"返回" forState:UIControlStateNormal];
     closeButton.titleLabel.font = FONT_MEDIUM(12.f);
     [self.view addSubview:closeButton];
+    
+    [titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(160, 26));
+        make.top.mas_equalTo(space);
+        make.centerX.mas_equalTo(self.view.mas_centerX);
+    }];
+    
+    [closeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(56, 26));
+        make.left.mas_equalTo(15);
+        make.top.mas_equalTo(titleLab);
+    }];
 }
 
 #pragma mark - AVCaptureMetadataOutputObjectsDelegate
@@ -163,20 +172,6 @@
             }
         }
     });
-}
-
-// 移除扫描框
-- (void)moveScanLayer:(NSTimer *)timer {
-    CGRect layerFrame = _scanLayer.frame;
-    if (_boxView.frame.size.height < _scanLayer.frame.origin.y) {
-        layerFrame.origin.y = 0;
-        _scanLayer.frame = layerFrame;
-    }else{
-        layerFrame.origin.y += 5;
-        [UIView animateWithDuration:0.1 animations:^{
-            _scanLayer.frame = layerFrame;
-        }];
-    }
 }
 
 - (BOOL)shouldAutorotate {

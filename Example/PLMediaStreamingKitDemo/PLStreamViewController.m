@@ -41,6 +41,7 @@ static NSString *AudioFileError[] = {
 };
 
 // PreferredExtension
+#warning 需要对应实际扩展 extension 的 bundleId，原工程 bundleId 修改，extension 对应也要修改
 static NSString *PLPreferredExtension = @"com.pili-engineering.PLMediaStreamingKit.PLBroadcastExtension";
 
 @interface PLStreamViewController ()
@@ -499,12 +500,9 @@ PLShowDetailViewDelegate
         }
 
     } else if (index == 3) {
-        // 打开/关闭 扬声器
-        _mediaSession.muteSpeaker = selected;
-    } else if (index == 4) {
         // 打开/关闭 麦克风
-        _mediaSession.muteMicrophone = selected;
-    } else if (index == 11) {
+        _mediaSession.muted = selected;
+    } else if (index == 10) {
         // 截图
         [_mediaSession getScreenshotWithCompletionHandler:^(UIImage * _Nullable image) {
             if (image == nil) {
@@ -512,7 +510,7 @@ PLShowDetailViewDelegate
             }
             UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
         }];
-    } else if (index == 12) {
+    } else if (index == 11) {
         // 人工报障
         __weak typeof(self) weakSelf = self;
         [_mediaSession postDiagnosisWithCompletionHandler:^(NSString * _Nullable diagnosisResult) {
@@ -527,7 +525,7 @@ PLShowDetailViewDelegate
         if (index == 0) {
             currentIndex = 0;
         } else{
-            currentIndex = index - 4;
+            currentIndex = index - 3;
         }
         if (selected) {
             _zoomSlider.hidden = YES;

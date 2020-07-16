@@ -106,7 +106,7 @@ UINavigationControllerDelegate
     versionLabel.textColor = COLOR_RGB(181, 68, 68, 1);
     versionLabel.textAlignment = NSTextAlignmentLeft;
     versionLabel.numberOfLines = 0;
-    versionLabel.text = [NSString stringWithFormat:@"Version: %@       Code: %@", PL_MEDIA_STREAM_VERSION, versionStr];
+    versionLabel.text = [NSString stringWithFormat:@"Version: %@ Code: %@", PL_MEDIA_STREAM_VERSION, versionStr];
     [self.view addSubview:versionLabel];
     
     UIView *lineView = [[UIView alloc] init];

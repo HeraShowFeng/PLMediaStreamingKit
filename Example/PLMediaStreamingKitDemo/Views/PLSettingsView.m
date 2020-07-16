@@ -192,7 +192,8 @@ PLListArrayViewDelegate
 
 #pragma mark - 请求获取推流地址 URL
 - (void)requestPublishURL {
-    NSString *streamServer = @"https://api-demo.qnsdk.com/v1/live/stream";
+    #warning 请填写自己服务器的推流地址获取 host，或通过扫描自动输入推流地址
+    NSString *streamServer = @"";
     NSString *streamID = [NSString randomizedString];
     NSString *streamURLString = [streamServer stringByAppendingPathComponent:streamID];
     NSURL *URL = [NSURL URLWithString:streamURLString];

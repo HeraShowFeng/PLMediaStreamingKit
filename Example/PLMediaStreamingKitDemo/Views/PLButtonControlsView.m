@@ -33,10 +33,10 @@
 }
 
 - (void)layoutButtonsView {
-    NSArray *titleArray = @[@"旋转方向", @"预览镜像", @"编码镜像", @"关闭扬声器", @"关闭麦克风", @"美颜设置", @"图片推流", @"贴纸设置", @"水印设置", @"混音设置", @"音效设置", @"截图", @"人工报障"];
-    NSArray *selectedTitleArray = @[@"旋转方向", @"预览镜像", @"编码镜像", @"打开扬声器", @"打开麦克风", @"美颜设置", @"图片推流", @"贴纸设置", @"水印设置", @"混音设置", @"音效设置", @"截图", @"人工报障"];
+    NSArray *titleArray = @[@"旋转方向", @"预览镜像", @"编码镜像", @"关闭麦克风", @"美颜设置", @"图片推流", @"贴纸设置", @"水印设置", @"混音设置", @"音效设置", @"截图", @"人工报障"];
+    NSArray *selectedTitleArray = @[@"旋转方向", @"预览镜像", @"编码镜像", @"打开麦克风", @"美颜设置", @"图片推流", @"贴纸设置", @"水印设置", @"混音设置", @"音效设置", @"截图", @"人工报障"];
     
-    CGRect maxBounds =  [titleArray[4] boundingRectWithSize:CGSizeMake(1000, 28) options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObject:FONT_MEDIUM(13.f) forKey:NSFontAttributeName] context:nil];
+    CGRect maxBounds =  [titleArray[3] boundingRectWithSize:CGSizeMake(1000, 28) options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObject:FONT_MEDIUM(13.f) forKey:NSFontAttributeName] context:nil];
     CGFloat viewWidth = maxBounds.size.width;
     CGFloat viewHeight = 40 * titleArray.count;
     

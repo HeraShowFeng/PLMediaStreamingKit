@@ -20,8 +20,8 @@
 
 - (void)broadcastStartedWithSetupInfo:(NSDictionary<NSString *,NSObject *> *)setupInfo {
     // User has requested to start the broadcast. Setup info from the UI extension will be supplied.
-    #warning 填入您的推流地址
-    NSString *streamingURL = @"rtmp://pili-publish.qnsdk.com/sdk-live/Ugc";
+    #warning 请填写自己的扩展录屏推流地址，不支持通过扫描自动输入
+    NSString *streamingURL = @"扩展录屏推流地址";
     CGSize videoSize = CGSizeMake(540, 960);
     [BroadcastManager createBroadcastManagerWithVideoSize:videoSize streamingURL:streamingURL];
 }
